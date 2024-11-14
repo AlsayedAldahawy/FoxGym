@@ -1,6 +1,6 @@
 import React from "react";
-import gymVideo from "../assets/images/gym-video.mp4";  // Import video
-import '../assets/css/header.css'
+import { Link } from "react-router-dom";
+import '../assets/css/header.css';
 
 const Header = () => {
   return (
@@ -24,28 +24,23 @@ const Header = () => {
             <div className="col-12">
               <nav className="main-nav">
                 {/* Logo */}
-                <a href="index.html" className="logo">
-                  Fox<em> Gym</em>
-                </a>
+                <Link to="/" className="logo">Fox<em> Gym</em></Link>
                 {/* Menu */}
                 <ul className="nav">
                   <li className="scroll-to-section">
-                    <a href="#top" className="active">Home</a>
+                    <Link to="/" className="active">Home</Link>
                   </li>
                   <li className="scroll-to-section">
-                    <a href="#features">About</a>
+                    <Link to="/bmi-calculator">BMI Calculator</Link>
                   </li>
                   <li className="scroll-to-section">
-                    <a href="#our-classes">Classes</a>
+                    <Link to="/members">Members</Link>
                   </li>
                   <li className="scroll-to-section">
-                    <a href="#schedule">Schedules</a>
-                  </li>
-                  <li className="scroll-to-section">
-                    <a href="#contact-us">Contact</a>
+                    <Link to="/coaches">Coaches</Link>
                   </li>
                   <li className="main-button">
-                    <a href="#">Sign Up</a>
+                    <Link to="/login">Login</Link>
                   </li>
                 </ul>
                 <a className="menu-trigger">
@@ -56,30 +51,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      {/* Main Banner Area */}
-      <div className="main-banner" id="top">
-        <video autoplay muted loop playsinline id="bg-video">
-          <source src={gymVideo} type="video/mp4" />
-        </video>
-
-        <div className="video-overlay header-text">
-          <div className="caption">
-            <h6>work harder, get stronger</h6>
-            <h2>
-              easy with Fox <em>gym</em>
-            </h2>
-            <div className="owner-trainer">
-              <div className="main-button scroll-to-section">
-                <a id="owner-trainer" href="#features">Owner</a>
-              </div>
-              <div className="main-button scroll-to-section">
-                <a id="owner-trainer" href="#features">Trainer</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
