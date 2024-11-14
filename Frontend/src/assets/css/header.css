@@ -1,0 +1,9 @@
+.owner-trainer{
+    display: flex;
+    justify-content:space-evenly;
+}
+
+#owner-trainer {
+    font-size: 35px;
+    border-radius: 15px; 
+}

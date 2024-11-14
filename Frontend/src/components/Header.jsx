@@ -1,6 +1,6 @@
-// Header.jsx
 import React from "react";
-
+import gymVideo from "../assets/images/gym-video.mp4";  // Import video
+import '../assets/css/header.css'
 
 const Header = () => {
   return (
@@ -25,7 +25,7 @@ const Header = () => {
               <nav className="main-nav">
                 {/* Logo */}
                 <a href="index.html" className="logo">
-                  Training<em> Studio</em>
+                  Fox<em> Gym</em>
                 </a>
                 {/* Menu */}
                 <ul className="nav">
@@ -56,6 +56,30 @@ const Header = () => {
           </div>
         </div>
       </header>
+
+      {/* Main Banner Area */}
+      <div className="main-banner" id="top">
+        <video autoplay muted loop playsinline id="bg-video">
+          <source src={gymVideo} type="video/mp4" />
+        </video>
+
+        <div className="video-overlay header-text">
+          <div className="caption">
+            <h6>work harder, get stronger</h6>
+            <h2>
+              easy with Fox <em>gym</em>
+            </h2>
+            <div className="owner-trainer">
+              <div className="main-button scroll-to-section">
+                <a id="owner-trainer" href="#features">Owner</a>
+              </div>
+              <div className="main-button scroll-to-section">
+                <a id="owner-trainer" href="#features">Trainer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

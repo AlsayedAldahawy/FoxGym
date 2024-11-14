@@ -303,10 +303,10 @@ header
   border: transparent;
   letter-spacing: 1px;
 }
-/*
+
 .header-area .main-nav .nav li a {
   color: #fff;
-} */
+} 
 
 .header-area .main-nav .nav li:last-child a {
   display: inline-block;
