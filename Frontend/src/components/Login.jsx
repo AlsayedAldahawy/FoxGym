@@ -5,7 +5,8 @@ import gymImage from "../assets/images/bg2.jpg";
 import mFarag from "../assets/images/users/m_farag.jpg"
 import trainer from "../assets/images/users/Amir.jpg"
 import trainer2 from "../assets/images/users/default.jpg"
-import trainer3 from "../assets/images/users/third-trainer.jpg"
+import trainer3 from "../assets/images/users/sayed.jpg"
+import femCoach from "../assets/images/users/fem.jpeg"
 
 import defaultTrainer from "../assets/images/fox.jpg"
 
@@ -69,7 +70,7 @@ export default function Login() {
                     <Link to="/owner" id="owner-trainer">
                       <img
                         className="userImage"
-                        src={trainer2}
+                        src={femCoach}
                         alt=""
                         srcSet=""
                       />

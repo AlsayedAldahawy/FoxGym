@@ -16,7 +16,7 @@
   /* margin-top: 15px; */
   border-radius: 50%; /* Makes the image circular */
   object-fit: cover; /* Ensures the image covers the container */
-  border: #000000 2px solid;
+  border: #ffffff 2px solid;
   margin-bottom: 10px;
   background-color: #ffffff;
   opacity: 0.5;
@@ -65,7 +65,8 @@
 }
 
 @media (max-width: 588px) {
-    .main-banner .caption h2{
-    font-size: 30px; 
+  .main-banner .caption h2 {
+    font-size: 30px;
+    /* visibility: hidden;   */
   }
 }
