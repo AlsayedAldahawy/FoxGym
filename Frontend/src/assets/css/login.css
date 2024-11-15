@@ -1,64 +1,69 @@
-.userButton{
-    width: 100px;
-    height: 100px;
-    /* background-color: #ed563b; */
-    margin: 20px 20px 60px 20px ;
-    max-height: fit-content;
-    /* background-image: url('../images/fox.jpg'); */
-    /* background-position: center;
+.userButton {
+  width: 100px;
+  height: 100px;
+  /* background-color: #ed563b; */
+  margin: 20px 20px 60px 20px;
+  max-height: fit-content;
+  /* background-image: url('../images/fox.jpg'); */
+  /* background-position: center;
     background-size: contain;
     background-repeat: no-repeat; */
-
 }
 
 .userImage {
-    width: 100px;
-    height: 100px;
-    /* margin-top: 15px; */
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image covers the container */
-    border: #000000 2px solid;
-    margin-bottom: 10px;
-    background-color: #ffffff;
+  width: 100px;
+  height: 100px;
+  /* margin-top: 15px; */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container */
+  border: #000000 2px solid;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  opacity: 0.5;
 }
 
 .userButton img:hover {
-    border: #ed563b 2px solid;
-    transition: all .5s;
-    transform: scale(1.1);
-    opacity: 1;
+  border: #ed563b 2px solid;
+  transition: all 0.5s;
+  transform: scale(1.1);
+  opacity: 1;
 }
 
 .userButton h6 {
-    opacity: .8;
+  opacity: 0.8;
 }
 
 .userButton h6:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
-.main-banner .caption .usertype{
-    color: #ed563b;
-    font-size: small;
-    margin-top: 3px;
+.main-banner .caption .usertype {
+  color: #ed563b;
+  font-size: small;
+  margin-top: 3px;
 }
 
-.main-banner .caption .username{
-font-size: medium;
+.main-banner .caption .username {
+  font-size: medium;
 }
 
-.admins{
-    display: flex;
-    /* border-right: #ed563b 2px solid; */
-    /* padding-right: 50px; */
-    flex-wrap: wrap;
+.admins {
+  display: flex;
+  /* border-right: #ed563b 2px solid; */
+  /* padding-right: 50px; */
+  flex-wrap: wrap;
 }
 .coaches {
-    display: flex;
-    flex-wrap: wrap;
-
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .main-banner .caption .border {
-    border: #ed563b 1px dashed  !important;
+  border: #ed563b 1px dashed !important;
+}
+
+@media (max-width: 588px) {
+    .main-banner .caption h2{
+    font-size: 20px; 
+  }
 }
