@@ -52,10 +52,12 @@
   /* border-right: #ed563b 2px solid; */
   /* padding-right: 50px; */
   flex-wrap: wrap;
+  justify-content: center;
 }
 .coaches {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .main-banner .caption .border {
@@ -64,6 +66,6 @@
 
 @media (max-width: 588px) {
     .main-banner .caption h2{
-    font-size: 20px; 
+    font-size: 30px; 
   }
 }
