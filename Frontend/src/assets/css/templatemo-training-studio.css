@@ -44,6 +44,7 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -71,7 +72,7 @@ ul, li {
   list-style: none;
 }
 
-header, nav, section, article, aside, footer, hgroup {
+header, nav, section, article, aside, footer, hgroup, footer {
   display: block;
 }
 
