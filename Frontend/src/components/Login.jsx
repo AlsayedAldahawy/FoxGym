@@ -43,27 +43,6 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="userButton">
-                  <div>
-                    <Link to="/owner" id="owner-trainer">
-                      <img
-                        className="userImage"
-                        src={defaultTrainer}
-                        alt=""
-                      />
-                      <div>
-                        <h6 className="username">Guest</h6>
-                      </div>
-
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border">
-
-              </div>
-              <div className="coaches">
-                <div className="userButton">
                     <Link to="/owner" id="owner-trainer">
                       <img
                         className="userImage"
@@ -76,10 +55,16 @@ export default function Login() {
                       </div>
 
                       <div>
-                        <h6 className="usertype">Chief Coach</h6>
+                        <h6 className="usertype">Manager</h6>
                       </div>
                     </Link>
                 </div>
+              </div>
+
+              <div className="border">
+
+              </div>
+              <div className="coaches">
                 <div className="userButton">
                     <Link to="/owner" id="owner-trainer">
                       <img
