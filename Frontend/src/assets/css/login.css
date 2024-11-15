@@ -51,6 +51,7 @@ font-size: medium;
     display: flex;
     /* border-right: #ed563b 2px solid; */
     /* padding-right: 50px; */
+    flex-wrap: wrap;
 }
 .coaches {
     display: flex;

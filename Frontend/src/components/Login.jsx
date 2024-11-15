@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import gymImage from "../assets/images/bg2.jpg";
-import mFarag from "../assets/images/m_farag.jpg"
-import trainer from "../assets/images/Amir.jpg"
-import trainer2 from "../assets/images/second-trainer.jpg"
-import trainer3 from "../assets/images/third-trainer.jpg"
+import mFarag from "../assets/images/users/m_farag.jpg"
+import trainer from "../assets/images/users/Amir.jpg"
+import trainer2 from "../assets/images/users/second-trainer.jpg"
+import trainer3 from "../assets/images/users/third-trainer.jpg"
 
 import defaultTrainer from "../assets/images/fox.jpg"
 
