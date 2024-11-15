@@ -6,9 +6,10 @@ import BMICalculator from "./components/Bmi";
 import Members from "./components/Members";
 import Coaches from "./components/Coaches";
 import Login from "./components/Login";
-import Home from "./components/home";
+import Home from "./components/Home";
 import Owner from "./components/Owner";
 import Trainer from "./components/Trainer";
+import Footer from "./components/Footer"
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
         <Route path="/owner" element={< Owner/>} />
         <Route path="/trainer" element={< Trainer />} />
       </Routes>
+      <Footer />
+
     </Router>
   );
 };
