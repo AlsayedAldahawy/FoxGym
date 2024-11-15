@@ -2,35 +2,25 @@
 BMI section
  ---------------------*/
 
+ .bmi-section {
+  background: #f6f9fa;
+  position: relative;
+  margin-top: 120px; /* Height of the header */
+  padding: 0 15px; /* Add margin to the sides */
+}
 
-
-.bmi-section {
-    background: #f6f9fa;
-    position: relative;
-    margin-top: 80px; /* Height of the header */
-  }
-
-  /* Set background image for the specific component */
-
-
-.bmi-bg {
-    height: 100%;
-    margin-top: 85px;
-    min-height: 400px; /* Adjust for smaller screens */
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
-  }
-  .cal {
-    margin-top: 55px;
-  }
+ .cal {
+   margin-top: 35px;
+   margin-left: 55px;
+   font-weight: bold;
+}
 
 .bmi-calculator-warp {
 	background: #242424;
-	padding: 48px 53px 40px;
 	margin-top: 60px;
+  border-radius: 8px;
+  padding: 40px 20px;
+  color: #fff;
 }
 
 .bmi-calculator input {
@@ -40,135 +30,30 @@ BMI section
 
 .bmi-calculator input,
 .bmi-calculator .site-btn {
-	width: 100%;
-	height: 57px;
-	margin-bottom: 30px;
-	padding: 0 24px;
-	border: none;
-	min-width: 100%;
-}
-
-.bmi-calculator p {
-	color: #fff;
-	font-style: italic;
-	margin-bottom: 0;
-	padding-top: 9px;
-}
-
-
-.bmi-calculator-warp {
-    background: #242424;
-    padding: 40px 20px;
-    border-radius: 8px;
-    color: #fff;
-  }
-  
-  .bmi-calculator input,
-  .bmi-calculator .site-btn {
     width: 100%;
     height: 45px;
     margin-bottom: 15px;
     padding: 0 10px;
     border: none;
     border-radius: 5px;
-  }
+    min-width: 100%;
+}
+
+.bmi-calculator p {
+	color: #fff;
+	font-style: inherit;
+  font-size: 18px;
+  font-weight: 400px;
+	margin-bottom: 0;
+	padding-top: 9px;
+  margin-top: 10px;
+
+}
+
+ .col-lg-6.bmi-bg {
+  flex: 0 0 60%; /* Image takes 60% of the width */
+}
   
-  .bmi-calculator p {
-    font-style: italic;
-    margin-top: 10px;
-    color: #bbb;
-  }
-  .col-lg-6.bmi-bg {
-    flex: 0 0 60%; /* Image takes 60% of the width */
-  }
-  @media (max-width: 768px) {
-    .bmi-bg {
-      height: 300px; /* Smaller image height for smaller screens */
-    }
-  }
-  /* Specific styles for smaller screens */
-@media (max-width: 1000px) {
-    .bmi-bg {
-        width: 100vw; /* Take up the entire viewport width */
-        margin-top: 0; /* Remove margin to align with the page edges */
-        border-radius: 0; /* Remove border-radius to match full width */
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-    .bmi-bg {
-		width:fit-content
-	}
-}
-
-@media only screen and (max-width: 767px) {
-	.bmi-calculator-warp {
-		padding: 48px 20px 40px;
-	}
-}
-
-/* Full width on small screens */
-@media (max-width: 1000px) {
-    .bmi-bg {
-        width: 100vw; /* Take up the full viewport width */
-        margin: 0; /* Remove extra margins */
-        border-radius: 0; /* Remove border-radius for full edge alignment */
-    }
-
-    .bmi-section .row {
-        margin: 0; /* Remove row's left/right margin */
-    }
-
-    .bmi-section .col-lg-6 {
-        padding: 0; /* Remove padding from columns */
-    }
-}
-
-/* Adjust padding for very small screens */
-@media only screen and (max-width: 767px) {
-    .bmi-calculator-warp {
-        padding: 48px 20px 40px;
-    }
-}
-
-@media (max-width: 768px) {
-  .custom-container {
-      max-width: 100% !important; /* Full width for smaller screens */
-      padding: 0 !important; /* Remove extra padding */
-  }
-}
-@media (min-width: 780px) and (max-width: 1000px) {
-  .custom-container {
-    max-width: 100% !important; /* Full width */
-    padding: 0 !important;      /* Remove default padding */
-  }
-}
-@media (max-width: 779px) {
-  .custom-container {
-    max-width: 100% !important;
-    padding: 0 !important;
-  }
-}
-
-/* Ensure full width for the background image on small screens */
-@media (min-width: 780px) and (max-width: 1000px) {
-  .bmi-bg {
-    width: 100vw; /* Full viewport width */
-    height: auto; /* Let the height adjust proportionally */
-    margin: 0; /* Remove any margin */
-    border-radius: 0; /* Remove border-radius for full width */
-    background-size: cover; /* Ensure the background image covers the entire div */
-    background-position: center; /* Keep the image centered */
-  }
-
-  .bmi-section .row {
-    margin: 0; /* Remove row's left/right margin */
-  }
-
-  .bmi-section .col-lg-6, .bmi-section .col-md-12 {
-    padding: 0; /* Remove padding from columns */
-  }
-}
 .bmi-image-container {
   width: 100%; /* Ensures the container takes full width */
   display: flex;
@@ -178,150 +63,14 @@ BMI section
 
 .bmi-image {
   width: 100%; /* Makes the image take full width */
-  margin-top: 50px;
-  height: auto; /* Maintains aspect ratio */
+  margin-top: 25px;
+  height: 475px; /* Maintains aspect ratio */
   border-radius: 8px; /* Optional, for rounded corners */
   object-fit: cover; /* Ensures the image covers the container properly */
 }
 
 @media (max-width: 768px) {
   .bmi-image {
-    height: 300px; /* Adjust height for smaller screens */
-  }
-}
-
-@media (min-width: 780px) and (max-width: 1000px) {
-  .bmi-image {
-    width: 100vw; /* Takes full viewport width on medium screens */
-    height: auto; /* Maintains aspect ratio */
-    border-radius: 0; /* Optional: removes border radius for full width */
-  }
-}
-
-/* ----------------
-BMI section
- ---------------------*/
-
- .bmi-section {
-  background: #f6f9fa;
-  position: relative;
-  margin-top: 80px; /* Height of the header */
-  padding: 0 15px; /* Add margin to the sides */
-}
-
-/* Set background image for the specific component */
-.bmi-bg {
-  height: 60vh; /* Adjust height to 60% of the viewport height for small screens */
-  margin-top: 85px;
-  min-height: 400px; /* Adjust for smaller screens */
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  aspect-ratio: 16 / 9; /* Maintain aspect ratio (adjust as needed) */
-  object-fit: cover; /* Ensures the image covers the area properly */
-}
-
-/* Ensures the image and container maintain their aspect ratio */
-@media (max-width: 768px) {
-  .bmi-bg {
-    height: auto; /* Allow height to adjust based on width */
-    min-height: 200px; /* Ensure minimum height for smaller screens */
-    aspect-ratio: 16 / 9; /* Maintain aspect ratio */
-  }
-}
-
-/* Specific styles for smaller screens */
-@media (max-width: 1000px) {
-  .bmi-bg {
-    width: 100vw; /* Take up the entire viewport width */
-    margin-top: 0; /* Remove margin to align with the page edges */
-    border-radius: 0; /* Remove border-radius to match full width */
-    height: auto; /* Maintain aspect ratio */
-    min-height: 200px;
-    object-fit: cover;
-  }
-
-  .bmi-section .row {
-    margin: 0; /* Remove row's left/right margin */
-  }
-
-  .bmi-section .col-lg-6 {
-    padding: 0; /* Remove padding from columns */
-  }
-}
-
-/* Ensure full width for the background image on small screens */
-@media (min-width: 780px) and (max-width: 1000px) {
-  .bmi-bg {
-    width: 100vw; /* Full viewport width */
-    height: auto; /* Let the height adjust proportionally */
-    margin: 0; /* Remove any margin */
-    border-radius: 0; /* Remove border-radius for full width */
-    background-size: cover; /* Ensure the background image covers the entire div */
-    background-position: center; /* Keep the image centered */
-  }
-
-  .bmi-section .row {
-    margin: 0; /* Remove row's left/right margin */
-  }
-
-  .bmi-section .col-lg-6,
-  .bmi-section .col-md-12 {
-    padding: 0; /* Remove padding from columns */
-  }
-}
-
-/* Adjust padding for very small screens */
-@media only screen and (max-width: 767px) {
-  .bmi-calculator-warp {
-    padding: 48px 20px 40px;
-  }
-}
-
-/* Adjust padding and layout for the container */
-@media (max-width: 768px) {
-  .custom-container {
-    max-width: 100% !important; /* Full width for smaller screens */
-    padding: 0 15px !important; /* Add padding to the sides */
-  }
-}
-
-@media (min-width: 780px) and (max-width: 1000px) {
-  .custom-container {
-    max-width: 100% !important; /* Full width */
-    padding: 0 !important; /* Remove default padding */
-  }
-}
-
-/* Ensure image scales properly on smaller screens */
-.bmi-image-container {
-  width: 100%; /* Ensures the container takes full width */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bmi-image {
-  width: 100%; /* Makes the image take full width */
-  margin-top: 50px;
-  height: auto; /* Maintains aspect ratio */
-  border-radius: 8px; /* Optional, for rounded corners */
-  object-fit: cover; /* Ensures the image covers the container properly */
-}
-
-@media (max-width: 768px) {
-  .bmi-image {
-    height: auto; /* Adjust to maintain aspect ratio on small screens */
-    width: 100%;
-  }
-}
-
-@media (min-width: 780px) and (max-width: 1000px) {
-  .bmi-image {
-    width: 100vw; /* Takes full viewport width on medium screens */
-    height: auto; /* Maintains aspect ratio */
-    border-radius: 0; /* Optional: removes border radius for full width */
+    height: 300px;
   }
 }
