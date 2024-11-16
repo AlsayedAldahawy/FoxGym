@@ -21,7 +21,7 @@ const Footer = () => {
               </svg>
             </div>
           </a>
-          <a href="" target="_blank">
+          <a href="https://www.x.com" target="_blank">
             <div className="social-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const Footer = () => {
               </svg>
             </div>
           </a>{" "}
-          <a href="" target="_blank">
+          <a href="https://www.youtube.com" target="_blank">
             <div className="social-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ const Footer = () => {
               </svg>
             </div>
           </a>{" "}
-          <a href="" target="_blank">
+          <a href="https://www.instagram.com" target="_blank">
             <div className="social-icon">
               <svg
                 role="img"

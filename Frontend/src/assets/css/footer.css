@@ -52,7 +52,7 @@
 
 footer {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   height: 100px;
   width: 100%;
   display: flex;
@@ -68,15 +68,16 @@ footer {
   position: absolute;
   height: 100px;
   width: 25%;
-  bottom: 0;
+  bottom: -60px;
   display: flex;
   align-items: center; /* Centers the content vertically */
   flex-direction: row;
   justify-content: space-evenly;
-  overflow: hidden
+  overflow: hidden;
+  transition: all 0.5s;
 }
 
-.shadow{
+.shadow {
   position: absolute;
   height: 80%;
   width: 75%;
@@ -88,7 +89,7 @@ footer {
   align-items: center;
   flex-direction: row;
   justify-content: space-evenly;
-  overflow: hidden
+  overflow: hidden;
 }
 
 /* .social-icon{
@@ -96,39 +97,39 @@ footer {
     height: 20px;
 } */
 
+.social-media:hover {
+  bottom: 0;
+}
 
-
-/* .social-media .social-icon:hover{
-    width: 60px;
-    height: 60px;
-} */
-
-.social-icon svg{
-    position: relative;
-    height: 20px;
-    width: 20px;
-    fill: aliceblue;
-    opacity: 0.6;
-    bottom: -5px;
-    transition: all 1s;
-
+.social-icon svg {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  fill: aliceblue;
+  opacity: 0.6;
+  bottom: -5px;
+  transition: all 1s;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
 }
 
-.social-icon svg:hover{
-    fill: #ed563b;
-    opacity: 1;
-    transform: scale(2);
-    }
+.social-icon svg:hover {
+  fill: #ed563b;
+  opacity: 1;
+  transform: scale(2);
+}
 
-    .copyrights{
-        position: relative;
-        bottom: -40px;
-        opacity: 0.6;
-        font-size: small;
-    }
-
+.copyrights {
+  position: relative;
+  bottom: -40px;
+  opacity: 0.6;
+  font-size: small;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  pointer-events: none;
+}
