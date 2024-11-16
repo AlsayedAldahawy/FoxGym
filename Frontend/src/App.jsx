@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Owner from "./components/Owner";
 import Trainer from "./components/Trainer";
 import Footer from "./components/Footer"
+import AddNewMember from "./components/addNewMember"
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/owner" element={< Owner/>} />
         <Route path="/trainer" element={< Trainer />} />
+        <Route path="/add-new-member" element={< AddNewMember />} />
       </Routes>
       <Footer />
 

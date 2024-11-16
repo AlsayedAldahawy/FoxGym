@@ -1,0 +1,31 @@
+.members-container {
+    margin-top: 100px;
+}
+
+.header {
+    text-align: center;
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .add-member-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .add-member-btn:hover {
+    background-color: #45a049;
+  }
+  

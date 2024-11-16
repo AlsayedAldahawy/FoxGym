@@ -1,0 +1,124 @@
+/* Style for the form container */
+.form-container {
+    width: 35%; /* Increased form width */
+    transition: border 0.3s ease;
+}
+
+.btn-signin {
+    background-color: #ed563b;;
+    color: aliceblue;
+    border: 1px solid #ed563b;
+    border-radius: 10px;
+    height: 50px;
+    width: 400px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+    display: block; /* Ensures it behaves as a block element */
+    box-sizing: border-box; /* Includes padding and border in the width/height calculations */
+}
+
+.btn-signin:hover {
+    background-color: #ed563b; /* Darker shade of red */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+.bg-image {
+    background-image: url('../img/loginCover.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }  
+
+.mb-5{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 25px; /* Adjust margin between the rows */
+}
+
+#signup {
+    display: flex;
+    justify-content: center;
+}
+
+.text-danger, .text-success{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* In addMember.css */
+.vh-100 {
+    height: auto !important; /* Overrides the Bootstrap .vh-100 */
+}
+
+.text-center {
+    margin-top: 65px;
+    margin-bottom: 50px;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* space between columns */
+}
+  
+.col {
+    flex: 1;
+    min-width: 45%; /* Adjusts the column width */
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1 1 45%; /* Makes each input take up 45% of the width */
+    margin-bottom: 15px;
+}
+
+.custom-check {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 25px;
+}
+
+@media screen and (max-width: 1000px) {
+    .form-container {
+        width: 50%; /* Adjust for medium screens */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-container {
+        width: 75%; /* Adjust for small screens */
+    }
+    .row {
+        flex-direction: column; /* Stack fields vertically on smaller screens */
+      }
+    
+      .col {
+        min-width: 100%; /* Make columns take full width on small screens */
+      }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .btn-signin {
+        font-size: 18px; /* Slightly smaller font on tablets */
+        height: 45px;  /* Slightly smaller height on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-signin {
+        font-size: 16px; /* Even smaller font on small screens */
+        height: 40px;  /* Smaller height on mobile screens */
+        width: 90%; /* Makes the button width smaller on mobile devices */
+    }
+}
