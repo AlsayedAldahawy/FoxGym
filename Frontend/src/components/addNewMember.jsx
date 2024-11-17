@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PackageSelector from './packages'; // Import the new PackageSelector component
 import '../assets/css/addMember.css';
@@ -9,7 +9,7 @@ const AddNewMember = () => {
     email: '',
     birthDate: '',
     memberShip: '',
-    startDate: '', // startDate initially empty
+    startDate: new Date().toISOString().split('T')[0], // Default to today's date
     expiryDate: '',
     phoneNumber: '',
     paymentStatus: '',
@@ -19,17 +19,45 @@ const AddNewMember = () => {
     image: '',
   });
 
+  const [packages, setPackages] = useState([]); // State to hold package details
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Fetch packages from the backend
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/packages');
+        const data = await response.json();
+        setPackages(data);
+      } catch (error) {
+        console.error('Error fetching packages:', error);
+      }
+    };
+    fetchPackages();
+  }, []);
+
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    setFormData((prev) => {
+      const updatedData = { ...prev, [name]: value };
+
+      // Calculate expiryDate if memberShip changes
+      if (name === 'memberShip') {
+        const selectedPackage = packages.find((pkg) => pkg.packageName === value);
+        if (selectedPackage) {
+          const startDate = new Date(updatedData.startDate);
+          const expiryDate = new Date(startDate);
+          expiryDate.setDate(startDate.getDate() + selectedPackage.numberOfDays); // Add package days
+          updatedData.expiryDate = expiryDate.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+        }
+      }
+
+      return updatedData;
+    });
   };
 
   // Validate form data
@@ -68,23 +96,15 @@ const AddNewMember = () => {
       return;
     }
 
-    // Set default start date to today's date if not provided
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-    const formWithDefaultDate = {
-      ...formData,
-      height: parseFloat(formData.height),
-      weight: parseFloat(formData.weight),
-      startDate: formData.startDate || currentDate, // Set startDate to current date if empty
-    };
-
-    // Call the API to add the new member
     try {
       const response = await fetch('http://localhost:5000/member/addMember', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formWithDefaultDate),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          height: parseFloat(formData.height),
+          weight: parseFloat(formData.weight),
+        }),
       });
 
       const data = await response.json();
@@ -96,24 +116,19 @@ const AddNewMember = () => {
       }
 
       setSuccess('New member added successfully!');
-      setTimeout(() => {
-        navigate('/members');
-      }, 3000);
+      setTimeout(() => navigate('/members'), 3000);
     } catch (error) {
       console.error('API Error:', error);
       setError('Something went wrong. Please try again.');
     }
   };
 
-  // Get the current date for the default input value
-  const currentDate = new Date().toISOString().split('T')[0];
-
   return (
     <div className="login template d-flex justify-content-center align-items-center vh-100 bg-image">
       <div className="form-container p-5 rounded bg-white">
         <form onSubmit={onSubmit}>
           <h3 className="text-center">Add New Member</h3>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>User Name</label>
               <input
@@ -137,7 +152,7 @@ const AddNewMember = () => {
               />
             </div>
           </div>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>Birth Date</label>
               <input
@@ -152,17 +167,18 @@ const AddNewMember = () => {
               <PackageSelector
                 value={formData.memberShip}
                 onChange={handleChange}
+                packages={packages} // Pass packages to the selector
               />
             </div>
           </div>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>Start Date</label>
               <input
                 type="date"
                 name="startDate"
                 className="form-control"
-                value={formData.startDate || currentDate}  // Default to current date if empty
+                value={formData.startDate}
                 onChange={handleChange}
               />
             </div>
@@ -173,11 +189,11 @@ const AddNewMember = () => {
                 name="expiryDate"
                 className="form-control"
                 value={formData.expiryDate}
-                onChange={handleChange}
+                readOnly // Make expiry date read-only
               />
             </div>
           </div>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>Phone Number</label>
               <input
@@ -201,7 +217,7 @@ const AddNewMember = () => {
               />
             </div>
           </div>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>Height</label>
               <input
@@ -225,7 +241,7 @@ const AddNewMember = () => {
               />
             </div>
           </div>
-          <div className='form-row'>
+          <div className="form-row">
             <div className="form-group">
               <label>Gender</label>
               <select
@@ -252,7 +268,6 @@ const AddNewMember = () => {
               />
             </div>
           </div>
-
           <div className="d-grid">
             <button type="submit" className="btn-signin">Add Member</button>
           </div>
