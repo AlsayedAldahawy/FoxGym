@@ -1,4 +1,3 @@
-// frontend/src/components/AddNewMember.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PackageSelector from './packages'; // Import the new PackageSelector component
@@ -10,7 +9,7 @@ const AddNewMember = () => {
     email: '',
     birthDate: '',
     memberShip: '',
-    startDate: '',
+    startDate: '', // startDate initially empty
     expiryDate: '',
     phoneNumber: '',
     paymentStatus: '',
@@ -69,6 +68,15 @@ const AddNewMember = () => {
       return;
     }
 
+    // Set default start date to today's date if not provided
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const formWithDefaultDate = {
+      ...formData,
+      height: parseFloat(formData.height),
+      weight: parseFloat(formData.weight),
+      startDate: formData.startDate || currentDate, // Set startDate to current date if empty
+    };
+
     // Call the API to add the new member
     try {
       const response = await fetch('http://localhost:5000/member/addMember', {
@@ -76,11 +84,7 @@ const AddNewMember = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          height: parseFloat(formData.height),
-          weight: parseFloat(formData.weight),
-        }),
+        body: JSON.stringify(formWithDefaultDate),
       });
 
       const data = await response.json();
@@ -100,6 +104,9 @@ const AddNewMember = () => {
       setError('Something went wrong. Please try again.');
     }
   };
+
+  // Get the current date for the default input value
+  const currentDate = new Date().toISOString().split('T')[0];
 
   return (
     <div className="login template d-flex justify-content-center align-items-center vh-100 bg-image">
@@ -155,7 +162,7 @@ const AddNewMember = () => {
                 type="date"
                 name="startDate"
                 className="form-control"
-                value={formData.startDate}
+                value={formData.startDate || currentDate}  // Default to current date if empty
                 onChange={handleChange}
               />
             </div>
