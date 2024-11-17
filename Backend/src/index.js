@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors';
 import memberRoute from './routes/memberRoute.js';
+import packageRoute from './routes/packagesRoute.js';
+import { seedInitialPackages } from './services/packagesService.js' ;
 
 
 dotenv.config()
@@ -21,7 +23,9 @@ mongoose
 
 
 app.use("/member", memberRoute);
+app.use("/packages", packageRoute)
 
+seedInitialPackages()
 
 app.listen(port, () =>{
     console.log(`Server Is Running On Port ${port}`);

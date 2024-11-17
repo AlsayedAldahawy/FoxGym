@@ -1,6 +1,8 @@
+// frontend/src/components/AddNewMember.js
 import React, { useState } from 'react';
-import '../assets/css/addMember.css'; // Assuming your styles are in the same folder
 import { useNavigate } from 'react-router-dom';
+import PackageSelector from './packages'; // Import the new PackageSelector component
+import '../assets/css/addMember.css';
 
 const AddNewMember = () => {
   const [formData, setFormData] = useState({
@@ -117,15 +119,15 @@ const AddNewMember = () => {
               />
             </div>
             <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-            />
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                className="form-control"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className='form-row'>
@@ -140,12 +142,7 @@ const AddNewMember = () => {
               />
             </div>
             <div className="form-group">
-              <label>Membership</label>
-              <input
-                type="text"
-                name="memberShip"
-                placeholder="Enter Membership"
-                className="form-control"
+              <PackageSelector
                 value={formData.memberShip}
                 onChange={handleChange}
               />
