@@ -4,7 +4,9 @@ import dotenv from 'dotenv'
 import cors from 'cors';
 import memberRoute from './routes/memberRoute.js';
 import packageRoute from './routes/packagesRoute.js';
+import adminRoute from './routes/adminRoute.js'
 import { seedInitialPackages } from './services/packagesService.js' ;
+import { seedInitialAdmin } from './services/adminService.js';
 
 
 dotenv.config()
@@ -24,8 +26,11 @@ mongoose
 
 app.use("/member", memberRoute);
 app.use("/packages", packageRoute)
+app.use("/admin", adminRoute);
+
 
 seedInitialPackages()
+seedInitialAdmin()
 
 app.listen(port, () =>{
     console.log(`Server Is Running On Port ${port}`);
