@@ -1,71 +1,60 @@
-function idGenerator(name, gender) {
-
-
+/**
+ * Generates a unique identifier based on the current date and time.
+ * The UID format: YYYYMM-HHDD-MMSS
+ *
+ * @returns {string} - The generated unique identifier
+ */
+function uidGenerator() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    // monthely dependent character calculation
-    let date = new Date()
-    let month = date.getMonth()    
+    // Create a new Date object to get the current date and time
+    let date = new Date();
+    const year = date.getFullYear();
+
+    // Yearly and quarter century dependent character calculation
+    let yearChar = chars[year % 26];
+    let qCentury = chars[Math.floor(year / 25) - 82];
+
+    yearChar += (Math.floor(year / 25) > 81) ? qCentury : "";
+
+    // Monthly dependent character calculation
+    let month = date.getMonth();
     let janJam = (month) ? 1 : 3;
-    let monthChar = chars[randomNumberRange(0, janJam) + (month * 2) + 3 - janJam]
+    let monthChar = chars[randomNumberRange(0, janJam) + (month * 2) + 3 - janJam];
 
+    // Daily & hourly & minute & second dependent character calculation
+    let dayChar = chars[date.getDate()];
+    let minChar = String(date.getMinutes()).padStart(2, '0');
+    let hourChar = chars[date.getHours()];
+    let secChar = String(date.getSeconds()).padStart(2, '0');
 
-    // Yearly dependant character
-    let yearChar = chars[date.getFullYear() % 26];
-
-
-    // Male/Female-Odd/Even dependent character calculation
-    const eo = name.length % 2;
-    const mf = (gender.toUpperCase() != "MALE");
-
-    /**
-     * dividing the letters to 2 sections:
-     * 0 - 21 for male members
-     * 22 - 35 for female members
-     * with ration 11:7 in favor for male members as they are the majority of the gym goers.
-     * 
-     * then dividing each section to two more sections based on the name length if it even or odd.
-     */
-
-    let MFEOChar = chars[randomNumberRange(0 + (mf * 21) + (eo * (10 - (3 * mf))), 35 - (!mf * 14) - (!eo * (10 - (3 * mf))))]
-
-
-    // Testing the ranges value
-    // for (let mf = 0; mf <= 1; mf++) {
-
-    //     for (let eo = 0; eo <= 1; eo++) {
-    //         console.log("range", 0 + (mf * 22) + (eo * (11 - (4 * mf))), 35 - (!mf * 14) - (!eo * (11 - (4 * mf))))
-    //     }
-
-    // }
-
-    // testing monthely dependent character
-    /*
-        for (let month = 0; month <= 11; month++) {
-
-            let janJam = (month) ? 1 : 3;
-
-            for (let index = 0; index <= janJam; index++) {
-                let monthChar = letters[index + (month * 2) + 3 - janJam]
-                console.log(month, monthChar)
-
-            }
-        }
-    */
-
-    let uid = yearChar + monthChar + MFEOChar;
-    return (uid);
+    // Combine the calculated characters to form the unique identifier
+    let uid = yearChar + monthChar + hourChar + dayChar + "-" + minChar + secChar;
+    return uid;
 }
 
-
-
-
+/**
+ * Generates a random number between the specified minimum and maximum values.
+ *
+ * @param {number} min - The minimum value
+ * @param {number} max - The maximum value
+ * @returns {number} - A random number between min and max
+ */
 function randomNumberRange(min, max) {
     return Math.floor(Math.random() * ((max - min) + 1)) + min;
-
 }
 
-console.log("m-o", idGenerator("ahmed mohamed tarek", "male"))
-console.log("m-e", idGenerator("Khalid mohamed tarek", "male"))
-console.log("f-o", idGenerator("Faiza tarek", "fale"))
-console.log("f-e", idGenerator("Faiza tareki", "female"))
+export { uidGenerator };
+
+// Test the uidGenerator function
+console.log(uidGenerator());
+setTimeout(() => { console.log(uidGenerator()); }, 1000);
+setTimeout(() => { console.log(uidGenerator()); }, 2000);
+setTimeout(() => { console.log(uidGenerator()); }, 3000);
+setTimeout(() => { console.log(uidGenerator()); }, 4000);
+setTimeout(() => { console.log(uidGenerator()); }, 5000);
+setTimeout(() => { console.log(uidGenerator()); }, 6000);
+setTimeout(() => { console.log(uidGenerator()); }, 7000);
+setTimeout(() => { console.log(uidGenerator()); }, 8000);
+setTimeout(() => { console.log(uidGenerator()); }, 9000);
+setTimeout(() => { console.log(uidGenerator()); }, 10000);
