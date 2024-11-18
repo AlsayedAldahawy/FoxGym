@@ -74,7 +74,7 @@ footer {
   flex-direction: row;
   justify-content: space-evenly;
   overflow: hidden;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .shadow {
@@ -108,7 +108,7 @@ footer {
   fill: aliceblue;
   opacity: 0.6;
   bottom: -5px;
-  transition: all 1s;
+  transition: all .2s;
 }
 
 footer {

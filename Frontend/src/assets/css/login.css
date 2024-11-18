@@ -20,11 +20,12 @@
   margin-bottom: 10px;
   background-color: #ffffff;
   opacity: 0.5;
+  transition: all 0.3s;
+
 }
 
 .userButton img:hover {
   border: #ed563b 2px solid;
-  transition: all 0.5s;
   transform: scale(1.1);
   opacity: 1;
 }
@@ -67,6 +68,13 @@
 @media (max-width: 588px) {
   .main-banner .caption h2 {
     font-size: 30px;
+    /* visibility: hidden;   */
+  }
+}
+
+@media (max-width: 476px) {
+  .main-banner .caption h2 {
+    font-size: 20px;
     /* visibility: hidden;   */
   }
 }

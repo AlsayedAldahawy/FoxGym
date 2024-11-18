@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import gymImage from "../assets/images/bg2.jpg";
+import gymImage from "../assets/images/backgrounds/bg_login.jpg";
 import mFarag from "../assets/images/users/m_farag.jpg"
 import trainer from "../assets/images/users/Amir.jpg"
 import trainer2 from "../assets/images/users/default.jpg"
