@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MemberFormInputs from './MemberFormInputs.jsx'; // Import the new MemberFormInputs component
+import MemberFormInputs from '../components/MemberFormInputs.jsx'; // Import the new MemberFormInputs component
 import '../assets/css/addMember.css';
 
 const AddNewMember = () => {

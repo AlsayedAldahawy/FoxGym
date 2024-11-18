@@ -22,19 +22,26 @@ export default function StickyHeadTable() {
   const [members, setMembers] = React.useState([]); // State to store fetched members
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [totalMembers, setTotalMembers] = React.useState(0); // For total count
+
 
   // Fetch all members when the component mounts
   React.useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/member/getAllMembers'); // Make API call
-        setMembers(response.data); // Set the state with the fetched data
+        const response = await axios.get('http://localhost:5000/member/getAllMembers', {
+          params: { page: page + 1, rowsPerPage }, // Backend expects 1-based page index
+        });
+        setMembers(response.data.members);
+        setTotalMembers(response.data.totalMembers);
       } catch (error) {
         console.error('Error fetching members:', error);
       }
     };
     fetchMembers();
-  }, []);
+  }, [page, rowsPerPage]); // Re-run when page or rowsPerPage changes
+  
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -46,49 +53,47 @@ export default function StickyHeadTable() {
   };
 
   return (
-    <Paper sx={{ width: '90%', mx: 'auto', overflow: 'hidden' }}> {/* Center the table with mx:auto */}
-      <TableContainer sx={{ maxHeight: 440, width: '90%', mx: 'auto' }}> {/* Adjust the table width */}
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {members
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                // Ensure unique key by combining row.id with index
+      <Paper sx={{ width: '90%', mx: 'auto', overflow: 'hidden' }}>
+        <TableContainer sx={{ maxHeight: 440, width: '90%', mx: 'auto' }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {members.map((row, index) => {
                 const rowKey = row.id + '-' + index;
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={rowKey}>
                     {columns.map((column) => {
                       const value = row[column.id];
+                      console.log(`Rendering cell for column ${column.id}:`, value); // Debug
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {value}
+                          {value || 'N/A'}
                         </TableCell>
                       );
                     })}
                   </TableRow>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={members.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-  );
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={totalMembers} // Ensure this value is correct
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    );
 }
