@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import StickyHeadTable from './MembersTable';  // Adjust path if needed
+import StickyHeadTable from '../components/MembersTable';  // Adjust path if needed
 import '../assets/css/Members.css';  // Make sure to import the CSS file
 
 export default function Members() {
