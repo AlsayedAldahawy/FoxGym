@@ -32,7 +32,7 @@ export const seedInitialAdmin = async () => {
       {
         userName: "Elsayed Eldahawy",
         password : "1213",
-        type: "admin",
+        type: "coach",
       },
     ];
 

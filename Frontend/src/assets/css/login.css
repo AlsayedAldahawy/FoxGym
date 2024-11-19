@@ -78,3 +78,49 @@
     /* visibility: hidden;   */
   }
 }
+
+
+.admin-login {
+  text-align: center;
+}
+
+.admin-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.admin-card {
+  cursor: pointer;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.admin-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.password-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.modal-content {
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
