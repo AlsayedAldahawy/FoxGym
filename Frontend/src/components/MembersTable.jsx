@@ -72,7 +72,6 @@ export default function StickyHeadTable() {
                   <TableRow hover role="checkbox" tabIndex={-1} key={rowKey}>
                     {columns.map((column) => {
                       const value = row[column.id];
-                      console.log(`Rendering cell for column ${column.id}:`, value); // Debug
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {value || 'N/A'}

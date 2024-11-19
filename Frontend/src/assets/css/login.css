@@ -124,3 +124,21 @@
   color: red;
   margin-top: 10px;
 }
+
+.after-login {
+  color: white;
+  font-size: 55px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.logout-button {
+  background-color: darkred;
+  color: white;
+  border-radius: 15px;
+  width: 170px;
+  height: 75px;
+  font-weight: bold;
+  font-size: 30px;
+  border: white;
+}

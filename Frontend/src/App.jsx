@@ -11,24 +11,30 @@ import Owner from "./components/Owner";
 import Trainer from "./components/Trainer";
 import Footer from "./components/Footer"
 import AddNewMember from "./pages/addNewMember"
+import AuthProvider from "./context/AuthContext"; // Update path as per your project
+import ProtectedRoute from "./components/protectedRoute"; // Update path as per your project
+
 
 const App = () => {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={< Home />} />
-        <Route path="/bmi-calculator" element={<BMICalculator />} />
-        <Route path="/members" element={<Members />} />
-        <Route path="/coaches" element={<Coaches />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/owner" element={< Owner/>} />
-        <Route path="/trainer" element={< Trainer />} />
-        <Route path="/add-new-member" element={< AddNewMember />} />
-      </Routes>
-      <Footer />
-
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={< Home />} />
+          <Route path="/bmi-calculator" element={<BMICalculator />} />
+          <Route path="/coaches" element={<Coaches />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/members" element={<Members />} />
+            <Route path="/add-new-member" element={<AddNewMember />} />
+          </Route>
+          <Route path="/owner" element={< Owner/>} />
+          <Route path="/trainer" element={< Trainer />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 };
 

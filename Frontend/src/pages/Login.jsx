@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx"; // Update path as per your project
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PasswordModal from "../components/passwordModal.jsx";
 import gymImage from "../assets/images/backgrounds/bg_login.jpg";
 import mFarag from "../assets/images/users/m_farag.jpg";
@@ -13,6 +15,9 @@ export default function Login() {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  
+  const { isAuthenticated, login, logout, username } = useAuth();
+  const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -42,6 +47,10 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
+    if (!selectedAdmin || !password) {
+      setErrorMessage("Please select an admin and enter a password.");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:5000/admin/login", {
         method: "POST",
@@ -51,14 +60,28 @@ export default function Login() {
 
       const result = await response.json();
       if (response.status === 200) {
-        alert("Login successful!");
-        setSelectedAdmin(null);
+        if (result.username && result.token) {
+          login(result.username, result.token);
+          alert("Login successful!");
+          setSelectedAdmin(null);
+          navigate("/"); // Navigate to home page
+        } else {
+          setErrorMessage("Invalid response from server.");
+        }
       } else {
-        setErrorMessage(result || "Incorrect email or password!");
+        setErrorMessage(result.message || "Incorrect email or password!");
       }
     } catch (error) {
       setErrorMessage("Something went wrong!");
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setSelectedAdmin(null); // Reset selected admin
+    setPassword(""); // Clear password
+    setErrorMessage(""); // Clear error message
+    alert("You have been logged out.");
   };
 
   return (
@@ -67,67 +90,76 @@ export default function Login() {
         <img src={gymImage} alt="Gym background" id="bg-video" />
         <div className="video-overlay header-text">
           <div className="caption">
-            <h2>
-              Welcome to FOX <em>gym</em>!
-            </h2>
-            <div className="owner-trainer">
-              <div className="admins">
-                {admins.slice(0, 2).map((admin, index) => (
-                  <div
-                    className="userButton"
-                    key={index}
-                    onClick={() => handleAdminClick(admin)}
-                  >
-                    <img
-                      className="userImage"
-                      src={userImages[admin.userName] || trainer2}
-                      alt={admin.userName}
-                    />
-                    <h6 className="username">{admin.userName}</h6>
-                    <h6 className="usertype">
-                      {admin.type.charAt(0).toUpperCase() +
-                        admin.type.slice(1)}
-                    </h6>
-                  </div>
-                ))}
-              </div>
+            {/* Show Logout if Authenticated */}
+            {isAuthenticated ? (
+              <>
+                <h3 className="after-login">Welcome, {username}!</h3>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <div className="owner-trainer">
+                <div className="admins">
+                  {admins.slice(0, 2).map((admin, index) => (
+                    <div
+                      className="userButton"
+                      key={index}
+                      onClick={() => handleAdminClick(admin)}
+                    >
+                      <img
+                        className="userImage"
+                        src={userImages[admin.userName] || trainer2}
+                        alt={admin.userName}
+                      />
+                      <h6 className="username">{admin.userName}</h6>
+                      <h6 className="usertype">
+                        {admin.type.charAt(0).toUpperCase() +
+                          admin.type.slice(1)}
+                      </h6>
+                    </div>
+                  ))}
+                </div>
 
-              <div className="border"></div>
+                <div className="border"></div>
 
-              <div className="coaches">
-                {admins.slice(2).map((admin, index) => (
-                  <div
-                    className="userButton"
-                    key={index}
-                    onClick={() => handleAdminClick(admin)}
-                  >
-                    <img
-                      className="userImage"
-                      src={userImages[admin.userName] || trainer2}
-                      alt={admin.userName}
-                    />
-                    <h6 className="username">{admin.userName}</h6>
-                    <h6 className="usertype">
-                      {admin.type.charAt(0).toUpperCase() +
-                        admin.type.slice(1)}
-                    </h6>
-                  </div>
-                ))}
+                <div className="coaches">
+                  {admins.slice(2).map((admin, index) => (
+                    <div
+                      className="userButton"
+                      key={index}
+                      onClick={() => handleAdminClick(admin)}
+                    >
+                      <img
+                        className="userImage"
+                        src={userImages[admin.userName] || trainer2}
+                        alt={admin.userName}
+                      />
+                      <h6 className="username">{admin.userName}</h6>
+                      <h6 className="usertype">
+                        {admin.type.charAt(0).toUpperCase() +
+                          admin.type.slice(1)}
+                      </h6>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Password Modal */}
-      <PasswordModal
-        selectedAdmin={selectedAdmin}
-        password={password}
-        setPassword={setPassword}
-        errorMessage={errorMessage}
-        handleLogin={handleLogin}
-        onClose={() => setSelectedAdmin(null)}
-      />
+      {!isAuthenticated && (
+        <PasswordModal
+          selectedAdmin={selectedAdmin}
+          password={password}
+          setPassword={setPassword}
+          errorMessage={errorMessage}
+          handleLogin={handleLogin}
+          onClose={() => setSelectedAdmin(null)}
+        />
+      )}
     </>
   );
 }
