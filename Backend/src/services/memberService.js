@@ -1,13 +1,18 @@
 import memberModel from '../models/memberModel.js';
+import { uidGenerator } from './uniqueId.js'; // Adjust the path based on your project structure
 
-export const register = async ({ id, userName, email, birthDate, memberShip, startDate, expiryDate,
+
+export const register = async ({ userName, email, birthDate, memberShip, startDate, expiryDate,
    phoneNumber, paymentStatus, height, weight, gender, image }) => {
   try {
-    const findUser = await memberModel.findOne({ email });
+    //const findUser = await memberModel.findOne({ email });
 
-    if (findUser) {
-      return { data: "User already exists!", statusCode: 400 };
-    }
+    //if (findUser) {
+    //  return { data: "User already exists!", statusCode: 400 };
+    //}
+    
+    // Generate a unique ID
+    const id = uidGenerator();
 
     const newUser = new memberModel({
       id,

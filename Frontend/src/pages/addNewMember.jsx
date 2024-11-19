@@ -57,8 +57,8 @@ const AddNewMember = () => {
   const validateForm = () => {
     const { userName, email, birthDate, memberShip, startDate, expiryDate, phoneNumber, paymentStatus, height, weight, gender } = formData;
     if (!userName || !memberShip || !paymentStatus || !gender) return 'All fields are required.';
-    if (!/^\S+@\S+\.\S+$/.test(email)) return 'Invalid email address.';
-    if (isNaN(Number(height)) || isNaN(Number(weight))) return 'Height and Weight must be numeric values.';
+    //if (!/^\S+@\S+\.\S+$/.test(email)) return 'Invalid email address.';
+    //if (isNaN(Number(height)) || isNaN(Number(weight))) return 'Height and Weight must be numeric values.';
     return '';
   };
 

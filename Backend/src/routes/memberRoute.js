@@ -7,12 +7,10 @@ const router = express.Router();
 
 router.post("/addMember", async (request, response) => {
   try {
-    const { id, userName, email, birthDate, memberShip, startDate, expiryDate,
+    const { userName, email, birthDate, memberShip, startDate, expiryDate,
        phoneNumber, paymentStatus, height, weight, gender, image } = request.body;
-    console.log(request.body);
 
     const { statusCode, data } = await register({
-      id,
       userName,
       email,
       birthDate,

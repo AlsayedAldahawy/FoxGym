@@ -18,7 +18,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
         <div className="form-group">
           <label>Email</label>
           <input
-            type="email"
+            type="text"
             name="email"
             placeholder="Enter Email"
             className="form-control"
