@@ -18,7 +18,7 @@ const columns = [
   { id: 'paymentStatus', label: 'Payment Status', minWidth: 80, align: 'center' },
 ];
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ searchQuery }) {
   const [members, setMembers] = React.useState([]); // State to store fetched members
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -29,9 +29,12 @@ export default function StickyHeadTable() {
   React.useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/member/getAllMembers', {
-          params: { page: page + 1, rowsPerPage }, // Backend expects 1-based page index
-        });
+        const params = { 
+          page: page + 1, 
+          rowsPerPage, 
+          searchQuery: searchQuery.trim()
+        };
+        const response = await axios.get('http://localhost:5000/member/getAllMembers', { params });
         setMembers(response.data.members);
         setTotalMembers(response.data.totalMembers);
       } catch (error) {
@@ -39,9 +42,7 @@ export default function StickyHeadTable() {
       }
     };
     fetchMembers();
-  }, [page, rowsPerPage]); // Re-run when page or rowsPerPage changes
-  
-  
+  }, [page, rowsPerPage, searchQuery]); // Re-run when page or rowsPerPage changes
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

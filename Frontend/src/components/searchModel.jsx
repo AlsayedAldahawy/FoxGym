@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -55,18 +55,27 @@ const StyledButton = styled('button')({
   },
 });
 
-// Component for Search Field
-const SearchField = () => {
+const SearchField = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const handleInputChange = (e) => setSearchQuery(e.target.value);
+
+  const handleSearch = () => {
+    onSearch(searchQuery.trim());
+  };
+
   return (
     <SearchWrapper>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        value={searchQuery}
+        onChange={handleInputChange}
         placeholder="Search..."
         inputProps={{ 'aria-label': 'search' }}
       />
-      <StyledButton>Search</StyledButton>
+      <StyledButton onClick={handleSearch}>Search</StyledButton>
     </SearchWrapper>
   );
 };

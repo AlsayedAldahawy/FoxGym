@@ -33,15 +33,26 @@ router.post("/addMember", async (request, response) => {
 
 // Backend API example (Node.js/Express with Mongoose)
 router.get("/getAllMembers", async (req, res) => {
-  const { page = 1, rowsPerPage = 10 } = req.query; // Default values for page and rowsPerPage
+  const { page = 1, rowsPerPage = 10, searchQuery = '' } = req.query;
   const skip = (Number(page) - 1) * Number(rowsPerPage);
 
   try {
-    const members = await memberModel.find().skip(skip).limit(parseInt(rowsPerPage));
-    const totalMembers = await memberModel.countDocuments();
+    // Use searchQuery to filter members by name or any other field
+    const members = await memberModel
+      .find({ userName: { $regex: searchQuery, $options: 'i' } }) // case-insensitive search
+      .skip(skip)
+      .limit(parseInt(rowsPerPage));
+    
+    const totalMembers = await memberModel.countDocuments({
+      userName: { $regex: searchQuery, $options: 'i' },
+    });
 
-    res.json({ members, totalMembers });
-
+    // If no members found, return empty array and total count 0
+    if (members.length === 0) {
+      res.json({ members: [], totalMembers: 0 });
+    } else {
+      res.json({ members, totalMembers });
+    }
   } catch (error) {
     res.status(500).json({ error: 'Error fetching members' });
   }
