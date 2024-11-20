@@ -37,14 +37,24 @@ router.get("/getAllMembers", async (req, res) => {
   const skip = (Number(page) - 1) * Number(rowsPerPage);
 
   try {
-    // Use searchQuery to filter members by name or any other field
+    // Use regex to perform a case-insensitive search across `username`, `id`, and `phoneNumber`
     const members = await memberModel
-      .find({ userName: { $regex: searchQuery, $options: 'i' } }) // case-insensitive search
+      .find({
+        $or: [
+          { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
+          { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
+          { phoneNumber: { $regex: searchQuery, $options: 'i' } } // Search by phoneNumber
+        ]
+      })
       .skip(skip)
       .limit(parseInt(rowsPerPage));
     
     const totalMembers = await memberModel.countDocuments({
-      userName: { $regex: searchQuery, $options: 'i' },
+      $or: [
+        { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
+        { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
+        { phoneNumber: { $regex: searchQuery, $options: 'i' } } // Search by phoneNumber
+      ]
     });
 
     // If no members found, return empty array and total count 0

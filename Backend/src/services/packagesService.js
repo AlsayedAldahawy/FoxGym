@@ -30,7 +30,7 @@ export const seedInitialPackages = async () => {
       {
         id: "5",
         packageName: "half-month",
-        numberOfDays: 12,
+        numberOfDays: 30,
       },
     ];
 

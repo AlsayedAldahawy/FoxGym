@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 const columns = [
   { id: 'userName', label: 'Name', minWidth: 120 },
   { id: 'id', label: 'Id', minWidth: 80 },
+  { id: 'phoneNumber', label: 'Phone', minWidth: 80, align: 'center' },
   { id: 'gender', label: 'Gender', minWidth: 80, align: 'center' },
   { id: 'memberShip', label: 'Membership Package', minWidth: 80, align: 'center' },
   { id: 'expiryDate', label: 'Expiry Date', minWidth: 80, align: 'center' },
