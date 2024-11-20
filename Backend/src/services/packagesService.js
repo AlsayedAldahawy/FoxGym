@@ -9,27 +9,27 @@ export const seedInitialPackages = async () => {
     const packages = [
       {
         id: "1",
-        packageName: "year",
+        packageName: "Annual",
         numberOfDays: 365,
       },
       {
         id: "2",
-        packageName: "half-year",
+        packageName: "Semi-annual",
         numberOfDays: 183,
       },
       {
         id: "3",
-        packageName: "quarter-year",
+        packageName: "Quarterly",
         numberOfDays: 91,
       },
       {
         id: "4",
-        packageName: "month",
+        packageName: "Monthly",
         numberOfDays: 30,
       },
       {
         id: "5",
-        packageName: "half-month",
+        packageName: "Semi-monthly",
         numberOfDays: 30,
       },
     ];

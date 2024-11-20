@@ -45,7 +45,6 @@ const StyledButton = styled('button')({
   border: 'none',
   padding: '12px 20px',
   fontWeight: 'bold',
-  borderRadius: '0 15px 15px 0', // Match the border radius of the wrapper
   cursor: 'pointer',
   '&:hover': {
     backgroundColor: '#d04c36',

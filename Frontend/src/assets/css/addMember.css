@@ -1,193 +1,224 @@
 /* Style for the form container */
+.background img{
+    position: fixed;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    filter:saturate(.7);
+
+}
 .form-container {
-    width: 55%; /* Increased form width */
-    transition: border 0.3s ease;
+
+    color: aliceblue;
+  width: 100%;
+  max-width: 600px; /* Limit maximum width of the form */
+  padding: 3rem;
+  margin: 0 auto; /* Center the form */
+  transform: translate(0, 100px);
+  width: 55%; /* Increased form width */
+  transition: border 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 2%;
+  backdrop-filter: blur(10px)
+}
+
+.required {
+  color: #ed563b;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .btn-signin {
-    background-color: #ed563b;;
-    color: aliceblue;
-    border: 1px solid #ed563b;
-    border-radius: 10px;
-    height: 50px;
-    width: 400px;
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 180px;
-    transition: background-color 0.3s ease; /* Smooth transition */
-    display: block; /* Ensures it behaves as a block element */
-    box-sizing: border-box; /* Includes padding and border in the width/height calculations */
+  background-color: #ed563b;
+  color: aliceblue;
+  border: 1px solid #ed563b;
+  border-radius: 10px;
+  height: 50px;
+  width: 400px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 180px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+  display: block; /* Ensures it behaves as a block element */
+  box-sizing: border-box; /* Includes padding and border in the width/height calculations */
 }
 
 .btn-signin:hover {
-    background-color: #ed563b; /* Darker shade of red */
-    cursor: pointer; /* Changes cursor to pointer on hover */
+  background-color: #ed563b; /* Darker shade of red */
+  cursor: pointer; /* Changes cursor to pointer on hover */
 }
 
-.bg-image {
-    background-image: url('../images/cover3.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }  
+/* #signup {
+  display: flex;
+  justify-content: center;
+} */
 
-.mb-5{
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 25px; /* Adjust margin between the rows */
-}
-
-#signup {
-    display: flex;
-    justify-content: center;
-}
-
-.text-danger, .text-success{
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
+.text-danger,
+.text-success {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
 }
 
 /* In addMember.css */
 .vh-100 {
-    height: auto !important; /* Overrides the Bootstrap .vh-100 */
+  height: auto !important; /* Overrides the Bootstrap .vh-100 */
 }
 
 .text-center {
-    margin-top: 65px;
-    margin-bottom: 50px;
-    font-weight: bold;
-    font-size: 40px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-weight: bold;
+  font-size: 40px;
 }
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px; /* space between columns */
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* space between columns */
 }
-  
+
 .col {
-    flex: 1;
-    min-width: 45%; /* Adjusts the column width */
+  flex: 1;
+  min-width: 45%; /* Adjusts the column width */
 }
 
 .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .form-group {
-    flex: 1 1 45%; /* Makes each input take up 45% of the width */
-    margin-bottom: 15px;
+  flex: 1 1 45%; /* Makes each input take up 45% of the width */
+  margin-bottom: 15px;
 }
 
 .custom-check {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 25px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 25px;
+}
+
+.extra-fields{
+    display: none;
+}
+
+.extra-fields-button {
+  fill: #ed563b;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.extra-fields-button svg {
+  width: 50px;
+  fill: #ed563b;
+  transition: all 1s;
+}
+
+
+.click-animation svg {
+  transform: rotate(180deg);
 }
 
 @media screen and (max-width: 1000px) {
-    .form-container {
-        width: 50%; /* Adjust for medium screens */
-    }
+  .form-container {
+    width: 50%; /* Adjust for medium screens */
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .form-container {
-        width: 75%; /* Adjust for small screens */
-    }
-    .row {
-        flex-direction: column; /* Stack fields vertically on smaller screens */
-      }
-    
-      .col {
-        min-width: 100%; /* Make columns take full width on small screens */
-      }
+  .form-container {
+    width: 75%; /* Adjust for small screens */
+  }
+  .row {
+    flex-direction: column; /* Stack fields vertically on smaller screens */
+  }
+
+  .col {
+    min-width: 100%; /* Make columns take full width on small screens */
+  }
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
-    .btn-signin {
-        font-size: 18px; /* Slightly smaller font on tablets */
-        height: 45px;  /* Slightly smaller height on tablets */
-    }
+  .btn-signin {
+    font-size: 18px; /* Slightly smaller font on tablets */
+    height: 45px; /* Slightly smaller height on tablets */
+  }
 }
 
 @media (max-width: 480px) {
-    .btn-signin {
-        font-size: 16px; /* Even smaller font on small screens */
-        height: 40px;  /* Smaller height on mobile screens */
-        width: 90%; /* Makes the button width smaller on mobile devices */
-    }
+  .btn-signin {
+    font-size: 16px; /* Even smaller font on small screens */
+    height: 40px; /* Smaller height on mobile screens */
+    width: 90%; /* Makes the button width smaller on mobile devices */
+  }
 }
 
 /* Increase width and height of input fields */
 .form-control {
-    width: 100%; /* Make the fields take up the full width of the container */
-    height: 45px; /* Increase the height of input fields */
-    padding: 10px; /* Adjust padding for better spacing inside the input */
-    font-size: 16px; /* Increase font size for better readability */
+  width: 100%; /* Make the fields take up the full width of the container */
+  height: 45px; /* Increase the height of input fields */
+  padding: 10px; /* Adjust padding for better spacing inside the input */
+  font-size: 16px; /* Increase font size for better readability */
 }
 
 /* Optional: You can also adjust the width of the form-container for large screens */
 
-
 /* Adjust form fields on smaller screens */
 @media screen and (max-width: 1000px) {
-    .form-container {
-        width: 50%; /* Adjust for medium screens */
-    }
+  .form-container {
+    width: 50%; /* Adjust for medium screens */
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .form-container {
-        width: 75%; /* Adjust for small screens */
-    }
-    
-    /* Adjust the input fields' size on small screens */
-    .form-control {
-        height: 50px; /* Increase height of input fields on smaller screens */
-        font-size: 18px; /* Adjust font size for better readability */
-    }
+  .form-container {
+    width: 75%; /* Adjust for small screens */
+  }
+
+  /* Adjust the input fields' size on small screens */
+  .form-control {
+    height: 50px; /* Increase height of input fields on smaller screens */
+    font-size: 18px; /* Adjust font size for better readability */
+  }
 }
 
 .btn-signin {
-    background-color: #ed563b;
-    color: aliceblue;
-    border: 1px solid #ed563b;
-    border-radius: 10px;
-    height: 50px;
-    width: 100%; /* Full width by default */
-    max-width: 400px; /* Limit maximum width */
-    font-weight: bold;
-    font-size: 20px;
-    margin: 20px auto; /* Center horizontally and add top-bottom margin */
-    transition: background-color 0.3s ease;
-    display: block;
-    box-sizing: border-box;
-    text-align: center; /* Center text alignment */
+  background-color: #ed563b;
+  color: aliceblue;
+  border: 1px solid #ed563b;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%; /* Full width by default */
+  max-width: 400px; /* Limit maximum width */
+  font-weight: bold;
+  font-size: 20px;
+  margin: 20px auto; /* Center horizontally and add top-bottom margin */
+  transition: background-color 0.3s ease;
+  display: block;
+  box-sizing: border-box;
+  text-align: center; /* Center text alignment */
 }
 
 @media (max-width: 768px) {
-    .btn-signin {
-        font-size: 18px; /* Adjust font size for tablets */
-        height: 45px; /* Slightly reduce height */
-    }
+  .btn-signin {
+    font-size: 18px; /* Adjust font size for tablets */
+    height: 45px; /* Slightly reduce height */
+  }
 }
 
 @media (max-width: 480px) {
-    .btn-signin {
-        font-size: 16px; /* Adjust font size for mobile */
-        height: 40px; /* Further reduce height */
-        width: 90%; /* Reduce width for smaller screens */
-        max-width: none; /* Disable max-width for mobile */
-    }
-}
-.form-container {
-    width: 100%;
-    max-width: 600px; /* Limit maximum width of the form */
-    padding: 20px;
-    margin: 0 auto; /* Center the form */
+  .btn-signin {
+    font-size: 16px; /* Adjust font size for mobile */
+    height: 40px; /* Further reduce height */
+    width: 90%; /* Reduce width for smaller screens */
+    max-width: none; /* Disable max-width for mobile */
+  }
 }

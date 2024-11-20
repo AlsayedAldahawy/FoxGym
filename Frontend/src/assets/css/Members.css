@@ -1,18 +1,23 @@
 .members-container {
-    margin-top: 100px;
+  transform: translate(0, 100px);
+
 }
 
 .header {
     text-align: center;
     font-size: 45px;
     font-weight: bold;
-    margin-bottom: 20px;
+    /* background-color: #000000; */
+
+    /* margin-bottom: 20px; */
 }
 
 .header-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    /* background-color: #000000; */
+
   }
   
   .add-member-btn {
@@ -29,4 +34,18 @@
   .add-member-btn:hover {
     background-color: #45a049;
   }
-  
+.background_members{
+  z-index: -10;
+  top:0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.background_members img{
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  filter:saturate(.7);
+}

@@ -48,7 +48,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (!selectedAdmin || !password) {
-      setErrorMessage("Please select an admin and enter a password.");
+      setErrorMessage("Please select a user and enter the password to login.");
       return;
     }
     try {
@@ -69,7 +69,7 @@ export default function Login() {
           setErrorMessage("Invalid response from server.");
         }
       } else {
-        setErrorMessage(result.message || "Incorrect email or password!");
+        setErrorMessage(result.message || "Incorrect password! Try again.");
       }
     } catch (error) {
       setErrorMessage("Something went wrong!");

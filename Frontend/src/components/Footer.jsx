@@ -9,7 +9,7 @@ const Footer = () => {
       <footer>
         <div className="social-media">
           <div className="shadow"></div>
-          <a href="https://www.facebook.com" target="_blank">
+          <a href="https://www.facebook.com/profile.php?id=100075962621680&mibextid=kFxxJD" target="_blank">
             <div className="social-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
