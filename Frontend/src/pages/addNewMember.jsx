@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MemberFormInputs from "../components/MemberFormInputs.jsx"; // Import the new MemberFormInputs component
 import "../assets/css/addMember.css";
-import bg from "../assets/images/backgrounds/bg_add_member.jpg"
+import bg from "../assets/images/backgrounds/bg_add_member.jpg";
 const AddNewMember = () => {
-  
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -108,7 +107,7 @@ const AddNewMember = () => {
       setIsSubmitting(true);
       setSuccess("New member added successfully!");
 
-      setTimeout(() => navigate("/members"), 3000);
+      setTimeout(() => navigate("/members"), 2000);
     } catch (error) {
       console.error("API Error:", error);
       setError("Something went wrong. Please try again.");
@@ -130,8 +129,12 @@ const AddNewMember = () => {
             packages={packages}
           />
           <div className="d-grid">
-            <button type="submit" disabled={isSubmitting} className="btn-signin">
-            {isSubmitting ? "Submitting..." : "Add Member"}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-signin"
+            >
+              {isSubmitting ? "Submitting..." : "Add Member"}
             </button>
           </div>
           {error && <p className="text-danger">{error}</p>}

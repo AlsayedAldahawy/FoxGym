@@ -9,8 +9,7 @@
 }
 .form-container {
 
-    color: aliceblue;
-  width: 100%;
+  color: aliceblue;
   max-width: 600px; /* Limit maximum width of the form */
   padding: 3rem;
   margin: 0 auto; /* Center the form */

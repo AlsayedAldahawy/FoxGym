@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/addMember", async (request, response) => {
   try {
     const { userName, email, birthDate, memberShip, startDate, expiryDate,
-       phoneNumber, paymentStatus, height, weight, gender, image } = request.body;
+      phoneNumber, paymentStatus, height, weight, gender, image } = request.body;
 
     const { statusCode, data } = await register({
       userName,
@@ -48,7 +48,7 @@ router.get("/getAllMembers", async (req, res) => {
       })
       .skip(skip)
       .limit(parseInt(rowsPerPage));
-    
+
     const totalMembers = await memberModel.countDocuments({
       $or: [
         { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
@@ -65,6 +65,20 @@ router.get("/getAllMembers", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: 'Error fetching members' });
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const member = await memberModel.findOne({ id: id });
+    if (!member) {
+      return null; // Return null if the member is not found
+    }
+    res.status(201).json(member); // Return the member's data
+  } catch (error) {
+    console.error("Error fetching member by ID:", error);
+    throw new Error("Database error"); // Throw an error to be caught in the route
   }
 });
 

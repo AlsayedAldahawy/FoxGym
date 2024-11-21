@@ -13,6 +13,7 @@ import Footer from "./components/Footer"
 import AddNewMember from "./pages/addNewMember"
 import AuthProvider from "./context/AuthContext"; // Update path as per your project
 import ProtectedRoute from "./components/protectedRoute"; // Update path as per your project
+import MemberPage from "./components/MemberPage"
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="/members" element={<Members />} />
             <Route path="/add-new-member" element={<AddNewMember />} />
+            <Route path="/member/:id" element={<MemberPage />} />
           </Route>
           <Route path="/owner" element={< Owner/>} />
           <Route path="/trainer" element={< Trainer />} />

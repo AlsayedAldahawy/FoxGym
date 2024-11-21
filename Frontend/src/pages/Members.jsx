@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import StickyHeadTable from "../components/MembersTable"; // Adjust path if needed
+import StickyHeadTable from "../components/MembersTable";
 import "../assets/css/Members.css"; 
 import SearchField from "../components/searchModel";
 import bg from "../assets/images/backgrounds/bg_add_member.jpg"

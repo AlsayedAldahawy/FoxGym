@@ -1,0 +1,87 @@
+/* .member-page {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #284c66;
+} */
+
+.member-card {
+    width: 90%;
+    max-width: 800px;
+    padding: 3rem;
+    margin: 0 auto;
+    transform: translate(0, 200px);
+    /* width: 55%; */
+    transition: border 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 2%;
+    backdrop-filter: blur(10px);
+}
+
+.member-pic{
+    background-color: rebeccapurple;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    transform: translateY(-130px);
+
+}
+
+.member-not-found {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: #e7dcc0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.sad-fox {
+  max-width: fit-content;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 10px;
+}
+
+.sad-fox img {
+  width: 300px;
+}
+
+.four-0-4 h1 {
+  max-width: fit-content;
+  color: #284c66;
+  font-size: 60px;
+  justify-self: center;
+  margin-bottom: 5px;
+  justify-content: center;
+}
+
+.four-0-4 p {
+  max-width: fit-content;
+  color: #284c66;
+  font-size: 20px;
+  justify-self: center;
+}
+
+.fox-gym-logo{
+    max-width: fit-content;
+    margin: 20px;
+}
+
+.fox-gym-logo img{
+    width: 100px;
+}

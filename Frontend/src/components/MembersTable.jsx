@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { Link } from 'react-router-dom';
 
 const columns = [
   { id: 'userName', label: 'Name', minWidth: 120 },
@@ -76,7 +77,7 @@ export default function StickyHeadTable({ searchQuery }) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {value || 'N/A'}
+                          <Link to={`/member/${row.id}`}>{value || 'N/A'}</Link>
                         </TableCell>
                       );
                     })}
