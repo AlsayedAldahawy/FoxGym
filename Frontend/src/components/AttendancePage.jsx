@@ -44,7 +44,7 @@ const AttendancePage = () => {
       // Optionally, update the state with the new attendance count if returned
       setMembers((prevMembers) =>
         prevMembers.map((member) =>
-          member.id === id ? { ...member, attendance: member.attendance + 1 } : member
+          member.id === id ? { ...member, session: member.session + 1 } : member
         )
       );
     } catch (error) {
@@ -60,7 +60,7 @@ const AttendancePage = () => {
       {Array.isArray(members) &&
         members.map((member) => (
           <div key={member.id}>
-            <p>{member.userName} - Attendance: {member.attendance}</p>
+            <p>{member.userName} - Attendance: {member.session}</p>
             <button onClick={() => markAttendance(member.id)}>Mark Attendance</button>
           </div>
         ))}

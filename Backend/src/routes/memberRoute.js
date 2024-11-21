@@ -2,6 +2,7 @@ import express from "express";
 import { register } from "../services/memberService.js";
 import memberModel from '../models/memberModel.js';
 import { checkMembershipStatus } from '../utils/checkMembershipStatus.js';
+import moment from 'moment';
 
 const router = express.Router();
 
@@ -101,8 +102,11 @@ router.post('/attendance', async (req, res) => {
       });
     }
 
-    // Increment attendance
-    member.attendance += 1;
+
+    // Add today's date to the sessions array
+    const today = moment().format('YYYY-MM-DD');
+    member.session.push(today);
+
 
     // Update status after attendance
     const newStatus = checkMembershipStatus(member);
@@ -136,7 +140,7 @@ router.post('/takeAttendance/:id', async (req, res) => {
     }
 
     // Increment attendance
-    member.attendance += 1;
+    member.session += 1;
 
     // Update status based on attendance and expiry
     member.status = checkMembershipStatus(member);
@@ -161,7 +165,7 @@ router.post('/resetAttendance/:id', async (req, res) => {
       return res.status(404).json({ message: 'Member not found' });
     }
 
-    member.attendance = 0;
+    member.session = 0;
     member.status = 'active';
 
     await member.save();

@@ -16,7 +16,8 @@ const memberSchema = new Schema({
     weight: { type: Number },
     image: { type: String },
     status: { type: String, default: 'active' }, // 'active' or 'inactive'
-    attendance: { type: Number, default: 0 }, // Tracks number of days attended
+    session: { type: [String], default: [] }, // Array of session dates
+    attentanceMatrix: { type: String, default: 0 },
 })
 
 const memberModel = mongoose.model('Members', memberSchema);
