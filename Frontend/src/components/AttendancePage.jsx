@@ -13,6 +13,7 @@ const AttendancePage = () => {
         setMembers(Array.isArray(data.members) ? data.members : []); // Ensure it's an array of members
       } catch (error) {
         console.error('Error fetching members:', error);
+        setMessage('Error fetching members. Please try again.');
       }
     };
 
@@ -40,16 +41,18 @@ const AttendancePage = () => {
       }
 
 
-      setMessage(`Attendance marked for member ID: ${id}`);
-      // Optionally, update the state with the new attendance count if returned
+      setMessage(`Attendance marked for ${data.member.userName} on ${new Date().toLocaleDateString()}`);
+      // Update the state with the new attendance array
       setMembers((prevMembers) =>
         prevMembers.map((member) =>
-          member.id === id ? { ...member, session: member.session + 1 } : member
+          member.id === id
+            ? { ...member, session: [...member.session, new Date().toISOString()] }
+            : member
         )
       );
     } catch (error) {
       console.error('Error marking attendance:', error);
-      setMessage('Something went wrong.');
+      setMessage('Something went wrong. Please try again later.');
     }
   };
 
@@ -60,7 +63,9 @@ const AttendancePage = () => {
       {Array.isArray(members) &&
         members.map((member) => (
           <div key={member.id}>
-            <p>{member.userName} - Attendance: {member.session}</p>
+            <p>
+              {member.userName} - Attendance: {member.session?.length || 0}
+            </p>
             <button onClick={() => markAttendance(member.id)}>Mark Attendance</button>
           </div>
         ))}
