@@ -126,46 +126,19 @@ router.post('/attendance', async (req, res) => {
 });
 
 
-
-
-
-router.post('/takeAttendance/:id', async (req, res) => {
-  const { id } = req.params;
+// Reset member's attendance and status
+router.post('/resetAttendance', async (req, res) => {
+  const { id } = req.body;
 
   try {
-    const member = await memberModel.findById(id);
+    const member = await memberModel.findOne({ id });
 
     if (!member) {
       return res.status(404).json({ message: 'Member not found' });
     }
 
-    // Increment attendance
-    member.session += 1;
-
-    // Update status based on attendance and expiry
-    member.status = checkMembershipStatus(member);
-
-    await member.save();
-
-    res.status(200).json({ message: 'Attendance recorded successfully', member });
-  } catch (error) {
-    console.error('Error taking attendance:', error);
-    res.status(500).json({ error: 'Failed to record attendance' });
-  }
-});
-
-
-router.post('/resetAttendance/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const member = await memberModel.findById(id);
-
-    if (!member) {
-      return res.status(404).json({ message: 'Member not found' });
-    }
-
-    member.session = 0;
+    // Reset the attendance and status
+    member.session = [];
     member.status = 'active';
 
     await member.save();
@@ -173,10 +146,9 @@ router.post('/resetAttendance/:id', async (req, res) => {
     res.status(200).json({ message: 'Attendance reset successfully', member });
   } catch (error) {
     console.error('Error resetting attendance:', error);
-    res.status(500).json({ error: 'Failed to reset attendance' });
+    res.status(500).json({ message: 'Error resetting attendance' });
   }
 });
-
 
 
 export default router;

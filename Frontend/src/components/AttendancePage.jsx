@@ -20,6 +20,37 @@ const AttendancePage = () => {
     fetchMembers();
   }, []);
 
+  const resetAttendance = async (id) => {
+    try {
+      const response = await fetch('http://localhost:5000/member/resetAttendance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage(data.message || 'Error resetting attendance.');
+        return;
+      }
+
+      setMessage(`Attendance reset for ${data.member.userName}`);
+      
+      // Update the state
+      setMembers((prevMembers) =>
+        prevMembers.map((member) =>
+          member.id === id
+            ? { ...member, session: [], status: 'active' }
+            : member
+        )
+      );
+    } catch (error) {
+      console.error('Error resetting attendance:', error);
+      setMessage('Something went wrong. Please try again later.');
+    }
+  };
+
   const markAttendance = async (id) => {
     try {
       const response = await fetch('http://localhost:5000/member/attendance', {
@@ -64,9 +95,12 @@ const AttendancePage = () => {
         members.map((member) => (
           <div key={member.id}>
             <p>
-              {member.userName} - Attendance: {member.session?.length || 0}
+              {member.userName} - Attendance: {member.session?.length || 0} - Status: {member.status}
             </p>
             <button onClick={() => markAttendance(member.id)}>Mark Attendance</button>
+            <button onClick={() => resetAttendance(member.id)} style={{ marginLeft: '10px' }}>
+              Reset
+            </button>
           </div>
         ))}
     </div>
