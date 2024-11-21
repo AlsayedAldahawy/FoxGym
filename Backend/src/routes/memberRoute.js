@@ -150,5 +150,30 @@ router.post('/resetAttendance', async (req, res) => {
   }
 });
 
+// Remove the latest attendance mark
+router.post('/unattend', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const member = await memberModel.findOne({ id });
+
+    if (!member) {
+      return res.status(404).json({ message: 'Member not found' });
+    }
+
+    // Remove the last attendance date
+    if (member.session.length > 0) {
+      member.session.pop(); // Remove the last session
+      await member.save();
+      return res.status(200).json({ message: 'Attendance removed successfully', member });
+    }
+
+    return res.status(400).json({ message: 'No attendance to remove.' });
+  } catch (error) {
+    console.error('Error removing attendance:', error);
+    res.status(500).json({ message: 'Error removing attendance' });
+  }
+});
+
 
 export default router;

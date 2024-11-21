@@ -9,7 +9,6 @@ import Login from "./pages/Login";
 import Home from "./components/Home";
 import Owner from "./components/Owner";
 import Trainer from "./components/Trainer";
-import Footer from "./components/Footer"
 import AddNewMember from "./pages/addNewMember"
 import AuthProvider from "./context/AuthContext"; // Update path as per your project
 import ProtectedRoute from "./components/protectedRoute"; // Update path as per your project
@@ -34,7 +33,6 @@ const App = () => {
           <Route path="/owner" element={< Owner/>} />
           <Route path="/trainer" element={< Trainer />} />
         </Routes>
-        <Footer />
       </Router>
     </AuthProvider>
   );
