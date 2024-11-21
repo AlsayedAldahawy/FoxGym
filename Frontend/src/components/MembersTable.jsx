@@ -18,6 +18,7 @@ const columns = [
   { id: 'memberShip', label: 'Membership Package', minWidth: 80, align: 'center' },
   { id: 'expiryDate', label: 'Expiry Date', minWidth: 80, align: 'center' },
   { id: 'paymentStatus', label: 'Payment Status', minWidth: 80, align: 'center' },
+  { id: 'status', label: 'Status', minWidth: 80, align: 'center' }, // New column
 ];
 
 export default function StickyHeadTable({ searchQuery }) {

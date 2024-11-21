@@ -14,7 +14,9 @@ const memberSchema = new Schema({
     phoneNumber: { type: String },
     height: { type: Number },
     weight: { type: Number },
-    image: { type: String }
+    image: { type: String },
+    status: { type: String, default: 'active' }, // 'active' or 'inactive'
+    attendance: { type: Number, default: 0 }, // Tracks number of days attended
 })
 
 const memberModel = mongoose.model('Members', memberSchema);

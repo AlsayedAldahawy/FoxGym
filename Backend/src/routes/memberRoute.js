@@ -1,7 +1,7 @@
 import express from "express";
 import { register } from "../services/memberService.js";
 import memberModel from '../models/memberModel.js';
-
+import { checkMembershipStatus } from '../utils/checkMembershipStatus.js';
 
 const router = express.Router();
 
@@ -81,6 +81,98 @@ router.get('/:id', async (req, res) => {
     throw new Error("Database error"); // Throw an error to be caught in the route
   }
 });
+
+// Mark attendance for a member
+router.post('/attendance', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const member = await memberModel.findOne({ id });
+
+    if (!member) {
+      return res.status(404).json({ message: 'Member not found' });
+    }
+
+    // Check current membership status before incrementing attendance
+    const currentStatus = checkMembershipStatus(member);
+    if (currentStatus === 'inactive') {
+      return res.status(403).json({ 
+        message: 'Member cannot attend further. Either the package has expired or the max attendance has been reached.' 
+      });
+    }
+
+    // Increment attendance
+    member.attendance += 1;
+
+    // Update status after attendance
+    const newStatus = checkMembershipStatus(member);
+    if (member.status !== newStatus) {
+      member.status = newStatus; // Only update if status has changed
+    }
+
+    // Save member with updated attendance and status
+    await member.save();
+
+    // Send updated member back to client
+    res.status(200).json({ message: 'Attendance marked successfully', member });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error updating attendance' });
+  }
+});
+
+
+
+
+
+router.post('/takeAttendance/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const member = await memberModel.findById(id);
+
+    if (!member) {
+      return res.status(404).json({ message: 'Member not found' });
+    }
+
+    // Increment attendance
+    member.attendance += 1;
+
+    // Update status based on attendance and expiry
+    member.status = checkMembershipStatus(member);
+
+    await member.save();
+
+    res.status(200).json({ message: 'Attendance recorded successfully', member });
+  } catch (error) {
+    console.error('Error taking attendance:', error);
+    res.status(500).json({ error: 'Failed to record attendance' });
+  }
+});
+
+
+router.post('/resetAttendance/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const member = await memberModel.findById(id);
+
+    if (!member) {
+      return res.status(404).json({ message: 'Member not found' });
+    }
+
+    member.attendance = 0;
+    member.status = 'active';
+
+    await member.save();
+
+    res.status(200).json({ message: 'Attendance reset successfully', member });
+  } catch (error) {
+    console.error('Error resetting attendance:', error);
+    res.status(500).json({ error: 'Failed to reset attendance' });
+  }
+});
+
 
 
 export default router;
