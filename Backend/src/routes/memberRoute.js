@@ -206,5 +206,28 @@ router.delete('/delete', async (req, res) => {
   }
 });
 
+router.post('/changePackage', async (req, res) => {
+  const { id, newPackage } = req.body;
+
+  try {
+    // Update the member's package
+    const result = await memberModel.updateOne({ id }, { $set: { memberShip: newPackage } });
+
+    if (result.modifiedCount === 0) {
+      // If no documents were modified, respond with 404
+      return res.status(404).json({ message: "Member not found or package already set to this value." });
+    }
+
+    // Respond with success if the package was updated
+    res.status(200).json({ message: "Package updated successfully." });
+  } catch (error) {
+    console.error("Error updating package:", error);
+
+    // Catch errors and send a server error response
+    res.status(500).json({ message: "Error updating package." });
+  }
+});
+
+
 
 export default router;

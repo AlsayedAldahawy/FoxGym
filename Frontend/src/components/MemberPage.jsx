@@ -14,6 +14,9 @@ function MemberPage() {
   const [member, setMember] = useState(null);
   const [message, setMessage] = useState("");
   const [marked, setMarked] = useState(false);
+  const [packages, setPackages] = useState([]);
+  const [selectedPackage, setSelectedPackage] = useState("");
+
 
   useEffect(() => {
     const fetchMember = async () => {
@@ -43,6 +46,19 @@ function MemberPage() {
 
     return () => clearInterval(timer); // Cleanup on component unmount
   }, [member]);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/packages");
+        setPackages(response.data);
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      }
+    };
+    fetchPackages();
+  }, []);
+  
 
   const toggleAttendance = async () => {
     if (!member) return;
@@ -134,6 +150,32 @@ function MemberPage() {
       setMessage("Something went wrong.");
     }
   };
+
+  const handlePackageChange = async (e) => {
+    const newPackage = e.target.value;
+    setSelectedPackage(newPackage);
+  
+    try {
+      const response = await axios.post("http://localhost:5000/member/changePackage", {
+        id: member.id,
+        newPackage,
+      });
+  
+      if (response.status === 200) {
+        setMessage("Package changed successfully.");
+        setMember((prevMember) => ({
+          ...prevMember,
+          memberShip: newPackage,
+        }));
+      } else {
+        setMessage(response.data.message || "Error changing package.");
+      }
+    } catch (error) {
+      console.error("Error changing package:", error);
+      setMessage("Something went wrong.");
+    }
+  };
+  
   
 
   if (!member) {
@@ -163,6 +205,8 @@ function MemberPage() {
           />
           <h6>{member.id}</h6>
           <h6>{member.userName}</h6>
+          <h6>{member.memberShip ? `Package: ${member.memberShip}` : "No package selected"}</h6>
+
         </div>
 
         <div className="manage-member">
@@ -203,7 +247,22 @@ function MemberPage() {
 
           {/* Change Plan Placeholder */}
           <div className="renew">
-            <button>Change Package</button>
+            <div className="change-package">
+              <select
+                value={selectedPackage}
+                onChange={handlePackageChange}
+                style={{ padding: "10px", marginTop: "10px" }}
+              >
+                <option value="" disabled>
+                  Select a new package
+                </option>
+                {packages.map((pkg) => (
+                  <option key={pkg.id} value={pkg.packageName}>
+                    {pkg.packageName} - {pkg.numberOfDays} days
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>
