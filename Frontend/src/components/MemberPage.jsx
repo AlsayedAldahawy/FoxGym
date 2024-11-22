@@ -225,12 +225,8 @@ function MemberPage() {
             src={`${member.gender === "Male" ? defMale : defFemale}`}
             alt=""
           />
-          <h6>{member.id}</h6>
-          <h6>{member.userName}</h6>
-          <h6>{member.memberShip ? `Package: ${member.memberShip}` : "No package selected"}</h6>
-
+          <h6 className="member-id">{member.id}</h6>
         </div>
-
         <div className="manage-member">
           {/* Mark Attendance Button */}
           <div className="attendance-button">
@@ -295,6 +291,10 @@ function MemberPage() {
               Delete Member
             </button>
           </div>
+        </div>
+        <div className="member-info">
+        <h6>{member.userName}</h6>
+        <h6>{member.memberShip ? `Package: ${member.memberShip}` : "No package selected"}</h6>
         </div>
       </div>
     </>

@@ -78,7 +78,9 @@ export default function StickyHeadTable({ searchQuery }) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          <Link to={`/member/${row.id}`}>{value || 'N/A'}</Link>
+                          <Link to={`/member/${row.id}`}>
+                          <span className={`${value == 'active' ? "active-status" : value == 'inactive' ? "inactive-status" :""}`}>{value || 'N/A'}</span>
+                          </Link>
                         </TableCell>
                       );
                     })}

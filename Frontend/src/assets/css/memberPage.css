@@ -22,6 +22,12 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     border-radius: 2%;
     backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -34,11 +40,9 @@
     justify-content: center;
     justify-items: center;
     align-items: center;
-}
+    margin-bottom: 20px;
+    margin-right: 500px;
 
-.member-pic h6{
-    font-size: large;
-    font-weight: bold;
 }
 
 .member-pic img{
@@ -52,6 +56,29 @@
     align-items: center;
 }
 
+.member-info{
+  width: fit-content;
+    height: fit-content;
+    transform: translateY(-130px);
+
+    border-radius: 50%;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin: 20px
+}
+
+.manage-member{
+  width: fit-content;
+    height: fit-content;
+    transform: translateY(-130px);
+
+    border-radius: 50%;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin:20px
+}
 button{
     border-radius: 10px;
     color: white;
@@ -119,4 +146,18 @@ button{
 
 .change-package-disabled {
   opacity: 50%;
+}
+
+.member-id {
+  margin: 5px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.active-status{
+  color: green;
+}
+
+.inactive-status{
+  color: red;
 }
