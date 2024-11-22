@@ -106,6 +106,7 @@ router.post('/attendance', async (req, res) => {
     // Add today's date to the sessions array
     const today = moment().format('YYYY-MM-DD');
     member.session.push(today);
+    member.attentanceMatrix.push(today);
 
 
     // Update status after attendance
@@ -164,6 +165,7 @@ router.post('/unattend', async (req, res) => {
     // Remove the last attendance date
     if (member.session.length > 0) {
       member.session.pop(); // Remove the last session
+      member.attentanceMatrix.pop(); // Remove the last session from matrix
       await member.save();
       return res.status(200).json({ message: 'Attendance removed successfully', member });
     }

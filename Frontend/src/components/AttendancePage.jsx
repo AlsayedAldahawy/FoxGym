@@ -48,7 +48,7 @@ const AttendancePage = () => {
       // Reset the button after 2 minutes
       setTimeout(() => {
         setMarkedMembers((prev) => ({ ...prev, [id]: false }));
-      }, 120000);
+      }, 6000);
 
       // Update attendance in the UI
       setMembers((prevMembers) =>
@@ -133,7 +133,7 @@ const AttendancePage = () => {
             <button
               onClick={() => resetAttendance(member.id)}
               style={{
-                backgroundColor: "blue",
+                backgroundColor: "#ed563b",
                 color: "white",
                 padding: "8px 16px",
                 border: "none",

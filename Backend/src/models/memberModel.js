@@ -17,7 +17,7 @@ const memberSchema = new Schema({
     image: { type: String },
     status: { type: String, default: 'active' }, // 'active' or 'inactive'
     session: { type: [String], default: [] }, // Array of session dates
-    attentanceMatrix: { type: String, default: 0 },
+    attentanceMatrix: { type: [String], default: [] },
 })
 
 const memberModel = mongoose.model('Members', memberSchema);
