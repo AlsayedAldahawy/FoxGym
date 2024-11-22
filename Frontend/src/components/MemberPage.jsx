@@ -24,7 +24,6 @@ function MemberPage() {
     setShowExtraFields(!showExtraFields);
   };
 
-
   useEffect(() => {
     const fetchMember = async () => {
       try {
@@ -65,7 +64,6 @@ function MemberPage() {
     };
     fetchPackages();
   }, []);
-  
 
   const toggleAttendance = async () => {
     if (!member) return;
@@ -133,23 +131,26 @@ function MemberPage() {
 
   const deleteMember = async () => {
     if (!member) return;
-  
+
     const confirmDelete = window.confirm(
       `Are you sure you want to delete member ${member.userName}? This action cannot be undone.`
     );
-  
+
     if (!confirmDelete) return;
-  
+
     try {
-      const response = await axios.delete("http://localhost:5000/member/delete", {
-        data: { id: member.id }, // Send the ID in the request body
-      });
-  
+      const response = await axios.delete(
+        "http://localhost:5000/member/delete",
+        {
+          data: { id: member.id }, // Send the ID in the request body
+        }
+      );
+
       if (response.status !== 200) {
         setMessage(response.data.message || "Error deleting member.");
         return;
       }
-  
+
       setMessage("Member deleted successfully.");
       navigate("/"); // Navigate to another page after deletion
     } catch (error) {
@@ -169,18 +170,20 @@ function MemberPage() {
     const confirmDelete = window.confirm(
       `Are you sure you want to change the package to ${selectedPackage}? This action cannot be undone.`
     );
-  
+
     if (!confirmDelete) return;
 
-    const newPackage = selectedPackage
+    const newPackage = selectedPackage;
 
-  
     try {
-      const response = await axios.post("http://localhost:5000/member/changePackage", {
-        id: member.id,
-        newPackage,
-      });
-  
+      const response = await axios.post(
+        "http://localhost:5000/member/changePackage",
+        {
+          id: member.id,
+          newPackage,
+        }
+      );
+
       if (response.status === 200) {
         setMessage("Package changed successfully.");
         setMember((prevMember) => ({
@@ -195,10 +198,8 @@ function MemberPage() {
       setMessage("Something went wrong.");
     }
 
-    resetAttendance()
+    resetAttendance();
   };
-  
-  
 
   if (!member) {
     return (
@@ -227,10 +228,35 @@ function MemberPage() {
           />
           <h6 className="member-id">{member.id}</h6>
         </div>
+        <div className="member-info">
+          <h6>Name: {member.userName}</h6>
+          <h6>
+            {member.memberShip
+              ? `Package: ${member.memberShip}`
+              : "No package selected"}
+          </h6>
+          <h6>
+            Status:{" "}
+            <span
+              style={{ color: member.status === "active" ? "green" : "red" }}
+            >
+              {member.status}
+            </span>
+          </h6>
+          <h6>
+            {member.memberShip === "Semi-monthly"
+              ? `Remaining days: ${12 - member.session.length}`
+              : `Expiry Date: ${member.expiryDate}`}
+          </h6>
+          <h6>
+            Phone Number: {member.phoneNumber}
+          </h6>
+        </div>
+
         <div className="manage-member">
           {/* Mark Attendance Button */}
           <div className="attendance-button">
-            {message && <p className="message">{message}</p>}
+            {/* {message && <p className="message">{message}</p>} */}
 
             <button
               onClick={toggleAttendance}
@@ -249,7 +275,9 @@ function MemberPage() {
               onClick={resetAttendance}
               style={{ backgroundColor: "#ed563b", color: "white" }}
               disabled={member.status == "active"}
-              className={`${member.status == "active" ? "change-package-disabled" :""} `}
+              className={`${
+                member.status == "active" ? "change-package-disabled" : ""
+              } `}
             >
               Renew Subscription
             </button>
@@ -257,29 +285,16 @@ function MemberPage() {
 
           {/* Change Plan Placeholder */}
           <div className="renew">
-            <div className="change-package" >
-              <button onClick={toggleExtraFields} disabled={member.status == "active"} className={`${member.status == "active" ? "change-package-disabled" :""} `}>Select a new package</button>
-              {showExtraFields && (<div>
-              <form action="">
-              <select
-                value={selectedPackage}
-                onChange={handlePackageChange}
-                style={{ padding: "10px", marginTop: "10px" }}
-                disabled = {member.status == "active"}
+            <div className="change-package">
+              <button
+                onClick={toggleExtraFields}
+                disabled={member.status == "active"}
+                className={`${
+                  member.status == "active" ? "change-package-disabled" : ""
+                } `}
               >
-                <option value="" disabled>
-                  Select a new package
-                </option>
-                {packages.map((pkg) => (
-                  <option key={pkg.id} value={pkg.packageName}>
-                    {pkg.packageName} - {pkg.numberOfDays} days
-                  </option>
-                ))}
-              </select>
-              <button type="submit" style={{ padding: "10px", marginTop: "10px" }} onClick={handleSubmitting} disabled={member.status == "active"} className={`${member.status == "active" ? "change-package-disabled" :""} `}> Submit </button>
-              </form>
-              <p>Selected Package: {selectedPackage}</p>
-              </div>)}
+                Select a new package
+              </button>
             </div>
           </div>
           {/* Delete Member Button */}
@@ -292,10 +307,40 @@ function MemberPage() {
             </button>
           </div>
         </div>
-        <div className="member-info">
-        <h6>{member.userName}</h6>
-        <h6>{member.memberShip ? `Package: ${member.memberShip}` : "No package selected"}</h6>
-        </div>
+        {showExtraFields && (
+          <div>
+            <form action="">
+              <select
+                value={selectedPackage}
+                onChange={handlePackageChange}
+                style={{ padding: "10px", marginTop: "10px" }}
+                disabled={member.status == "active"}
+              >
+                <option value="" disabled>
+                  Select a new package
+                </option>
+                {packages.map((pkg) => (
+                  <option key={pkg.id} value={pkg.packageName}>
+                    {pkg.packageName} - {pkg.numberOfDays} days
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                style={{ padding: "10px", marginTop: "10px" }}
+                onClick={handleSubmitting}
+                disabled={member.status == "active"}
+                className={`${
+                  member.status == "active" ? "change-package-disabled" : ""
+                } `}
+              >
+                {" "}
+                Submit{" "}
+              </button>
+            </form>
+            <p>Selected Package: {selectedPackage}</p>
+          </div>
+        )}
       </div>
     </>
   );

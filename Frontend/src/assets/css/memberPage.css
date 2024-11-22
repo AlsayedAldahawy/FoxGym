@@ -11,82 +11,83 @@
 } */
 
 .member-card {
-    width: 90%;
-    max-width: 800px;
-    height: fit-content;
-    padding: 3rem;
-    margin: 0 auto;
-    transform: translate(0, 200px);
-    /* width: 55%; */
-    transition: border 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    border-radius: 2%;
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    
+  width: 90%;
+  max-width: 800px;
+  height: fit-content;
+  padding: 3rem;
+  margin: 0 auto;
+  transform: translate(0, 200px);
+  /* width: 55%; */
+  transition: border 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 2%;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.member-pic{
-    width: fit-content;
-    height: fit-content;
-    transform: translateY(-130px);
-
-    border-radius: 50%;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-right: 500px;
-
-}
-
-.member-pic img{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 2px solid #ed563b;
-
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-}
-
-.member-info{
+.member-pic {
   width: fit-content;
-    height: fit-content;
-    transform: translateY(-130px);
+  height: fit-content;
+  transform: translateY(-100px);
 
-    border-radius: 50%;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin: 20px
+  border-radius: 50%;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.manage-member{
+.member-pic img {
+  width: 100px;
+  border-radius: 50%;
+  border: 1px solid #ed563b;
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.member-info {
   width: fit-content;
-    height: fit-content;
-    transform: translateY(-130px);
+  height: fit-content;
+  transform: translateY(-130px);
 
-    border-radius: 50%;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin:20px
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
 }
-button{
-    border-radius: 10px;
-    color: white;
-    background-color: #ed563b;
-    font-weight: bold;
-    border: unset;
-    margin: 5px;
-    padding: 5px;
+
+.member-info h6{
+  /* display: block; */
+}
+
+.manage-member {
+  width: fit-content;
+  height: fit-content;
+  transform: translateY(-130px);
+
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin: 20px;
+}
+button {
+  border-radius: 10px;
+  color: white;
+  background-color: #ed563b;
+  font-weight: bold;
+  border: unset;
+  margin: 5px;
+  padding: 5px;
 }
 
 .member-not-found {
@@ -134,15 +135,14 @@ button{
   justify-self: center;
 }
 
-.fox-gym-logo{
-    max-width: fit-content;
-    margin: 20px;
+.fox-gym-logo {
+  max-width: fit-content;
+  margin: 20px;
 }
 
-.fox-gym-logo img{
-    width: 100px;
+.fox-gym-logo img {
+  width: 100px;
 }
-
 
 .change-package-disabled {
   opacity: 50%;
@@ -154,10 +154,10 @@ button{
   font-weight: bold;
 }
 
-.active-status{
+.active-status {
   color: green;
 }
 
-.inactive-status{
+.inactive-status {
   color: red;
 }
