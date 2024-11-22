@@ -5,15 +5,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
 
+import sadFox from "../assets/images/profile_pics/sad_fox.png";
+import defMale from "../assets/images/profile_pics/default_m.jpeg";
+import defFemale from "../assets/images/profile_pics/default_f.jpeg";
 
-import sadFox from "../assets/images/not_found/sad_fox.png";
 // import foxLogo from "../assets/images/not_found/foxgym_logo.png";
 
 function MemberPage() {
   const { id } = useParams();
 
   // checking the id
-//   console.log("Product ID:", id);
+  //   console.log("Product ID:", id);
 
   const [member, setMember] = useState(null);
   useEffect(() => {
@@ -49,16 +51,35 @@ function MemberPage() {
       </>
     );
   }
-//   console.log(member)
+  //   console.log(member)
   return (
     <>
-        <div className="member-card">
-            <div className="member-pic">
-
-            </div>
+      <div className="member-card">
+        <div className="member-pic">
+          <img
+            src={`${member.gender == "Male" ? defMale : defFemale}`}
+            alt=""
+          />
+          <h6>{member.id}</h6>
+          <h6>{member.userName}</h6>
         </div>
-    </>
 
+        <div className="manage-member">
+          <div className="attendance-button">
+            <button>Mark Attendance</button>
+          </div>
+          <div className="delete-member">
+            <button>Delete Member</button>
+          </div>
+          <div className="renew">
+            <button>renew subscription</button>
+          </div>
+          <div className="renew">
+            <button>Change Plan</button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 export default MemberPage;
