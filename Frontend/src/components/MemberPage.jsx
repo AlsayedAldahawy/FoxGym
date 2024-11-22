@@ -17,6 +17,13 @@ function MemberPage() {
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState("");
 
+  // change package
+  const [showExtraFields, setShowExtraFields] = useState(false);
+
+  const toggleExtraFields = () => {
+    setShowExtraFields(!showExtraFields);
+  };
+
 
   useEffect(() => {
     const fetchMember = async () => {
@@ -151,9 +158,15 @@ function MemberPage() {
     }
   };
 
-  const handlePackageChange = async (e) => {
+  const handlePackageChange = (e) => {
     const newPackage = e.target.value;
     setSelectedPackage(newPackage);
+  };
+
+  const handleSubmitting = async (e) => {
+    e.preventDefault();
+    const newPackage = selectedPackage
+
   
     try {
       const response = await axios.post("http://localhost:5000/member/changePackage", {
@@ -174,6 +187,8 @@ function MemberPage() {
       console.error("Error changing package:", error);
       setMessage("Something went wrong.");
     }
+
+    resetAttendance()
   };
   
   
@@ -230,28 +245,24 @@ function MemberPage() {
             <button
               onClick={resetAttendance}
               style={{ backgroundColor: "#ed563b", color: "white" }}
+              disabled={member.status == "active"}
+              className={`${member.status == "active" ? "change-package-disabled" :""} `}
             >
               Renew Subscription
             </button>
           </div>
 
-          {/* Delete Member Button */}
-          <div className="delete-member">
-            <button
-              onClick={deleteMember}
-              style={{ backgroundColor: "red", color: "white" }}
-            >
-              Delete Member
-            </button>
-          </div>
-
           {/* Change Plan Placeholder */}
           <div className="renew">
-            <div className="change-package">
+            <div className="change-package" >
+              <button onClick={toggleExtraFields} disabled={member.status == "active"} className={`${member.status == "active" ? "change-package-disabled" :""} `}>Select a new package</button>
+              {showExtraFields && (<div>
+              <form action="">
               <select
                 value={selectedPackage}
                 onChange={handlePackageChange}
                 style={{ padding: "10px", marginTop: "10px" }}
+                disabled = {member.status == "active"}
               >
                 <option value="" disabled>
                   Select a new package
@@ -262,7 +273,20 @@ function MemberPage() {
                   </option>
                 ))}
               </select>
+              <button type="submit" style={{ padding: "10px", marginTop: "10px" }} onClick={handleSubmitting} disabled={member.status == "active"} className={`${member.status == "active" ? "change-package-disabled" :""} `}> Submit </button>
+              </form>
+              <p>Selected Package: {selectedPackage}</p>
+              </div>)}
             </div>
+          </div>
+          {/* Delete Member Button */}
+          <div className="delete-member">
+            <button
+              onClick={deleteMember}
+              style={{ backgroundColor: "red", color: "white" }}
+            >
+              Delete Member
+            </button>
           </div>
         </div>
       </div>

@@ -115,3 +115,8 @@ button{
 .fox-gym-logo img{
     width: 100px;
 }
+
+
+.change-package-disabled {
+  opacity: 50%;
+}
