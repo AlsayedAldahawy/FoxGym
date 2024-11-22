@@ -13,7 +13,7 @@ import AddNewMember from "./pages/addNewMember"
 import AuthProvider from "./context/AuthContext"; // Update path as per your project
 import ProtectedRoute from "./components/protectedRoute"; // Update path as per your project
 import MemberPage from "./components/MemberPage"
-
+import NotFound from "./components/Notfound"
 
 const App = () => {
   return (
@@ -22,16 +22,17 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={< Home />} />
-          <Route path="/bmi-calculator" element={<BMICalculator />} />
-          <Route path="/coaches" element={<Coaches />} />
+          {/* <Route path="/bmi-calculator" element={<BMICalculator />} /> */}
+          {/* <Route path="/coaches" element={<Coaches />} /> */}
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/members" element={<Members />} />
             <Route path="/add-new-member" element={<AddNewMember />} />
             <Route path="/member/:id" element={<MemberPage />} />
           </Route>
-          <Route path="/owner" element={< Owner/>} />
-          <Route path="/trainer" element={< Trainer />} />
+          {/* <Route path="/owner" element={< Owner/>} /> */}
+          {/* <Route path="/trainer" element={< Trainer />} /> */}
+          <Route path="*" element={<NotFound />} />          
         </Routes>
       </Router>
     </AuthProvider>

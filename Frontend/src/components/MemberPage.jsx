@@ -165,6 +165,13 @@ function MemberPage() {
 
   const handleSubmitting = async (e) => {
     e.preventDefault();
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to change the package to ${selectedPackage}? This action cannot be undone.`
+    );
+  
+    if (!confirmDelete) return;
+
     const newPackage = selectedPackage
 
   

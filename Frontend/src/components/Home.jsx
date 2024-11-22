@@ -14,14 +14,14 @@ export default function Home() {
           <div className="caption">
             <h6>work harder, get stronger</h6>
             <h2>easy with Fox <em>gym</em></h2>
-            <div className="owner-trainer">
+            {/* <div className="owner-trainer">
               <div className="main-button scroll-to-section">
                 <Link to="/owner" id="owner-trainer">Owner</Link>
               </div>
               <div className="main-button scroll-to-section">
                 <Link to="/trainer" id="owner-trainer">Trainer</Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
