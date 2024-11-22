@@ -5,16 +5,11 @@ export const checkMembershipStatus = (member) => {
   const today = moment();
   const expiryDate = moment(member.expiryDate);
 
-  console.log('Checking membership status for member:', member.userName); // Debugging log
-  console.log('Attendance:', member.session);
-  console.log('Expiry Date:', expiryDate.format('YYYY-MM-DD'));
 
   // If attendance has reached max days or package expired, mark as inactive
   if (member.session.length >= getMaxAttendance(member.memberShip) || today.isAfter(expiryDate)) {
-    console.log('Status set to inactive');
     return 'inactive';
   }
-  console.log('Status set to active');
   return 'active';
 };
 

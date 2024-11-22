@@ -70,18 +70,25 @@ router.get("/getAllMembers", async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
-    const member = await memberModel.findOne({ id: id });
+    const member = await memberModel.findOne({ id });
+
     if (!member) {
-      return null; // Return null if the member is not found
+      return res.status(404).json({ message: 'Member not found' });
     }
-    res.status(201).json(member); // Return the member's data
+
+    const today = moment().format('YYYY-MM-DD');
+    const isMarked = member.session.includes(today); // Check if attendance is already marked today
+
+    res.status(200).json({ ...member.toObject(), isMarked });
   } catch (error) {
-    console.error("Error fetching member by ID:", error);
-    throw new Error("Database error"); // Throw an error to be caught in the route
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching member' });
   }
 });
+
 
 // Mark attendance for a member
 router.post('/attendance', async (req, res) => {
@@ -119,7 +126,7 @@ router.post('/attendance', async (req, res) => {
     await member.save();
 
     // Send updated member back to client
-    res.status(200).json({ message: 'Attendance marked successfully', member });
+    res.status(200).json({ message: 'Attendance already marked for today', member });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error updating attendance' });
