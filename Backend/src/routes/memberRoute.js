@@ -184,5 +184,27 @@ router.post('/unattend', async (req, res) => {
   }
 });
 
+router.delete('/delete', async (req, res) => {
+  const { id } = req.body; // Extract ID from the request body
+
+  if (!id) {
+    return res.status(400).send({ message: 'Member ID is required.' });
+  }
+
+  try {
+    // Find and delete the member
+    const deletedMember = await memberModel.findOneAndDelete({ id }); // Assuming "id" is a unique field
+
+    if (!deletedMember) {
+      return res.status(404).send({ message: 'Member not found.' });
+    }
+
+    res.status(200).send({ message: 'Member deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting member:', error);
+    res.status(500).send({ message: 'Error deleting member.' });
+  }
+});
+
 
 export default router;

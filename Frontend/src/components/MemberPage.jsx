@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
 
@@ -9,6 +9,7 @@ import defFemale from "../assets/images/profile_pics/default_f.jpeg";
 
 function MemberPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [member, setMember] = useState(null);
   const [message, setMessage] = useState("");
@@ -19,22 +20,38 @@ function MemberPage() {
       try {
         const response = await axios.get(`http://localhost:5000/member/${id}`);
         setMember(response.data);
-        setMarked(response.data.isMarked); // Set the initial marked state
+
+        // Determine if today's date is already marked
+        const today = new Date().toISOString().split("T")[0];
+        setMarked(response.data.session.includes(today));
       } catch (error) {
         console.error("Error fetching member:", error);
       }
     };
     fetchMember();
   }, [id]);
-  
+
+  useEffect(() => {
+    // Reset the marked state when the day changes
+    const timer = setInterval(() => {
+      const today = new Date().toISOString().split("T")[0];
+      if (member) {
+        const isTodayMarked = member.session.includes(today);
+        setMarked(isTodayMarked);
+      }
+    }, 60000); // Check every minute
+
+    return () => clearInterval(timer); // Cleanup on component unmount
+  }, [member]);
 
   const toggleAttendance = async () => {
     if (!member) return;
 
     try {
+      const today = new Date().toISOString().split("T")[0];
       const url = marked
-        ? "http://localhost:5000/member/unattend" // API endpoint to remove attendance
-        : "http://localhost:5000/member/attendance"; // API endpoint to add attendance
+        ? "http://localhost:5000/member/unattend"
+        : "http://localhost:5000/member/attendance";
 
       const response = await axios.post(url, { id: member.id });
       if (response.status !== 200) {
@@ -42,12 +59,12 @@ function MemberPage() {
         return;
       }
 
-      setMarked((prev) => !prev);
+      setMarked((prev) => !prev); // Toggle the marked state
       setMember((prevMember) => ({
         ...prevMember,
         session: marked
-          ? prevMember.session.slice(0, -1) // Remove the last attendance
-          : [...prevMember.session, new Date().toISOString()], // Add a new attendance
+          ? prevMember.session.filter((date) => date !== today) // Remove today's date
+          : [...prevMember.session, today], // Add today's date
       }));
 
       setMessage(
@@ -55,13 +72,6 @@ function MemberPage() {
           ? "Attendance removed successfully."
           : "Attendance marked successfully."
       );
-
-      // Reset button to "Mark Attendance" after 10 seconds
-      if (!marked) {
-        setTimeout(() => {
-          setMarked(false);
-        }, 1000); // 10 seconds delay
-      }
     } catch (error) {
       if (error.response && error.response.status === 403) {
         setMessage(error.response.data.message);
@@ -98,6 +108,34 @@ function MemberPage() {
     }
   };
 
+  const deleteMember = async () => {
+    if (!member) return;
+  
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete member ${member.userName}? This action cannot be undone.`
+    );
+  
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await axios.delete("http://localhost:5000/member/delete", {
+        data: { id: member.id }, // Send the ID in the request body
+      });
+  
+      if (response.status !== 200) {
+        setMessage(response.data.message || "Error deleting member.");
+        return;
+      }
+  
+      setMessage("Member deleted successfully.");
+      navigate("/"); // Navigate to another page after deletion
+    } catch (error) {
+      console.error("Error deleting member:", error);
+      setMessage("Something went wrong.");
+    }
+  };
+  
+
   if (!member) {
     return (
       <div className="member-not-found">
@@ -130,7 +168,7 @@ function MemberPage() {
         <div className="manage-member">
           {/* Mark Attendance Button */}
           <div className="attendance-button">
-          {message && <p className="message">{message}</p>}
+            {message && <p className="message">{message}</p>}
 
             <button
               onClick={toggleAttendance}
@@ -153,14 +191,19 @@ function MemberPage() {
             </button>
           </div>
 
-          {/* Delete Member Placeholder */}
+          {/* Delete Member Button */}
           <div className="delete-member">
-            <button>Delete Member</button>
+            <button
+              onClick={deleteMember}
+              style={{ backgroundColor: "red", color: "white" }}
+            >
+              Delete Member
+            </button>
           </div>
 
           {/* Change Plan Placeholder */}
           <div className="renew">
-            <button>Change Plan</button>
+            <button>Change Package</button>
           </div>
         </div>
       </div>
