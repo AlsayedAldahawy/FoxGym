@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <>
       {/* Preloader */}
-      <div id="js-preloader" className="js-preloader">
+      {/* <div id="js-preloader" className="js-preloader">
         <div className="preloader-inner">
           <span className="dot"></span>
           <div className="dots">
@@ -15,7 +15,7 @@ const Header = () => {
             <span></span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Header Area */}
       <header className="header-area header-sticky">
