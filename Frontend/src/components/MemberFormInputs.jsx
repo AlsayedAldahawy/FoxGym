@@ -7,8 +7,8 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
   const [showExtraFields, setShowExtraFields] = useState(false);
   return (
     <>
-      <div className="form-row">
-        <div className="form-group">
+      <div className="form-row" autoComplete="off">
+        <div className="form-group" autoComplete="off">
           <label>
             Full Name <span className="required">*</span>{" "}
           </label>
@@ -90,6 +90,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             name="phoneNumber"
             placeholder="Enter Phone Number"
             className="form-control"
+            autoComplete="off"
             value={formData.phoneNumber}
             onChange={handleChange}
           />
@@ -113,6 +114,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             <div className="form-group">
               <label>Email</label>
               <input
+                autoComplete="off"
                 type="text"
                 name="email"
                 placeholder="Enter Email"
@@ -126,6 +128,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             <div className="form-group">
               <label>Height</label>
               <input
+                autoComplete="off"
                 type="number"
                 name="height"
                 placeholder="Enter Height (in cm)"
@@ -137,6 +140,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             <div className="form-group">
               <label>Weight</label>
               <input
+                autoComplete="off"
                 type="number"
                 name="weight"
                 placeholder="Enter Weight (in kg)"
@@ -160,6 +164,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             <div className="form-group">
               <label>Image URL</label>
               <input
+                autoComplete="off"
                 type="text"
                 name="image"
                 placeholder="Enter Image URL"
