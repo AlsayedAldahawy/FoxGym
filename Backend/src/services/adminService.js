@@ -12,27 +12,27 @@ export const seedInitialAdmin = async () => {
       {
         userName: "Mahmoud Farag",
         password : "123",
-        type: "admin",
+        type: "Administrator",
       },
       {
         userName: "Amir Elsayed",
         password : "456",
-        type: "admin",
+        type: "Manager",
       },
       {
         userName: "Merna Hossam",
         password : "789",
-        type: "coach",
+        type: "Coach",
       },
       {
         userName: "Wessam Abdelnabi",
         password : "1011",
-        type: "coach",
+        type: "Coach",
       },
       {
         userName: "Elsayed Eldahawy",
         password : "1213",
-        type: "coach",
+        type: "Coach",
       },
     ];
 
