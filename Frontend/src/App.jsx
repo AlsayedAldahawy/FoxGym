@@ -2,6 +2,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 import BMICalculator from "./pages/Bmi";
 import Members from "./pages/Members";
 import Coaches from "./components/Coaches";
@@ -34,6 +36,7 @@ const App = () => {
           {/* <Route path="/trainer" element={< Trainer />} /> */}
           <Route path="*" element={<NotFound />} />          
         </Routes>
+        <Footer />
       </Router>
     </AuthProvider>
   );
