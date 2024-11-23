@@ -9,8 +9,11 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
     <>
       <div className="form-row">
         <div className="form-group">
-          <label>Full Name <span className="required">*</span> </label>
+          <label>
+            Full Name <span className="required">*</span>{" "}
+          </label>
           <input
+            autoComplete="off"
             type="text"
             name="userName"
             placeholder="Enter Member's Full Name"
@@ -20,7 +23,9 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
           />
         </div>
         <div className="form-group">
-          <label>Gender <span className="required">*</span></label>
+          <label>
+            Gender <span className="required">*</span>
+          </label>
           <select
             name="gender"
             className="form-control"
@@ -35,7 +40,9 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label>Subscription Package <span className="required">*</span></label>
+          <label>
+            Subscription Package <span className="required">*</span>
+          </label>
           <select
             name="memberShip"
             className="form-control"
@@ -51,8 +58,11 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
           </select>
         </div>
         <div className="form-group">
-          <label>Payment Status <span className="required">*</span></label>
+          <label>
+            Payment Status <span className="required">*</span>
+          </label>
           <input
+            autoComplete="off"
             type="text"
             name="paymentStatus"
             placeholder="Enter Payment Status"
@@ -85,9 +95,10 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
           />
         </div>
       </div>
-        <div>
-      
-        <div className={`${!showExtraFields ? "extra-fields" :"main-fields"} `}>
+      <div>
+        <div
+          className={`${!showExtraFields ? "extra-fields" : "main-fields"} `}
+        >
           <div className="form-row">
             <div className="form-group">
               <label>Expiry Date</label>
@@ -162,8 +173,23 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
       </div>
       <div className="extra-fields-button">
         <div onClick={toggleExtraFields}>
-          <div className={`${showExtraFields ? "click-animation" : ""}`} title={`${!showExtraFields ? "More information" : "Less information"}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.293 9.293a1 1 0 0 1 1.414 0L12 12.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"/></svg>
+          <div
+            className={`${showExtraFields ? "click-animation" : ""}`}
+            title={`${
+              !showExtraFields ? "More information" : "Less information"
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.293 9.293a1 1 0 0 1 1.414 0L12 12.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
+              />
+            </svg>
           </div>
           {/* {showExtraFields ? (
             "Less information"
