@@ -66,11 +66,6 @@ const SearchField = ({ onSearch }) => {
     onSearch(searchQuery.trim());
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
-  };
   return (
     <SearchWrapper>
       <SearchIconWrapper>
@@ -79,7 +74,7 @@ const SearchField = ({ onSearch }) => {
       <StyledInputBase
         value={searchQuery}
         onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
+        onKeyUp={handleSearch}
         placeholder="Search..."
         inputProps={{ "aria-label": "search" }}
       />

@@ -8,6 +8,7 @@ import trainer from "../assets/images/users/Amir.jpg";
 import trainer2 from "../assets/images/users/default.jpg";
 import trainer3 from "../assets/images/users/sayed.jpg";
 import femCoach from "../assets/images/users/fem.jpeg";
+import axios from "axios";
 import "../assets/css/login.css";
 
 export default function Login() {
@@ -15,7 +16,7 @@ export default function Login() {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const { isAuthenticated, login, logout, username } = useAuth();
   const navigate = useNavigate(); // Initialize navigate function
 

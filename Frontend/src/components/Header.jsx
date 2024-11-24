@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx"; // Update path as per your project
+
 import '../assets/css/header.css';
 
 const Header = () => {
+
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       {/* Preloader */}
@@ -39,9 +44,12 @@ const Header = () => {
                   <li className="scroll-to-section">
                     <Link to="/coaches">Coaches</Link>
                   </li>
-                  <li id="loginButton" className="main-button">
+                  {!isAuthenticated ?
+                  <li className="main-button">
                     <Link to="/login">Login</Link>
-                  </li>
+                  </li> : <li className="main-button">
+                    <Link to="/login">Logout</Link>
+                  </li>}
                 </ul>
                 <a className="menu-trigger">
                   <span>Menu</span>
