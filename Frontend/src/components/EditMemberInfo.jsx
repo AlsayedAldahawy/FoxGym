@@ -10,6 +10,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
     setFormData({
       gender: member.gender || "",
       email: member.email || "",
+      paymentStatus: member.paymentStatus || "",
       phoneNumber: member.phoneNumber || "",
       birthDate: member.birthDate || "",
       height: member.height || "",
@@ -58,7 +59,6 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              required
             >
               <option value="" disabled>
                 Select Gender
@@ -68,13 +68,20 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
             </select>
           </label>
           <label>
+            Payment Status:
+            <input
+              name="paymentStatus"
+              value={formData.paymentStatus}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
             Email:
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              required
             />
           </label>
           <label>
@@ -84,7 +91,6 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
-              required
             />
           </label>
           <label>
@@ -94,7 +100,6 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               name="birthDate"
               value={formData.birthDate}
               onChange={handleChange}
-              required
             />
           </label>
           <label>
@@ -104,7 +109,6 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               name="height"
               value={formData.height}
               onChange={handleChange}
-              required
             />
           </label>
           <label>
@@ -114,7 +118,6 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               name="weight"
               value={formData.weight}
               onChange={handleChange}
-              required
             />
           </label>
           <div className="modal-actions">
