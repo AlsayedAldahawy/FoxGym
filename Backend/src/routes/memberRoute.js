@@ -230,4 +230,32 @@ router.post('/changePackage', async (req, res) => {
 
 
 
+router.post("/updateInfo", async (req, res) => {
+  const { id, gender, email, phoneNumber, birthDate, height, weight } = req.body;
+  console.log(req.body);
+
+  try {
+    const member = await memberModel.findOne({ id });
+    if (!member) {
+      return res.status(404).json({ message: "Member not found." });
+    }
+
+    // Update fields only if provided
+    if (gender) member.gender = gender;
+    if (email) member.email = email;
+    if (phoneNumber) member.phoneNumber = phoneNumber;
+    if (birthDate) member.birthDate = birthDate;
+    if (height) member.height = height;
+    if (weight) member.weight = weight;
+
+    await member.save();
+
+    res.status(200).json({ message: "Member information updated successfully!" });
+  } catch (error) {
+    console.error("Error updating member info:", error);
+    res.status(500).json({ message: "Something went wrong." });
+  }
+});
+
+
 export default router;
