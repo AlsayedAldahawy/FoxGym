@@ -58,7 +58,7 @@ export default function StickyHeadTable({ searchQuery }) {
 
   return (
       <Paper sx={{ width: '90%', mx: 'auto', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 440, width: '90%', mx: 'auto' }}>
+        <TableContainer sx={{ maxHeight: 530, width: '90%', mx: 'auto' }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
