@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx"; // Update path as per your project
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PasswordModal from "../components/passwordModal.jsx";
+import UpdatePasswordModal from "../components/UpdatePasswordModal.jsx";
 import gymImage from "../assets/images/backgrounds/bg_login.jpg";
 import mFarag from "../assets/images/users/m_farag.jpg";
 import trainer from "../assets/images/users/Amir.jpg";
@@ -15,7 +16,7 @@ export default function Login() {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+  const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const { isAuthenticated, login, logout, username } = useAuth();
   const navigate = useNavigate(); // Initialize navigate function
 
@@ -90,6 +91,36 @@ export default function Login() {
     alert("You have been logged out.");
   };
 
+  const handleUpdatePassword = async (oldPassword, newPassword) => {
+    try {
+      const response = await fetch("http://localhost:5000/admin/updatePassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName: username, oldPassword, newPassword }),
+      });
+
+      const result = await response.json();
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      return false;
+    }
+  };
+
+  const openUpdatePasswordModal = () => {
+    console.log("Opening update password modal"); // Debug log
+    setShowUpdatePasswordModal(true);
+  };
+
+  const closeUpdatePasswordModal = () => {
+    console.log("Closing update password modal");
+    setShowUpdatePasswordModal(false);
+  };
+
   return (
     <>
       <div className="main-banner" id="top">
@@ -100,9 +131,14 @@ export default function Login() {
             {isAuthenticated ? (
               <>
                 <h3 className="after-login">Welcome, {username}!</h3>
-                <button onClick={handleLogout} className="logout-button">
-                  Logout
-                </button>
+                <div className="logout-updatepass">
+                  <button onClick={openUpdatePasswordModal} className="updatePass-button">
+                    Update Password
+                  </button>
+                  <button onClick={handleLogout} className="logout-button">
+                    Logout
+                  </button>
+                </div>
               </>
             ) : (
               <div className="owner-trainer">
@@ -154,6 +190,14 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      {/* Update Password Modal */}
+      {showUpdatePasswordModal && (
+        <UpdatePasswordModal
+          onClose={closeUpdatePasswordModal}
+          onUpdatePassword={handleUpdatePassword}
+        />
+      )}
 
       {/* Password Modal */}
       {!isAuthenticated && (
