@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
+import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMemberInfo component
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
 import defMale from "../assets/images/profile_pics/default_m.jpeg";
@@ -16,6 +17,7 @@ function MemberPage() {
   const [marked, setMarked] = useState(false);
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false); // State to control modal visibility
 
   // change package
   const [showExtraFields, setShowExtraFields] = useState(false);
@@ -64,6 +66,29 @@ function MemberPage() {
     };
     fetchPackages();
   }, []);
+
+  const handleEditMember = async (id, updatedData) => {
+    try {
+      const response = await axios.post("http://localhost:5000/member/updateInfo", {
+        id,
+        ...updatedData,
+      });
+
+      if (response.status === 200) {
+        setMessage("Member information updated successfully!");
+        setMember((prev) => ({
+          ...prev,
+          ...updatedData,
+        }));
+        setShowEditModal(false); // Close modal after successful update
+      } else {
+        setMessage("Failed to update member information.");
+      }
+    } catch (error) {
+      console.error("Error updating member info:", error);
+      setMessage("An error occurred. Please try again.");
+    }
+  };
 
   const toggleAttendance = async () => {
     if (!member) return;
@@ -229,30 +254,48 @@ function MemberPage() {
           <h6 className="member-id">{member.id}</h6>
         </div>
         <div className="member-info">
-          <h6>Name: {member.userName}</h6>
+          <h6>Name: {member.userName || "N/A"}</h6>
+          <h6>
+            Gender: {member.gender || "N/A"}
+          </h6>
           <h6>
             {member.memberShip
               ? `Package: ${member.memberShip}`
               : "No package selected"}
           </h6>
-          <h6>
-            Status:{" "}
-            <span
-              style={{ color: member.status === "active" ? "green" : "red" }}
-            >
-              {member.status}
-            </span>
-          </h6>
+          <h6>Start Date: {member.startDate || "N/A"}</h6>
           <h6>
             {member.memberShip === "Semi-monthly"
               ? `Remaining days: ${12 - member.session.length}`
               : `Expiry Date: ${member.expiryDate}`}
           </h6>
           <h6>
-            Phone Number: {member.phoneNumber}
+            Payment Status:{" "}
+            <span
+              style={{ color: member.paymentStatus === "Paid" ? "green" : "red" }}
+            >
+              {member.paymentStatus || "N/A"}
+            </span>
+          </h6>
+          <h6>Email: {member.email || "N/A"}</h6>
+          <h6>Phone Number: {member.phoneNumber || "N/A"}</h6>
+          <h6>Birth Date: {member.birthDate || "N/A"}</h6>
+          <h6>Height: {member.height ? `${member.height} cm` : "N/A"}</h6>
+          <h6>Weight: {member.weight ? `${member.weight} kg` : "N/A"}</h6>
+          <h6>
+            Status:{" "}
+            <span
+              style={{ color: member.status === "active" ? "green" : "red" }}
+            >
+              {member.status || "N/A"}
+            </span>
           </h6>
         </div>
-
+        <div className="edit-member">
+          <button onClick={() => setShowEditModal(true)} style={{ backgroundColor: "blue", color: "white" }}>
+            Edit Member Info
+          </button>
+        </div>
         <div className="manage-member">
           {/* Mark Attendance Button */}
           <div className="attendance-button">
@@ -342,6 +385,15 @@ function MemberPage() {
           </div>
         )}
       </div>
+
+      {/* Show modal when the button is clicked */}
+      {showEditModal && (
+        <EditMemberInfo
+          member={member}
+          onClose={() => setShowEditModal(false)}
+          onUpdate={handleEditMember}
+        />
+      )}
     </>
   );
 }
