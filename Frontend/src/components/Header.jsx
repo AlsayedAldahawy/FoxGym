@@ -39,7 +39,7 @@ const Header = () => {
                   <li className="scroll-to-section">
                     <Link to="/coaches">Coaches</Link>
                   </li>
-                  <li className="main-button">
+                  <li id="loginButton" className="main-button">
                     <Link to="/login">Login</Link>
                   </li>
                 </ul>

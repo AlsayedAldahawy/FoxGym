@@ -46,6 +46,11 @@ export default function Login() {
     setErrorMessage("");
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter')
+      handleLogin();
+  }
+
   const handleLogin = async () => {
     if (!selectedAdmin || !password) {
       setErrorMessage("Please select a user and enter the password to login.");
@@ -62,8 +67,9 @@ export default function Login() {
       if (response.status === 200) {
         if (result.username && result.token) {
           login(result.username, result.token);
-          alert("Login successful!");
+          // alert("Login successful!");
           setSelectedAdmin(null);
+          
           navigate("/"); // Navigate to home page
         } else {
           setErrorMessage("Invalid response from server.");
@@ -157,7 +163,10 @@ export default function Login() {
           setPassword={setPassword}
           errorMessage={errorMessage}
           handleLogin={handleLogin}
-          onClose={() => setSelectedAdmin(null)}
+          handleKeyDown={handleKeyDown}
+          onClose={() => setSelectedAdmin(null)
+            
+          }
         />
       )}
     </>

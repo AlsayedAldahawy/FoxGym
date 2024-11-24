@@ -22,8 +22,10 @@ export default function PasswordModal({
   setPassword,
   errorMessage,
   handleLogin,
+  handleKeyDown,
   onClose,
-}) {
+}) 
+{
   return (
     <Modal
       open={!!selectedAdmin}
@@ -36,6 +38,7 @@ export default function PasswordModal({
           Enter Password for {selectedAdmin?.userName}
         </Typography>
         <input
+          onKeyDown={handleKeyDown}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -59,12 +62,16 @@ export default function PasswordModal({
           </Typography>
         )}
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="contained" sx={{
-                backgroundColor: "#ed563b",
-                "&:hover": {
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#ed563b",
+              "&:hover": {
                 backgroundColor: "#d14c33", // Slightly darker shade for hover effect
-                },
-            }} onClick={handleLogin}>
+              },
+            }}
+            onClick={handleLogin}
+          >
             Login
           </Button>
           <Button variant="contained" onClick={onClose}>
