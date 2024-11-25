@@ -5,8 +5,10 @@ import cors from 'cors';
 import memberRoute from './routes/memberRoute.js';
 import packageRoute from './routes/packagesRoute.js';
 import adminRoute from './routes/adminRoute.js'
+import paymentRoute from './routes/paymentRoute.js'
 import { seedInitialPackages } from './services/packagesService.js' ;
 import { seedInitialAdmin } from './services/adminService.js';
+import { seedInitialPayment } from './services/paymentService.js'
 
 
 dotenv.config()
@@ -27,11 +29,13 @@ mongoose
 app.use("/member", memberRoute);
 app.use("/packages", packageRoute)
 app.use("/admin", adminRoute);
+app.use("/payment", paymentRoute)
 
 
 
 seedInitialPackages()
 seedInitialAdmin()
+seedInitialPayment()
 
 app.listen(port, () =>{
     console.log(`Server Is Running On Port ${port}`);

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import '../assets/css/discountPayment.css'
 
-const MemberFormInputs = ({ formData, handleChange, packages }) => {
+const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
   const toggleExtraFields = () => {
     setShowExtraFields(!showExtraFields);
   };
@@ -61,16 +62,65 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
           <label>
             Payment Status <span className="required">*</span>
           </label>
-          <input
-            autoComplete="off"
-            type="text"
-            name="paymentStatus"
-            placeholder="Enter Payment Status"
+          <select
+            name="payment"
             className="form-control"
             value={formData.paymentStatus}
             onChange={handleChange}
-          />
+          >
+            <option value="">Select </option>
+            {payment.map((pay) => (
+              <option key={pay.id} value={pay.packageName}>
+                {pay.paymentName}
+              </option>
+            ))}
+          </select>
         </div>
+
+
+        <div className="apply-discount">
+          <div className="form-group">
+            <label>
+              Discount 
+            </label>
+            <input
+              type="number"
+              name="discount"
+              placeholder="Discount %"
+              className="form-control"
+              value={formData.discount}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              Paied <span className="required">*</span>
+            </label>
+            <input
+              type="number"
+              name="paied"
+              placeholder="price paied"
+              className="form-control"
+              value={formData.discount}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              Remaining <span className="required">*</span>
+            </label>
+            <input
+              type="number"
+              name="discount"
+              placeholder="remaining price"
+              className="form-control"
+              value={formData.discount}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+
       </div>
       <div className="form-row">
         <div className="form-group">

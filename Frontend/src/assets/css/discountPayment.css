@@ -1,0 +1,15 @@
+.apply-discount {
+    display: flex; /* Use flexbox for layout */
+    gap: 1rem; /* Adds spacing between the fields */
+    margin-top: 0px;
+  }
+  
+  .apply-discount .form-group {
+    flex: 1; /* Ensures all fields take equal width */
+  }
+  @media (max-width: 768px) {
+    .apply-discount {
+      flex-direction: column; /* Stack fields vertically */
+    }
+  }
+    

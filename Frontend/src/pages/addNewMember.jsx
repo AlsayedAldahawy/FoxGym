@@ -20,6 +20,7 @@ const AddNewMember = () => {
   });
 
   const [packages, setPackages] = useState([]);
+  const [payment, setPayment] = useState([])
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,6 +37,19 @@ const AddNewMember = () => {
       }
     };
     fetchPackages();
+  }, []);
+
+  useEffect(() => {
+    const fetchPayment = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/payment");
+        const data = await response.json();
+        setPayment(data);
+      } catch (error) {
+        console.error("Error fetching payment status:", error);
+      }
+    };
+    fetchPayment();
   }, []);
 
   const handleChange = (e) => {
@@ -127,6 +141,7 @@ const AddNewMember = () => {
             formData={formData}
             handleChange={handleChange}
             packages={packages}
+            payment={payment}
           />
           <div className="d-grid">
             <button
