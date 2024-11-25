@@ -12,11 +12,14 @@ const AddNewMember = () => {
     startDate: new Date().toISOString().split("T")[0],
     expiryDate: "",
     phoneNumber: "",
-    paymentStatus: "",
+    program: "",
     height: "",
     weight: "",
     gender: "",
     image: "",
+    discount: "",
+    paied: "",
+    remaining: ""
   });
 
   const [packages, setPackages] = useState([]);
@@ -46,7 +49,7 @@ const AddNewMember = () => {
         const data = await response.json();
         setPayment(data);
       } catch (error) {
-        console.error("Error fetching payment status:", error);
+        console.error("Error fetching program:", error);
       }
     };
     fetchPayment();
@@ -82,12 +85,16 @@ const AddNewMember = () => {
       startDate,
       expiryDate,
       phoneNumber,
-      paymentStatus,
+      program,
       height,
       weight,
       gender,
+      discount,
+      paied,
+      remaining
+      
     } = formData;
-    if (!userName || !memberShip || !paymentStatus || !gender)
+    if (!userName || !memberShip || !program || !gender || !paied || !remaining)
       return "Please fill all the fields required (*)";
     //if (!/^\S+@\S+\.\S+$/.test(email)) return 'Invalid email address.';
     //if (isNaN(Number(height)) || isNaN(Number(weight))) return 'Height and Weight must be numeric values.';

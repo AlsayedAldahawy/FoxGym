@@ -3,7 +3,7 @@ import { uidGenerator } from './uniqueId.js'; // Adjust the path based on your p
 
 
 export const register = async ({ userName, email, birthDate, memberShip, startDate, expiryDate,
-   phoneNumber, paymentStatus, height, weight, gender, image }) => {
+   phoneNumber, program, height, weight, gender, image, discount, paied, remaining }) => {
   try {
     //const findUser = await memberModel.findOne({ email });
 
@@ -23,16 +23,19 @@ export const register = async ({ userName, email, birthDate, memberShip, startDa
       startDate,
       expiryDate,
       phoneNumber,
-      paymentStatus,
+      program,
       height,
       weight,
       gender,
       image,
+      discount,
+      paied,
+      remaining
     });
     await newUser.save();
 
     return { data: { id, userName, email, birthDate, memberShip, startDate,
-       expiryDate, phoneNumber, paymentStatus, height, weight, gender, image }, statusCode: 200 };
+       expiryDate, phoneNumber, program, height, weight, gender, image, discount, paied, remaining }, statusCode: 200 };
   } catch (err) {
     console.error("Error in register function:", err);
     throw err;

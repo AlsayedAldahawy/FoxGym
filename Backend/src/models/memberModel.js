@@ -7,7 +7,7 @@ const memberSchema = new Schema({
     memberShip: { type: String, required: true},
     startDate: { type: String, required: true},
     expiryDate: { type: String, required: true},
-    paymentStatus: { type: String, required: true},
+    program: { type: String, required: true},
     gender: { type: String, required: true},
     email: { type: String },
     birthDate: { type: String },
@@ -18,6 +18,9 @@ const memberSchema = new Schema({
     status: { type: String, default: 'active' }, // 'active' or 'inactive'
     session: { type: [String], default: [] }, // Array of session dates
     attentanceMatrix: { type: [String], default: [] },
+    discount: { type: Number },
+    paied: { type: Number },
+    remaining: { type: Number }
 })
 
 const memberModel = mongoose.model('Members', memberSchema);

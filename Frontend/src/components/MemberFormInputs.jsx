@@ -60,17 +60,17 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
         </div>
         <div className="form-group">
           <label>
-            Payment Status <span className="required">*</span>
+            Program <span className="required">*</span>
           </label>
           <select
-            name="payment"
+            name="program"
             className="form-control"
-            value={formData.paymentStatus}
+            value={formData.program}
             onChange={handleChange}
           >
             <option value="">Select </option>
             {payment.map((pay) => (
-              <option key={pay.id} value={pay.packageName}>
+              <option key={pay.id} value={pay.paymentName}>
                 {pay.paymentName}
               </option>
             ))}
@@ -97,11 +97,10 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
               Paied <span className="required">*</span>
             </label>
             <input
-              type="number"
               name="paied"
               placeholder="price paied"
               className="form-control"
-              value={formData.discount}
+              value={formData.paied}
               onChange={handleChange}
             />
           </div>
@@ -110,11 +109,10 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
               Remaining <span className="required">*</span>
             </label>
             <input
-              type="number"
-              name="discount"
+              name="remaining"
               placeholder="remaining price"
               className="form-control"
-              value={formData.discount}
+              value={formData.remaining}
               onChange={handleChange}
             />
           </div>

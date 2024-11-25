@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/addMember", async (request, response) => {
   try {
     const { userName, email, birthDate, memberShip, startDate, expiryDate,
-      phoneNumber, paymentStatus, height, weight, gender, image } = request.body;
+      phoneNumber, program, height, weight, gender, image, discount, paied, remaining } = request.body;
 
     const { statusCode, data } = await register({
       userName,
@@ -19,11 +19,14 @@ router.post("/addMember", async (request, response) => {
       startDate,
       expiryDate,
       phoneNumber,
-      paymentStatus,
+      program,
       height,
       weight,
       gender,
       image,
+      discount,
+      paied,
+      remaining
     });
     response.status(statusCode).json(data);
   } catch (err) {

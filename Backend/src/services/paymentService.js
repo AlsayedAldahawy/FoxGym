@@ -14,19 +14,19 @@ export const seedInitialPayment = async () => {
       },
       {
         id: "2",
+        paymentName: "Lifting + Treadmill",
+        price: 300,
+      },
+      {
+        id: "3",
         paymentName: "Cross Fit",
         price: 250,
       },
       {
-        id: "3",
+        id: "4",
         paymentName: "Mixed",
         price: 400,
       },
-      {
-        id: "4",
-        paymentName: "Treadmill",
-        price: 50,
-      }
     ];
 
 
