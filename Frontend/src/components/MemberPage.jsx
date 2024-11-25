@@ -298,7 +298,7 @@ function MemberPage() {
 
             <div className="info-column">
               <h6>{member.userName || "No data"}</h6>
-              <h6>{calculateAge(member.birthDate) || "No data"}</h6>
+              {member.birthDate && (<h6>{calculateAge(member.birthDate) || "No data"}</h6>)}
               {console.log("age", calculateAge(member.birthDate), member.birthDate)}
               <h6>{member.gender || "No data"}</h6>
               <h6>
