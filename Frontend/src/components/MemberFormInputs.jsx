@@ -52,7 +52,7 @@ const MemberFormInputs = ({ formData, handleChange, packages }) => {
             <option value="">Select </option>
             {packages.map((pkg) => (
               <option key={pkg.id} value={pkg.packageName}>
-                {pkg.packageName} - {pkg.numberOfDays} days
+                {pkg.packageName}
               </option>
             ))}
           </select>

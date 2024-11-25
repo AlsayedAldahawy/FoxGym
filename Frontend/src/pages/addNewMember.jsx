@@ -107,7 +107,7 @@ const AddNewMember = () => {
       setIsSubmitting(true);
       setSuccess("New member added successfully!");
 
-      setTimeout(() => navigate("/members"), 1500);
+      setTimeout(() => navigate("/members"), 1000);
     } catch (error) {
       console.error("API Error:", error);
       setError("Something went wrong. Please try again.");

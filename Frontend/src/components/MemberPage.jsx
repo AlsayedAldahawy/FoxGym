@@ -69,10 +69,13 @@ function MemberPage() {
 
   const handleEditMember = async (id, updatedData) => {
     try {
-      const response = await axios.post("http://localhost:5000/member/updateInfo", {
-        id,
-        ...updatedData,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/member/updateInfo",
+        {
+          id,
+          ...updatedData,
+        }
+      );
 
       if (response.status === 200) {
         setMessage("Member information updated successfully!");
@@ -226,6 +229,24 @@ function MemberPage() {
     resetAttendance();
   };
 
+  function calculateAge(birthDateString) {
+    // Split the birth date string into day, month, and year
+    const [day, month, year] = birthDateString.split("-"); // Create a new Date object using the parsed values
+    const birthDate = new Date(`${year}-${month}-${day}`);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    // Check if the birth month is after the current month or
+    // if it's the current month but the birth day is after today
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  }
+
   if (!member) {
     return (
       <div className="member-not-found">
@@ -245,110 +266,147 @@ function MemberPage() {
 
   return (
     <>
-      <div className="member-card">
-        <div className="member-pic">
-          <img
-            src={`${member.gender === "Male" ? defMale : defFemale}`}
-            alt=""
-          />
-          <h6 className="member-id">{member.id}</h6>
-        </div>
-        <div className="member-info">
-          <h6>Name: {member.userName || "N/A"}</h6>
-          <h6>
-            Gender: {member.gender || "N/A"}
-          </h6>
-          <h6>
-            {member.memberShip
-              ? `Package: ${member.memberShip}`
-              : "No package selected"}
-          </h6>
-          <h6>Start Date: {member.startDate || "N/A"}</h6>
-          <h6>
-            {member.memberShip === "Semi-monthly"
-              ? `Remaining days: ${12 - member.session.length}`
-              : `Expiry Date: ${member.expiryDate}`}
-          </h6>
-          <h6>
-            Payment Status:{" "}
-            <span
-              style={{ color: member.paymentStatus === "Paid" ? "green" : "red" }}
-            >
-              {member.paymentStatus || "N/A"}
-            </span>
-          </h6>
-          <h6>Email: {member.email || "N/A"}</h6>
-          <h6>Phone Number: {member.phoneNumber || "N/A"}</h6>
-          <h6>Birth Date: {member.birthDate || "N/A"}</h6>
-          <h6>Height: {member.height ? `${member.height} cm` : "N/A"}</h6>
-          <h6>Weight: {member.weight ? `${member.weight} kg` : "N/A"}</h6>
-          <h6>
-            Status:{" "}
-            <span
-              style={{ color: member.status === "active" ? "green" : "red" }}
-            >
-              {member.status || "N/A"}
-            </span>
-          </h6>
-        </div>
-        <div className="edit-member">
-          <button onClick={() => setShowEditModal(true)} style={{ backgroundColor: "blue", color: "white" }}>
-            Edit Member Info
-          </button>
+      <div className="member-page">
+        <div className="main-row">
+          <div className="main-column">
+            <div className="edit-member">
+              <svg
+                name="modify"
+                onClick={() => setShowEditModal(true)}
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:serif="http://www.serif.com/"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="#ff4800"
+                width="20px"
+                height="20px"
+                viewBox="0 0 32 32"
+                version="1.1"
+                xml:space="preserve"
+              >
+                <path d="M12.965,5.462c0,-0 -2.584,0.004 -4.979,0.008c-3.034,0.006 -5.49,2.467 -5.49,5.5l0,13.03c0,1.459 0.579,2.858 1.611,3.889c1.031,1.032 2.43,1.611 3.889,1.611l13.003,0c3.038,-0 5.5,-2.462 5.5,-5.5c0,-2.405 0,-5.004 0,-5.004c0,-0.828 -0.672,-1.5 -1.5,-1.5c-0.827,-0 -1.5,0.672 -1.5,1.5l0,5.004c0,1.381 -1.119,2.5 -2.5,2.5l-13.003,0c-0.663,-0 -1.299,-0.263 -1.768,-0.732c-0.469,-0.469 -0.732,-1.105 -0.732,-1.768l0,-13.03c0,-1.379 1.117,-2.497 2.496,-2.5c2.394,-0.004 4.979,-0.008 4.979,-0.008c0.828,-0.002 1.498,-0.675 1.497,-1.503c-0.001,-0.828 -0.675,-1.499 -1.503,-1.497Z" />
+                <path d="M20.046,6.411l-6.845,6.846c-0.137,0.137 -0.232,0.311 -0.271,0.501l-1.081,5.152c-0.069,0.329 0.032,0.671 0.268,0.909c0.237,0.239 0.577,0.343 0.907,0.277l5.194,-1.038c0.193,-0.039 0.371,-0.134 0.511,-0.274l6.845,-6.845l-5.528,-5.528Zm1.415,-1.414l5.527,5.528l1.112,-1.111c1.526,-1.527 1.526,-4.001 -0,-5.527c-0.001,-0 -0.001,-0.001 -0.001,-0.001c-1.527,-1.526 -4.001,-1.526 -5.527,-0l-1.111,1.111Z" />
+                <g id="Icon" />
+              </svg>
+            </div>
+            <div className="member-pic">
+              <img
+                src={`${member.gender === "Male" ? defMale : defFemale}`}
+                alt=""
+              />
+              <h6 className="member-id">{member.id}</h6>
+            </div>
+
+            <div className="info-column">
+              <h6>{member.userName || "No data"}</h6>
+              <h6>
+                {calculateAge(member.birthDate) || "No data"}
+              </h6>
+              {console.log(new Date(member.birthDate))}
+              <h6>{member.gender || "No data"}</h6>
+              <h6>
+                {" "}
+                <span
+                  style={{
+                    color: member.status === "active" ? "green" : "red",
+                  }}
+                >
+                  {member.status || "No data"}
+                </span>
+              </h6>
+              <h6>
+                {member.memberShip
+                  ? `${member.memberShip}`
+                  : "No package selected"}
+              </h6>
+              <h6>
+                Payment Status:{" "}
+                <span
+                  style={{
+                    color: member.paymentStatus === "Paid" ? "green" : "red",
+                  }}
+                >
+                  {member.paymentStatus || "No data"}
+                </span>
+              </h6>
+            </div>
+          </div>
+          <div className="secondary-column">
+            <div className="grid-element">
+              <h6>Phone Number: {member.phoneNumber || "No data"}</h6>
+              <h6>Email: {member.email || "No data"}</h6>
+            </div>
+
+            <div className="grid-element">
+              <h6>Start Date: {member.startDate || "No data"}</h6>
+              <h6>
+                {member.memberShip === "Semi-monthly"
+                  ? `Remaining days: ${12 - member.session.length}`
+                  : `Expiry Date: ${member.expiryDate}`}
+              </h6>
+            </div>
+            <div className="grid-element">
+              <h6>Birth Date: {member.birthDate || "No data"}</h6>
+              <h6>
+                Height: {member.height ? `${member.height} cm` : "No data"}
+              </h6>
+              <h6>
+                Weight: {member.weight ? `${member.weight} kg` : "No data"}
+              </h6>
+              <h6>
+                BMI:{" "}
+                {member.weight && member.height
+                  ? `${(member.weight / ((member.height * member.height) / 10000)).toFixed(2)}`
+                  : "No data"}
+              </h6>
+            </div>
+          </div>
         </div>
         <div className="manage-member">
           {/* Mark Attendance Button */}
-          <div className="attendance-button">
-            {/* {message && <p className="message">{message}</p>} */}
-
-            <button
-              onClick={toggleAttendance}
-              style={{
-                backgroundColor: marked ? "red" : "green",
-                color: "white",
-              }}
-            >
-              {marked ? "Unattend" : "Mark Attendance"}
-            </button>
-          </div>
+          <button
+            onClick={toggleAttendance}
+            disabled={member.status == "inactive"}
+            style={{
+              backgroundColor: marked ? "red" : "green",
+              color: "white",
+              height: "30",
+            }}
+            className={`${
+              member.status == "inactive" ? "change-package-disabled" : ""
+            } `}
+          >
+            {marked ? "Unattend" : "Mark Attendance"}
+          </button>
 
           {/* Reset Attendance Button */}
-          <div className="renew">
-            <button
-              onClick={resetAttendance}
-              style={{ backgroundColor: "#ed563b", color: "white" }}
-              disabled={member.status == "active"}
-              className={`${
-                member.status == "active" ? "change-package-disabled" : ""
-              } `}
-            >
-              Renew Subscription
-            </button>
-          </div>
+          <button
+            onClick={resetAttendance}
+            style={{ backgroundColor: "#ed563b", color: "white" }}
+            disabled={member.status == "active"}
+            className={`${
+              member.status == "active" ? "change-package-disabled" : ""
+            } `}
+          >
+            Renew Subscription
+          </button>
 
           {/* Change Plan Placeholder */}
-          <div className="renew">
-            <div className="change-package">
-              <button
-                onClick={toggleExtraFields}
-                disabled={member.status == "active"}
-                className={`${
-                  member.status == "active" ? "change-package-disabled" : ""
-                } `}
-              >
-                Select a new package
-              </button>
-            </div>
-          </div>
+          <button
+            onClick={toggleExtraFields}
+            disabled={member.status == "active"}
+            className={`${
+              member.status == "active" ? "change-package-disabled" : ""
+            } `}
+          >
+            Select a new package
+          </button>
           {/* Delete Member Button */}
-          <div className="delete-member">
-            <button
-              onClick={deleteMember}
-              style={{ backgroundColor: "red", color: "white" }}
-            >
-              Delete Member
-            </button>
-          </div>
+          <button
+            onClick={deleteMember}
+            style={{ backgroundColor: "red", color: "white" }}
+          >
+            Delete Member
+          </button>
         </div>
         {showExtraFields && (
           <div>
@@ -364,7 +422,7 @@ function MemberPage() {
                 </option>
                 {packages.map((pkg) => (
                   <option key={pkg.id} value={pkg.packageName}>
-                    {pkg.packageName} - {pkg.numberOfDays} days
+                    {pkg.packageName}
                   </option>
                 ))}
               </select>
@@ -385,7 +443,6 @@ function MemberPage() {
           </div>
         )}
       </div>
-
       {/* Show modal when the button is clicked */}
       {showEditModal && (
         <EditMemberInfo
