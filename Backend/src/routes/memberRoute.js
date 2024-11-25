@@ -44,7 +44,8 @@ router.get("/getAllMembers", async (req, res) => {
         $or: [
           { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
           { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
-          { phoneNumber: { $regex: searchQuery, $options: 'i' } } // Search by phoneNumber
+          { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
+          { status: { $regex: searchQuery, $options: 'i' } }
         ]
       })
       .skip(skip)
@@ -54,7 +55,8 @@ router.get("/getAllMembers", async (req, res) => {
       $or: [
         { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
         { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
-        { phoneNumber: { $regex: searchQuery, $options: 'i' } } // Search by phoneNumber
+        { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
+        { status: { $regex: searchQuery, $options: 'i' } }
       ]
     });
 
