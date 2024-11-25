@@ -38,7 +38,20 @@ router.post("/addMember", async (request, response) => {
 // Backend API example (Node.js/Express with Mongoose)
 router.get("/getAllMembers", async (req, res) => {
   const { page = 1, rowsPerPage = 10, searchQuery = '' } = req.query;
+
+  const totalMembers = await memberModel.countDocuments({
+    $or: [
+      { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
+      { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
+      { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
+      { status: { $regex: searchQuery, $options: 'i' } }
+    ]
+  });
+
+  const totalPages = Math.ceil(totalMembers / rowsPerPage)
   const skip = (Number(page) - 1) * Number(rowsPerPage);
+  const skiprev = (page != totalPages) ? totalMembers - ((totalPages - Number(page)) * rowsPerPage) : 0
+  
 
   try {
     // Use regex to perform a case-insensitive search across `username`, `id`, and `phoneNumber`
@@ -51,17 +64,10 @@ router.get("/getAllMembers", async (req, res) => {
           { status: { $regex: searchQuery, $options: 'i' } }
         ]
       })
-      .skip(skip)
-      .limit(parseInt(rowsPerPage));
+      .skip(skiprev)
+      .limit(parseInt(page != totalPages ? rowsPerPage : (totalMembers - ((totalPages - 1) * rowsPerPage))));
 
-    const totalMembers = await memberModel.countDocuments({
-      $or: [
-        { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
-        { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
-        { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
-        { status: { $regex: searchQuery, $options: 'i' } }
-      ]
-    });
+    
 
     // If no members found, return empty array and total count 0
     if (members.length === 0) {

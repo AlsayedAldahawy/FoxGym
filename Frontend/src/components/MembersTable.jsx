@@ -40,7 +40,7 @@ export default function StickyHeadTable({ searchQuery }) {
         const response = await axios.get('http://localhost:5000/member/getAllMembers', { params });
         setMembers(response.data.members.reverse());
         setTotalMembers(response.data.totalMembers);
-        console.log("members", response.data.members)
+        // console.log("members", response.data.members)
       } catch (error) {
         console.error('Error fetching members:', error);
       }
