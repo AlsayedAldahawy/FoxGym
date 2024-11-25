@@ -35,6 +35,7 @@ const AddNewMember = () => {
         const response = await fetch("http://localhost:5000/packages");
         const data = await response.json();
         setPackages(data);
+        console.log(data)
       } catch (error) {
         console.error("Error fetching packages:", error);
       }
@@ -73,23 +74,43 @@ const AddNewMember = () => {
         }
       }
 
-      if (["program", "discount", "paied"].includes(name)) {
+      if (["program", "discount", "paied", "memberShip"].includes(name)) {
         // Fetch the selected program's base price
         const selectedPayment = payment.find(
           (item) => item.paymentName === updatedData.program
         );
         const basePrice = selectedPayment ? parseFloat(selectedPayment.price) : 0;
   
+        // Map package names to multipliers
+        const packageMultipliers = {
+          "Annual": 12,
+          "Semi-annual": 6,
+          "Quarterly": 3,
+          "Monthly": 1,
+          "Semi-monthly": 0.6
+        };
+  
+        // Fetch the multiplier for the selected package
+        const selectedPackage = packages.find(
+          (pkg) => pkg.packageName === updatedData.memberShip
+        );
+        const multiplier = selectedPackage
+          ? packageMultipliers[selectedPackage.packageName] || 1
+          : 1;
+  
+        // Adjust the price based on the package multiplier
+        const adjustedPrice = basePrice * multiplier;
+  
         const discount = parseFloat(updatedData.discount || 0);
         const paidAmount = parseFloat(updatedData.paied || 0);
   
-        if (!isNaN(basePrice) && !isNaN(discount) && !isNaN(paidAmount)) {
+        if (!isNaN(adjustedPrice) && !isNaN(discount) && !isNaN(paidAmount)) {
           // Calculate the discounted amount
-          const discountedAmount = (basePrice * discount) / 100;
+          const discountedAmount = (adjustedPrice * discount) / 100;
   
           // Update the remaining amount
           updatedData.remaining = (
-            basePrice - discountedAmount - paidAmount
+            adjustedPrice - discountedAmount - paidAmount
           ).toFixed(2); // Round to 2 decimal places
         }
       }

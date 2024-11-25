@@ -319,13 +319,13 @@ function MemberPage() {
                   : "No package selected"}
               </h6>
               <h6>
-                Payment Status:{" "}
+                Program:{" "}
                 <span
                   style={{
-                    color: member.paymentStatus === "Paid" ? "green" : "red",
+                    color: member.program === "Paid" ? "green" : "red",
                   }}
                 >
-                  {member.paymentStatus || "No data"}
+                  {member.program || "No data"}
                 </span>
               </h6>
             </div>
