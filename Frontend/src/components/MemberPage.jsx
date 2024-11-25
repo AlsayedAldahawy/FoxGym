@@ -180,7 +180,7 @@ function MemberPage() {
       }
 
       setMessage("Member deleted successfully.");
-      navigate("/"); // Navigate to another page after deletion
+      navigate("/members"); // Navigate to another page after deletion
     } catch (error) {
       console.error("Error deleting member:", error);
       setMessage("Something went wrong.");
