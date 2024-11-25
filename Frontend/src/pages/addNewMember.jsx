@@ -72,6 +72,28 @@ const AddNewMember = () => {
           updatedData.expiryDate = expiryDate.toISOString().split("T")[0];
         }
       }
+
+      if (["program", "discount", "paied"].includes(name)) {
+        // Fetch the selected program's base price
+        const selectedPayment = payment.find(
+          (item) => item.paymentName === updatedData.program
+        );
+        const basePrice = selectedPayment ? parseFloat(selectedPayment.price) : 0;
+  
+        const discount = parseFloat(updatedData.discount || 0);
+        const paidAmount = parseFloat(updatedData.paied || 0);
+  
+        if (!isNaN(basePrice) && !isNaN(discount) && !isNaN(paidAmount)) {
+          // Calculate the discounted amount
+          const discountedAmount = (basePrice * discount) / 100;
+  
+          // Update the remaining amount
+          updatedData.remaining = (
+            basePrice - discountedAmount - paidAmount
+          ).toFixed(2); // Round to 2 decimal places
+        }
+      }
+
       return updatedData;
     });
   };
