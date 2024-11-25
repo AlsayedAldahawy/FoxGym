@@ -77,7 +77,7 @@ const Header = () => {
                             cx="300"
                             cy="300"
                             r="280"
-                            fill="red"
+                            fill="#ed563b"
                             clipPath="url(#avoid-antialiasing-bugs)"
                           />
                           <circle cx="300" cy="230" r="115" />

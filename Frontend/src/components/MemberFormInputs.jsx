@@ -81,7 +81,7 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
         <div className="apply-discount">
           <div className="form-group">
             <label>
-              Discount 
+              Discount %
             </label>
             <input
               type="number"
@@ -106,14 +106,18 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
           </div>
           <div className="form-group">
             <label>
-              Remaining <span className="required">*</span>
+              Remaining
             </label>
             <input
               name="remaining"
+              disabled="true"
               placeholder="remaining price"
               className="form-control"
               value={formData.remaining}
               onChange={handleChange}
+              style={
+                {color:"#ed563b"}
+              }
             />
           </div>
         </div>
@@ -238,8 +242,8 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
               fill="none"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M7.293 9.293a1 1 0 0 1 1.414 0L12 12.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
               />
             </svg>
