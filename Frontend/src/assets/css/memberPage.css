@@ -223,11 +223,6 @@ body {
   z-index: 999;
 }
 
-.edit-member h6 {
-  font-size: 10px;
-  color: #ff4800;
-}
-
 .edit-member:hover {
   opacity: 0.5;
 }

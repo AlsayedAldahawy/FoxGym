@@ -277,8 +277,8 @@ function MemberPage() {
                 xmlns:serif="http://www.serif.com/"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 fill="#ff4800"
-                width="20px"
-                height="20px"
+                width="25px"
+                height="25px"
                 viewBox="0 0 32 32"
                 version="1.1"
                 xml:space="preserve"
@@ -298,9 +298,7 @@ function MemberPage() {
 
             <div className="info-column">
               <h6>{member.userName || "No data"}</h6>
-              <h6>
-                {calculateAge(member.birthDate) || "No data"}
-              </h6>
+              <h6>{calculateAge(member.birthDate) || "No data"}</h6>
               {console.log(new Date(member.birthDate))}
               <h6>{member.gender || "No data"}</h6>
               <h6>
