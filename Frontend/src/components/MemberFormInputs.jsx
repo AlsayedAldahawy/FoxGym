@@ -94,11 +94,11 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
           </div>
           <div className="form-group">
             <label>
-              Paied <span className="required">*</span>
+              Paid <span className="required">*</span>
             </label>
             <input
               name="paied"
-              placeholder="price paied"
+              placeholder="price paid"
               className="form-control"
               value={formData.paied}
               onChange={handleChange}
