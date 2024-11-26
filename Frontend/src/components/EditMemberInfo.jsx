@@ -10,7 +10,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
     setFormData({
       gender: member.gender || "",
       email: member.email || "",
-      paymentStatus: member.paymentStatus || "",
+      remaining: member.remaining || "",
       phoneNumber: member.phoneNumber || "",
       birthDate: member.birthDate || "",
       height: member.height || "",
@@ -68,10 +68,10 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
             </select>
           </label>
           <label>
-            Payment Status:
+            Remaining Payment:
             <input
-              name="paymentStatus"
-              value={formData.paymentStatus}
+              name="remaining"
+              value={formData.remaining}
               onChange={handleChange}
             />
           </label>

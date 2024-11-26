@@ -242,8 +242,6 @@ function MemberPage() {
                 name="modify"
                 onClick={() => setShowEditModal(true)}
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:serif="http://www.serif.com/"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
                 fill="#ff4800"
                 width="25px"
                 height="25px"
@@ -284,15 +282,20 @@ function MemberPage() {
                   : "No package selected"}
               </h6>
               <h6>
-                Program:{" "}
+                {member.program
+                  ? `${member.program}`
+                  : "No program selected"}
+              </h6>
+              {member.remaining != '-' && (<h6>
+                Remaining:{" "}
                 <span
                   style={{
-                    color: member.program === "Paid" ? "green" : "red",
+                    color:"red",
                   }}
                 >
-                  {member.program || "No data"}
+                  {member.remaining || "No data"}
                 </span>
-              </h6>
+              </h6>)}
             </div>
           </div>
           <div className="secondary-column">

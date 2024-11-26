@@ -251,7 +251,7 @@ router.post('/renewPackage', async (req, res) => {
 
 
 router.post("/updateInfo", async (req, res) => {
-  const { id, gender, email, phoneNumber, birthDate, height, weight } = req.body;
+  const { id, gender, email, phoneNumber, birthDate, height, weight, remaining } = req.body;
   console.log(req.body);
 
   try {
@@ -267,6 +267,9 @@ router.post("/updateInfo", async (req, res) => {
     if (birthDate) member.birthDate = birthDate;
     if (height) member.height = height;
     if (weight) member.weight = weight;
+    if (remaining) member.remaining = remaining;
+
+    
 
     await member.save();
 
