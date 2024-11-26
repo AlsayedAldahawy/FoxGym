@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
 import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMemberInfo component
+import RenewSubscriptionModal from "../components/RenewSubscriptionModal"
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
 import defMale from "../assets/images/profile_pics/default_m.jpeg";
@@ -15,16 +16,10 @@ function MemberPage() {
   const [member, setMember] = useState(null);
   const [message, setMessage] = useState("");
   const [marked, setMarked] = useState(false);
-  const [packages, setPackages] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState("");
   const [showEditModal, setShowEditModal] = useState(false); // State to control modal visibility
+  const [showRenewModal, setShowRenewModal] = useState(false);
 
-  // change package
-  const [showExtraFields, setShowExtraFields] = useState(false);
 
-  const toggleExtraFields = () => {
-    setShowExtraFields(!showExtraFields);
-  };
 
   useEffect(() => {
     const fetchMember = async () => {
@@ -55,17 +50,6 @@ function MemberPage() {
     return () => clearInterval(timer); // Cleanup on component unmount
   }, [member]);
 
-  useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/packages");
-        setPackages(response.data);
-      } catch (error) {
-        console.error("Error fetching packages:", error);
-      }
-    };
-    fetchPackages();
-  }, []);
 
   const handleEditMember = async (id, updatedData) => {
     try {
@@ -187,46 +171,30 @@ function MemberPage() {
     }
   };
 
-  const handlePackageChange = (e) => {
-    const newPackage = e.target.value;
-    setSelectedPackage(newPackage);
-  };
-
-  const handleSubmitting = async (e) => {
-    e.preventDefault();
-
-    const confirmDelete = window.confirm(
-      `Are you sure you want to change the package to ${selectedPackage}? This action cannot be undone.`
-    );
-
-    if (!confirmDelete) return;
-
-    const newPackage = selectedPackage;
-
+  const handleRenewSubscription = async (memberId, updatedData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/member/changePackage",
-        {
-          id: member.id,
-          newPackage,
-        }
-      );
-
+      const response = await axios.post("http://localhost:5000/member/renewPackage", {
+        id: memberId,
+        ...updatedData,
+      });
       if (response.status === 200) {
-        setMessage("Package changed successfully.");
         setMember((prevMember) => ({
           ...prevMember,
-          memberShip: newPackage,
+          ...updatedData,
         }));
+
+        // Call resetAttendance after successful subscription renewal
+        await resetAttendance();
+
+        return true;
       } else {
-        setMessage(response.data.message || "Error changing package.");
+        console.error("Error renewing subscription:", response.data.message);
+        return false;
       }
     } catch (error) {
-      console.error("Error changing package:", error);
-      setMessage("Something went wrong.");
+      console.error("Error renewing subscription:", error);
+      return false;
     }
-
-    resetAttendance();
   };
 
   function calculateAge(birthDateString) {
@@ -299,7 +267,6 @@ function MemberPage() {
             <div className="info-column">
               <h6>{member.userName || "No data"}</h6>
               {member.birthDate && (<h6>{calculateAge(member.birthDate) || "No data"}</h6>)}
-              {console.log("age", calculateAge(member.birthDate), member.birthDate)}
               <h6>{member.gender || "No data"}</h6>
               <h6>
                 {" "}
@@ -378,7 +345,7 @@ function MemberPage() {
 
           {/* Reset Attendance Button */}
           <button
-            onClick={resetAttendance}
+            onClick={() => setShowRenewModal(true)}
             style={{ backgroundColor: "#ed563b", color: "white" }}
             disabled={member.status == "active"}
             className={`${
@@ -388,16 +355,6 @@ function MemberPage() {
             Renew Subscription
           </button>
 
-          {/* Change Plan Placeholder */}
-          <button
-            onClick={toggleExtraFields}
-            disabled={member.status == "active"}
-            className={`${
-              member.status == "active" ? "change-package-disabled" : ""
-            } `}
-          >
-            Select a new package
-          </button>
           {/* Delete Member Button */}
           <button
             onClick={deleteMember}
@@ -406,40 +363,6 @@ function MemberPage() {
             Delete Member
           </button>
         </div>
-        {showExtraFields && (
-          <div>
-            <form action="">
-              <select
-                value={selectedPackage}
-                onChange={handlePackageChange}
-                style={{ padding: "10px", marginTop: "10px" }}
-                disabled={member.status == "active"}
-              >
-                <option value="" disabled>
-                  Select a new package
-                </option>
-                {packages.map((pkg) => (
-                  <option key={pkg.id} value={pkg.packageName}>
-                    {pkg.packageName}
-                  </option>
-                ))}
-              </select>
-              <button
-                type="submit"
-                style={{ padding: "10px", marginTop: "10px" }}
-                onClick={handleSubmitting}
-                disabled={member.status == "active"}
-                className={`${
-                  member.status == "active" ? "change-package-disabled" : ""
-                } `}
-              >
-                {" "}
-                Submit{" "}
-              </button>
-            </form>
-            <p>Selected Package: {selectedPackage}</p>
-          </div>
-        )}
       </div>
       {/* Show modal when the button is clicked */}
       {showEditModal && (
@@ -447,6 +370,13 @@ function MemberPage() {
           member={member}
           onClose={() => setShowEditModal(false)}
           onUpdate={handleEditMember}
+        />
+      )}
+      {showRenewModal && (
+        <RenewSubscriptionModal
+          member={member}
+          onClose={() => setShowRenewModal(false)}
+          onRenew={handleRenewSubscription}
         />
       )}
     </>

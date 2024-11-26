@@ -19,7 +19,8 @@ const AddNewMember = () => {
     image: "",
     discount: "",
     paied: "",
-    remaining: ""
+    remaining: "",
+    joinDate: ""
   });
 
   const [packages, setPackages] = useState([]);
@@ -134,7 +135,8 @@ const AddNewMember = () => {
       gender,
       discount,
       paied,
-      remaining
+      remaining,
+      joinDate
       
     } = formData;
     if (!userName || !memberShip || !program || !gender || !paied || !remaining)
@@ -154,11 +156,15 @@ const AddNewMember = () => {
       return;
     }
     try {
+      // Add today's date to the formData object
+      const today = new Date().toISOString().split("T")[0];
+
       const response = await fetch("http://localhost:5000/member/addMember", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          joinDate: today, // Set the current date as joinDate
           height: parseFloat(formData.height),
           weight: parseFloat(formData.weight),
         }),
