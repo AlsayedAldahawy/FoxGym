@@ -87,7 +87,7 @@ const AddNewMember = () => {
           "Semi-annual": 6,
           "Quarterly": 3,
           "Monthly": 1,
-          "Semi-monthly": 0.6
+          "Semi-monthly": 0.8
         };
   
         // Fetch the multiplier for the selected package

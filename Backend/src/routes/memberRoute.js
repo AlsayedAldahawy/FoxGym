@@ -49,7 +49,7 @@ router.get("/getAllMembers", async (req, res) => {
   });
 
   const totalPages = Math.ceil(totalMembers / rowsPerPage)
-  const skip = (Number(page) - 1) * Number(rowsPerPage);
+  // const skip = (Number(page) - 1) * Number(rowsPerPage);
   const skiprev = (page != totalPages) ? totalMembers - ((totalPages - Number(page)) * rowsPerPage) : 0
   
 
