@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/addMember", async (request, response) => {
   try {
     const { userName, email, birthDate, memberShip, startDate, expiryDate,
-      phoneNumber, program, height, weight, gender, image, discount, paied, remaining } = request.body;
+      phoneNumber, program, height, weight, gender, image, discount, paied, remaining, joinDate } = request.body;
 
     const { statusCode, data } = await register({
       userName,
@@ -26,7 +26,8 @@ router.post("/addMember", async (request, response) => {
       image,
       discount,
       paied,
-      remaining
+      remaining,
+      joinDate
     });
     response.status(statusCode).json(data);
   } catch (err) {
@@ -217,25 +218,33 @@ router.delete('/delete', async (req, res) => {
   }
 });
 
-router.post('/changePackage', async (req, res) => {
-  const { id, newPackage } = req.body;
+router.post('/renewPackage', async (req, res) => {
+  const { id, memberShip, startDate, expiryDate, program, discount, paied, remaining } = req.body;
 
   try {
-    // Update the member's package
-    const result = await memberModel.updateOne({ id }, { $set: { memberShip: newPackage } });
+    // Update the member's details in the database
+    const result = await memberModel.updateOne(
+      { id },
+      {
+        $set: {
+          memberShip,
+          startDate,
+          expiryDate,
+          program,
+          discount,
+          paied,
+          remaining,
+        },
+      }
+    );
 
-    if (result.modifiedCount === 0) {
-      // If no documents were modified, respond with 404
-      return res.status(404).json({ message: "Member not found or package already set to this value." });
-    }
-
-    // Respond with success if the package was updated
-    res.status(200).json({ message: "Package updated successfully." });
+    // Respond with success if the update was performed
+    res.status(200).json({ message: "Member details updated successfully." });
   } catch (error) {
-    console.error("Error updating package:", error);
+    console.error("Error updating member details:", error);
 
-    // Catch errors and send a server error response
-    res.status(500).json({ message: "Error updating package." });
+    // Handle any server errors
+    res.status(500).json({ message: "Error updating member details." });
   }
 });
 
