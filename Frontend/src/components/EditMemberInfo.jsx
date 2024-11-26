@@ -48,33 +48,42 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
       <div className="modal-content">
         <h3 className="header">Edit Member Information</h3>
         {message && (
-          <p className={message.includes("successfully") ? "success-message" : "error-message"}>
+          <p
+            className={
+              message.includes("successfully")
+                ? "success-message"
+                : "error-message"
+            }
+          >
             {message}
           </p>
         )}
         <form onSubmit={handleSubmit}>
-          <label>
-            Gender:
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Gender
-              </option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </label>
-          <label>
-            Remaining Payment:
-            <input
-              name="remaining"
-              value={formData.remaining}
-              onChange={handleChange}
-            />
-          </label>
+          <div className="field-row">
+            <label className="cell">
+              
+              Gender:
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </label>
+            <label className="cell">
+              Remaining:
+              <input
+                name="remaining"
+                value={formData.remaining}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
           <label>
             Email:
             <input
@@ -84,7 +93,9 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               onChange={handleChange}
             />
           </label>
-          <label>
+          <div className="field-row">
+          
+          <label className="cell">
             Phone Number:
             <input
               type="tel"
@@ -93,7 +104,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               onChange={handleChange}
             />
           </label>
-          <label>
+          <label className="cell">
             Birth Date:
             <input
               type="date"
@@ -102,26 +113,32 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               onChange={handleChange}
             />
           </label>
-          <label>
-            Height (cm):
-            <input
-              type="number"
-              name="height"
-              value={formData.height}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Weight (kg):
-            <input
-              type="number"
-              name="weight"
-              value={formData.weight}
-              onChange={handleChange}
-            />
-          </label>
+          </div>
+          
+          <div className="field-row">
+            <label className="cell">
+              Height (cm):
+              <input
+                type="number"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="cell">
+              Weight (kg):
+              <input
+                type="number"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
           <div className="modal-actions">
-            <button type="submit" className="update-button">Save</button>
+            <button type="submit" className="update-button">
+              Save
+            </button>
             <button type="button" onClick={onClose} className="cancel-button">
               Cancel
             </button>

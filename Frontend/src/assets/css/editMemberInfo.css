@@ -105,4 +105,13 @@
     text-align: center;
     margin-bottom: 20px;
   }
-  
+.field-row{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
+
+.cell {
+  max-width: 48%;
+}
