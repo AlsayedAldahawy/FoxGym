@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../assets/css/discountPayment.css'
+import "../assets/css/discountPayment.css";
 
 const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
   const toggleExtraFields = () => {
@@ -77,13 +77,11 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
           </select>
         </div>
 
-
         <div className="apply-discount">
           <div className="form-group">
-            <label>
-              Discount %
-            </label>
+            <label>Discount %</label>
             <input
+              autoComplete="off"
               type="number"
               name="discount"
               placeholder="Discount %"
@@ -97,6 +95,7 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
               Paid <span className="required">*</span>
             </label>
             <input
+              autoComplete="off"
               name="paied"
               placeholder="price paid"
               className="form-control"
@@ -105,29 +104,25 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
             />
           </div>
           <div className="form-group">
-            <label>
-              Remaining
-            </label>
+            <label>Remaining</label>
             <input
+              autoComplete="off"
               name="remaining"
               disabled="true"
               placeholder="remaining price"
               className="form-control"
               value={formData.remaining}
               onChange={handleChange}
-              style={
-                {color:"#ed563b"}
-              }
+              style={{ color: "#ed563b" }}
             />
           </div>
         </div>
-
-
       </div>
       <div className="form-row">
         <div className="form-group">
           <label>Start Date</label>
           <input
+            autoComplete="off"
             type="date"
             name="startDate"
             className="form-control"
@@ -138,11 +133,11 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
         <div className="form-group">
           <label>Phone Number</label>
           <input
+            autoComplete="off"
             type="text"
             name="phoneNumber"
             placeholder="Enter Phone Number"
             className="form-control"
-            autoComplete="off"
             value={formData.phoneNumber}
             onChange={handleChange}
           />
@@ -156,6 +151,7 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
             <div className="form-group">
               <label>Expiry Date</label>
               <input
+                autoComplete="off"
                 type="date"
                 name="expiryDate"
                 className="form-control"
@@ -206,6 +202,7 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
             <div className="form-group">
               <label>Birth Date</label>
               <input
+                autoComplete="off"
                 type="date"
                 name="birthDate"
                 className="form-control"

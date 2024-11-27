@@ -4,6 +4,7 @@ import "../assets/css/updatePassModal.css"; // Add your modal styles
 export default function UpdatePasswordModal({ onClose, onUpdatePassword }) {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [reNewPassword, setReNewPassword] = useState("");
   const [message, setMessage] = useState(""); // To store success or error message
 
   const handleUpdate = async () => {
@@ -11,6 +12,11 @@ export default function UpdatePasswordModal({ onClose, onUpdatePassword }) {
     if (!oldPassword || !newPassword) {
       setMessage("Both fields are required.");
       return;
+    }
+
+    if (newPassword !== reNewPassword) {
+      setMessage("New password mismatch");
+      return
     }
     try {
       const success = await onUpdatePassword(oldPassword, newPassword);
@@ -50,6 +56,12 @@ export default function UpdatePasswordModal({ onClose, onUpdatePassword }) {
           placeholder="Enter new password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <input className="input"
+          type="password"
+          placeholder="Re-Enter the new password"
+          value={reNewPassword}
+          onChange={(e) => setReNewPassword(e.target.value)}
         />
         <div className="modal-actions">
           <button onClick={handleUpdate} className="update-button">Update</button>

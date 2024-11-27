@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx"; // Update path as per your
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PasswordModal from "../components/passwordModal.jsx";
 import UpdatePasswordModal from "../components/UpdatePasswordModal.jsx";
-import gymImage from "../assets/images/backgrounds/bg_login.jpg";
+import gymImage from "../assets/images/backgrounds/bg10.jpg";
 import mFarag from "../assets/images/users/m_farag.jpg";
 import trainer from "../assets/images/users/Amir.jpg";
 import trainer2 from "../assets/images/users/default.jpg";
@@ -72,7 +72,7 @@ export default function Login() {
           // alert("Login successful!");
           setSelectedAdmin(null);
           
-          navigate("/"); // Navigate to home page
+          navigate("/login"); // Navigate to home page
         } else {
           setErrorMessage("Invalid response from server.");
         }

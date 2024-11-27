@@ -286,7 +286,7 @@ function MemberPage() {
                   ? `${member.program}`
                   : "No program selected"}
               </h6>
-              {member.remaining != '-' && (<h6>
+              {member.remaining > 0 && (<h6>
                 Remaining:{" "}
                 <span
                   style={{

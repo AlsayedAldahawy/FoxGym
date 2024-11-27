@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-import gymImage from "../assets/images/cover1.jpg";
+import gymImage from "../assets/images/backgrounds/bg01.jpg";
 import '../assets/css/header.css';
 
 

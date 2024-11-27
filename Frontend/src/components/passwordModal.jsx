@@ -38,6 +38,7 @@ export default function PasswordModal({
           Enter Password for {selectedAdmin?.userName}
         </Typography>
         <input
+          autoComplete="off"
           onKeyDown={handleKeyDown}
           type="password"
           value={password}
