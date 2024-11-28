@@ -152,7 +152,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: black;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
   background-color: #e7dcc0;
   -webkit-user-select: none;
