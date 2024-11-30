@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-import gymImage from "../assets/images/backgrounds/bg01.jpg";
-import '../assets/css/header.css';
+import gymImage from "../assets/images/backgrounds/bg_home.jpg";
+// import '../assets/css/header.css';
 
 
 export default function Home() {

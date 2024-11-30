@@ -90,8 +90,18 @@ BMI section
   .bmi-section .col-lg-6 {
     flex: 0 0 100%; /* Take up 100% width on mobile */
   }
+}
 
-  .bmi-image {
-    height: 300px; /* Adjust height for smaller screens */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.bmi-icon {
+  display: inline-block;
+  animation: bounce 2s infinite;
 }

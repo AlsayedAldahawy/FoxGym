@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MemberFormInputs from "../components/MemberFormInputs.jsx"; // Import the new MemberFormInputs component
 import "../assets/css/addMember.css";
-import bg from "../assets/images/backgrounds/bg_add_member.jpg";
+import bg from "../assets/images/backgrounds/bg_reg2.jpg";
 const AddNewMember = () => {
   const [formData, setFormData] = useState({
     userName: "",
@@ -188,6 +188,7 @@ const AddNewMember = () => {
     <>
       <div className="background">
         <img src={bg} alt="" />
+        <div className="bg-shadow"></div>
       </div>
 
       <div className="form-container">
