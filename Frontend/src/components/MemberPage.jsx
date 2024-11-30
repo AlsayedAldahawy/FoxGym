@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
 import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMemberInfo component
-import RenewSubscriptionModal from "../components/RenewSubscriptionModal"
+import RenewSubscriptionModal from "../components/RenewSubscriptionModal";
+import DailySessionTracker from "../components/DailySessionTracker";
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
-import defMale from "../assets/images/profile_pics/default_m.jpeg";
-import defFemale from "../assets/images/profile_pics/default_f.jpeg";
+import defMale from "../assets/images/profile_pics/default_m-removebg.png";
+import defFemale from "../assets/images/profile_pics/default_f-removebg.png";
+import bg from "../assets/images/backgrounds/bg04.jpg";
 
 function MemberPage() {
   const { id } = useParams();
@@ -18,8 +20,6 @@ function MemberPage() {
   const [marked, setMarked] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false); // State to control modal visibility
   const [showRenewModal, setShowRenewModal] = useState(false);
-
-
 
   useEffect(() => {
     const fetchMember = async () => {
@@ -49,7 +49,6 @@ function MemberPage() {
 
     return () => clearInterval(timer); // Cleanup on component unmount
   }, [member]);
-
 
   const handleEditMember = async (id, updatedData) => {
     try {
@@ -173,10 +172,13 @@ function MemberPage() {
 
   const handleRenewSubscription = async (memberId, updatedData) => {
     try {
-      const response = await axios.post("http://localhost:5000/member/renewPackage", {
-        id: memberId,
-        ...updatedData,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/member/renewPackage",
+        {
+          id: memberId,
+          ...updatedData,
+        }
+      );
       if (response.status === 200) {
         setMember((prevMember) => ({
           ...prevMember,
@@ -234,6 +236,10 @@ function MemberPage() {
 
   return (
     <>
+      <div className="background">
+        <img src={bg} alt="" />
+        <div className="bg-shadow"></div>
+      </div>
       <div className="member-page">
         <div className="main-row">
           <div className="main-column">
@@ -254,20 +260,31 @@ function MemberPage() {
                 <g id="Icon" />
               </svg>
             </div>
-            <div className="member-pic">
-              <img
-                src={`${member.gender === "Male" ? defMale : defFemale}`}
-                alt=""
-              />
+            <div className="member-upper">
+              <div
+                className="member-pic"
+                style={
+                  member.status === "inactive" ? { borderColor: "silver" } : {}
+                }
+              >
+                <img
+                  src={`${member.gender === "Male" ? defMale : defFemale}`}
+                  alt=""
+                />
+              </div>
+
+              <h6 className="member-id">{member.userName}</h6>
               <h6 className="member-id">{member.id}</h6>
             </div>
 
             <div className="info-column">
-              <h6>{member.userName || "No data"}</h6>
-              {member.birthDate && (<h6>{calculateAge(member.birthDate) || "No data"}</h6>)}
-              <h6>{member.gender || "No data"}</h6>
+              {member.birthDate && (
+                <h6>Age: {calculateAge(member.birthDate) || "No data"}</h6>
+              )}
+              <h6>Gender: {member.gender || "No data"}</h6>
               <h6>
                 {" "}
+                Status:{" "}
                 <span
                   style={{
                     color: member.status === "active" ? "green" : "red",
@@ -277,25 +294,31 @@ function MemberPage() {
                 </span>
               </h6>
               <h6>
+                Program:{" "}
+                {member.program ? `${member.program}` : "No program selected"}
+              </h6>
+              <h6>
+                Subscription Package:{" "}
                 {member.memberShip
                   ? `${member.memberShip}`
                   : "No package selected"}
               </h6>
-              <h6>
-                {member.program
-                  ? `${member.program}`
-                  : "No program selected"}
-              </h6>
-              {member.remaining > 0 && (<h6>
-                Remaining:{" "}
-                <span
-                  style={{
-                    color:"red",
-                  }}
-                >
-                  {member.remaining || "No data"}
-                </span>
-              </h6>)}
+
+              {member.remaining > 0 && (
+                <h6>
+                  Remaining:{" "}
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {member.remaining || "No data"}
+                  </span>
+                </h6>
+              )}
+            </div>
+            <div>
+              <DailySessionTracker member={member} />
             </div>
           </div>
           <div className="secondary-column">
@@ -343,7 +366,7 @@ function MemberPage() {
               member.status == "inactive" ? "change-package-disabled" : ""
             } `}
           >
-            {marked ? "Unattend" : "Mark Attendance"}
+            {marked ? "Unmark Attendance" : "Mark Attendance"}
           </button>
 
           {/* Reset Attendance Button */}

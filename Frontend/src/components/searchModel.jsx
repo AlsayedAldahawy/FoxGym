@@ -21,7 +21,7 @@ const SearchWrapper = styled("div")({
 });
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "black",
+  color: "white",
   padding: theme.spacing(1, 1, 1, 6), // Add padding to make space for the icon
   flex: 1, // Allow the input to grow
   "&::placeholder": {

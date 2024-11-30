@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx"; // Update path as per your project
 
 import "../assets/css/header.css";
 
-
 const Header = () => {
-  const { isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
   return (
     <>
@@ -34,26 +34,35 @@ const Header = () => {
                 </Link>
                 {/* Menu */}
                 <ul className="nav">
-                  <li className="scroll-to-section">
-                    <Link to="/" className="active">
+                  <li className="">
+                    <Link
+                      to="/"
+                      className={`${location.pathname == "/" || location.pathname.toLocaleLowerCase() == "/home" ? "active" : ""}`}
+                    >
                       Home
                     </Link>
                   </li>
-                  <li className="scroll-to-section">
-                    <Link to="/bmi-calculator">BMI Calculator</Link>
+                  <li>
+                    <Link to="/bmi-calculator"
+                    className={`${location.pathname.toLocaleLowerCase() == "/bmi-calculator" ? "active" : ""}`}
+                    >BMI Calculator</Link>
+                  </li>
+                  <li className="active">
+                    <Link to="/members"
+                    className={`${location.pathname.toLocaleLowerCase() == "/members" ? "active" : ""}`}>Members</Link>
                   </li>
                   <li className="scroll-to-section">
-                    <Link to="/members">Members</Link>
-                  </li>
-                  <li className="scroll-to-section">
-                    <Link to="/coaches">Coaches</Link>
+                    <Link to="/coaches"
+                    className={`${location.pathname.toLocaleLowerCase() == "/coaches" ? "active" : ""}`}>Coaches</Link>
                   </li>
                   {!isAuthenticated ? (
                     <li className="main-button">
-                      <Link to="/login">Login</Link>
+                      <Link to="/login"
+                      >Login</Link>
                     </li>
                   ) : (
-                    <Link to="/login">
+                    <Link to="/login"
+                    className={`${location.pathname.toLocaleLowerCase() == "/login" ? "active" : ""}`}>
                       <li className="loggedin-icon">
                         <svg
                           version="1.1"

@@ -76,8 +76,8 @@ export default function Bmi() {
               y="0px"
               width={100}
               viewBox="0 0 256 256"
-              enable-background="new 0 0 256 256"
-              xml:space="preserve"
+              enableBackground="new 0 0 256 256"
+              xmlSpace="preserve"
             >
               <metadata>
                 {" "}
@@ -146,7 +146,7 @@ export default function Bmi() {
                 name="results"
                 placeholder="Results"
                 className="form-control"
-                readOnly="true"
+                readOnly={true}
                 value={bmiResult}
               />
             </div>
