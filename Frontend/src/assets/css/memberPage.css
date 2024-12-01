@@ -5,7 +5,7 @@ body {
 }
 
 .member-page {
-  transform: translate(0, 12%);
+  transform: translate(0, 15%);
   transition: border 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   border-radius: 2%;
@@ -288,12 +288,19 @@ body {
 }
 
 .react-calendar-heatmap .color-empty {
-  fill: #ebedf0;
+  fill: #747577c3 !important;
+
 }
 .react-calendar-heatmap .color-scale-1 {
   fill: #ed563b;
 }
 
+
 .inactive-border{
   border-color: silver;
+}
+
+.attendance h3{
+  justify-self: center;
+  margin-bottom: 5px;
 }

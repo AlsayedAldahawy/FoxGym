@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import StickyHeadTable from "../components/MembersTable";
 import "../assets/css/Members.css";
 import SearchField from "../components/searchModel";
-import bg from "../assets/images/backgrounds/bg01.jpg"
+import bg from "../assets/images/backgrounds/bg_login.png"
 
 const Members = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,7 +28,7 @@ const Members = () => {
             <button className="add-member-btn">Add New Member</button>
           </Link>
         </div>
-        <StickyHeadTable searchQuery={searchQuery} />
+        <StickyHeadTable searchQuery={searchQuery}/>
       </div>
       {/* <div className="background_members">
         <img src={bg} alt="" />

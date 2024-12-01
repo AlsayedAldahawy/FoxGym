@@ -17,95 +17,184 @@
   align-items: center; /* Vertically centers the grid items */
 }
 
-.coaches-text h6{
-    position: absolute;
-    top:18%;
-    left: 50%;
-    transform: translate(-50%, -60%);
-    margin-top: 0px;
-    margin-bottom: 25px;
-    font-size: 50px;
-    text-transform: uppercase;
-    font-weight: 800;
-    color:aliceblue;
-    letter-spacing: 1px;
+.coaches-text h6 {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  margin-top: 0px;
+  margin-bottom: 25px;
+  font-size: 50px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: aliceblue;
+  letter-spacing: 1px;
 }
 
-.coach-button{
-    height: 50px;
-    width: fit-content;
-    /* background-color: #ed563baa; */
-    border-radius: 5px;
-    position: absolute;
-    top:22%;
-    left: 55px;
-    transform: translate(-50%, -60%);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    /* border: #ed563b solid 2px; */
-    flex-direction: column;
-    flex-wrap: nowrap;
-    
+.coach-button {
+  height: 50px;
+  width: fit-content;
+  /* background-color: #ed563baa; */
+  border-radius: 5px;
+  position: absolute;
+  top: 22%;
+  left: 55px;
+  transform: translate(-50%, -60%);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* border: #ed563b solid 2px; */
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
-.settings-icon, .icon-text{
-    height: 20px;
-    width: 20px;
-    fill: aliceblue;
-    color: aliceblue;
-    font-size: 10px;
-    margin: 2px 2px;
-    margin-left: 3px;
-    transition:all ease-in .3s ;
+.settings-icon,
+.icon-text {
+  height: 20px;
+  width: 20px;
+  fill: aliceblue;
+  color: aliceblue;
+  font-size: 10px;
+  margin: 2px 2px;
+  margin-left: 3px;
+  transition: all ease-in 0.3s;
 }
 
-.icon-text{
-    width: fit-content;
+.icon-text {
+  width: fit-content;
 }
 
+.settings-icon:hover {
+  transform: rotate(45deg);
+  fill: #ed563b;
+}
+
+.coaches-page {
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  position: absolute;
+  width: 100%;
+  transform: translate(0, 50%);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
+}
+
+.coaches-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
 
 .coach-card {
-  background-color: #233142;
-  height: 300px;
-  width: 250px;
-  min-width: 250px;
-  margin: 10px 0;
-  padding: 5px;
-  border: 2px #e3e3e3 solid;
+  background-color: #fff;
   border-radius: 10px;
-
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s;
 }
 
-.coach-pic {
-  height: 150px;
-  width: 150px;
-
-  background-color: black;
-  border-radius: 50% 50%;
+.coach-card:hover {
+  transform: scale(1.05);
 }
 
-.settings-icon:hover{
-    transform: rotate(45deg);
-    fill: #ed563b;
+
+.coach-info {
+  padding: 15px;
+}
+
+.coach-info h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.coach-info p {
+  color: #666;
+  margin: 5px 0;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+.bouncing-text {
+  display: inline-block;
+  animation: bounce 2s infinite;
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.fade-text {
+  animation: fade 3s infinite;
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 30%;
+  }
+}
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #ed563b;
+  }
+}
+.typewriter-text {
+  overflow: hidden; /* Ensures the text is hidden until it's "typed" */
+  border-right: 0.15em solid #ed563b; /* Creates the typing cursor */
+  white-space: nowrap; /* Prevents text from wrapping */
+  animation:
+    typing 1.5s steps(50, end),
+    blink-caret 0.75s step-end infinite;
+  font-size: 2rem;
+  color: #333;
 }
 @media (max-width: 1135px) {
-    .coaches-board {
-      grid-template-columns: repeat(3, minmax(200px, 1fr));
-    }
+  .coaches-board {
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
   }
-
+}
 
 @media (max-width: 768px) {
   .coaches-board {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
   }
-  .coaches-text h6{
+  .coaches-text h6 {
     font-size: 30px;
   }
 }
@@ -116,3 +205,15 @@
   }
 }
 
+.coach-pic{
+  width: 100%;
+
+}
+
+.coach-pic img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}

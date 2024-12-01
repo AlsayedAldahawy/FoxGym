@@ -70,7 +70,7 @@ export default function StickyHeadTable({ searchQuery }) {
   };
 
   return (
-    <Paper sx={{ width: "90%", mx: "auto", overflow: "hidden" }}>
+    <Paper sx={{ width: "90%", mx: "auto", overflow: "hidden", border: "2px solid #ed563b" }}>
       <TableContainer sx={{ minHeight: 580, width: "90%", mx: "auto" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

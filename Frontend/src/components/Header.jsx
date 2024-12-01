@@ -71,7 +71,7 @@ const Header = () => {
                           fill="white"
                           viewBox="0 0 600 600"
                         >
-                          <title>Abstract user icon</title>
+                          <title>Profile</title>
 
                           <defs>
                             <clipPath id="circular-border">

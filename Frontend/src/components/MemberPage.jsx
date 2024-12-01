@@ -7,9 +7,9 @@ import RenewSubscriptionModal from "../components/RenewSubscriptionModal";
 import DailySessionTracker from "../components/DailySessionTracker";
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
-import defMale from "../assets/images/profile_pics/default_m-removebg.png";
-import defFemale from "../assets/images/profile_pics/default_f-removebg.png";
-import bg from "../assets/images/backgrounds/bg04.jpg";
+import defMale from "../assets/images/profile_pics/default_m-removebg.jpeg";
+import defFemale from "../assets/images/profile_pics/default_f-removebg.jpeg";
+import bg from "../assets/images/backgrounds/bg_bmi.jpg";
 
 function MemberPage() {
   const { id } = useParams();
@@ -274,7 +274,9 @@ function MemberPage() {
               </div>
 
               <h6 className="member-id">{member.userName}</h6>
-              <h6 className="member-id">{member.id}</h6>
+              <h6 className="member-id"
+              style={{fontSize:"15px"}}
+              >{member.id}</h6>
             </div>
 
             <div className="info-column">
@@ -317,7 +319,7 @@ function MemberPage() {
                 </h6>
               )}
             </div>
-            <div>
+            <div className="attendance">
               <DailySessionTracker member={member} />
             </div>
           </div>
