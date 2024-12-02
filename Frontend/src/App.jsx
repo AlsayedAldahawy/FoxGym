@@ -12,7 +12,6 @@ import Coaches from "./components/Coaches";
 import Login from "./pages/Login";
 import Home from "./components/Home";
 import Owner from "./components/Owner";
-import Trainer from "./components/Trainer";
 import AddNewMember from "./pages/addNewMember";
 import AuthProvider from "./context/AuthContext"; // Update path as per your project
 import ProtectedRoute from "./components/protectedRoute"; // Update path as per your project
@@ -30,7 +29,7 @@ const App = () => {
           <Route path="/home" element={<Home />} />
 
           <Route path="/bmi-calculator" element={<BMICalculator />} />
-          <Route path="/coaches" element={<Coaches />} />
+          {/* <Route path="/coaches" element={<Coaches />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Login/>} />
 

@@ -11,6 +11,7 @@ import trainer3 from "../assets/images/users/sayed.jpg";
 import femCoach from "../assets/images/users/fem.jpeg";
 import axios from "axios";
 import "../assets/css/login.css";
+import UpdateCoachInfo from "../components/UpdateCoachinfo.jsx";
 
 export default function Login() {
   const [admins, setAdmins] = useState([]);
@@ -18,8 +19,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
+  const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
+  const [message, setMessage] = useState("");
+  const [coach, setCoach] = useState({});
+
   const { isAuthenticated, login, logout, username } = useAuth();
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -27,12 +32,14 @@ export default function Login() {
         const response = await fetch("http://localhost:5000/admin");
         const data = await response.json();
         setAdmins(data);
+        setCoach(data.find((coach) => coach.userName === username));
+        // console.log("admins", data, username, "\n coach", coach);
       } catch (error) {
         console.error("Error fetching admin data:", error);
       }
     };
     fetchAdmins();
-  }, []);
+  }, [isAuthenticated]);
 
   const userImages = {
     "Mahmoud Farag": mFarag,
@@ -44,14 +51,14 @@ export default function Login() {
 
   const handleAdminClick = (admin) => {
     setSelectedAdmin(admin);
+    // console.log("selected admin", selectedAdmin, admin)
     setPassword("");
     setErrorMessage("");
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter')
-      handleLogin();
-  }
+    if (event.key === "Enter") handleLogin();
+  };
 
   const handleLogin = async () => {
     if (!selectedAdmin || !password) {
@@ -71,7 +78,7 @@ export default function Login() {
           login(result.username, result.token);
           // alert("Login successful!");
           setSelectedAdmin(null);
-          
+
           navigate("/login"); // Navigate to home page
         } else {
           setErrorMessage("Invalid response from server.");
@@ -86,7 +93,8 @@ export default function Login() {
 
   const handleLogout = () => {
     logout();
-    setSelectedAdmin(null); // Reset selected admin
+    setSelectedAdmin(null);
+    setCoach(null);
     setPassword(""); // Clear password
     setErrorMessage(""); // Clear error message
     alert("You have been logged out.");
@@ -94,11 +102,18 @@ export default function Login() {
 
   const handleUpdatePassword = async (oldPassword, newPassword) => {
     try {
-      const response = await fetch("http://localhost:5000/admin/updatePassword", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userName: username, oldPassword, newPassword }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/admin/updatePassword",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userName: username,
+            oldPassword,
+            newPassword,
+          }),
+        }
+      );
 
       const result = await response.json();
       if (response.status === 200) {
@@ -113,15 +128,49 @@ export default function Login() {
   };
 
   const openUpdatePasswordModal = () => {
-    console.log("Opening update password modal"); // Debug log
     setShowUpdatePasswordModal(true);
   };
 
   const closeUpdatePasswordModal = () => {
-    console.log("Closing update password modal");
     setShowUpdatePasswordModal(false);
   };
 
+  const openUpdateInfoModal = () => {
+    console.log("Opening update info modal");
+    setShowUpdateInfoModal(true);
+  };
+
+  const closeUpdateInfoModal = () => {
+    console.log("Closing update info modal");
+    setShowUpdateInfoModal(false);
+  };
+
+  const handleUpdateCoachInfo = async (userName, updatedData) => {
+    console.log("xxx", userName, updatedData);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/admin/updateInfo",
+        {
+          userName,
+          ...updatedData,
+        }
+      );
+
+      if (response.status === 200) {
+        setMessage("Coach information updated successfully!");
+        setCoach((prev) => ({
+          ...prev,
+          ...updatedData,
+        }));
+        setShowUpdateInfoModal(false);
+      } else {
+        setMessage("Failed to update Coach information.");
+      }
+    } catch (error) {
+      console.error("Error updating Coach info:", error);
+      setMessage("An error occurred. Please try again.");
+    }
+  };
   return (
     <>
       <div className="main-banner" id="top">
@@ -130,17 +179,34 @@ export default function Login() {
           <div className="caption">
             {/* Show Logout if Authenticated */}
             {isAuthenticated ? (
-              <>
-                <h3 className="after-login">Welcome, {username}!</h3>
-                <div className="logout-updatepass">
-                  <button onClick={openUpdatePasswordModal} className="updatePass-button">
-                    Update Password
-                  </button>
-                  <button onClick={handleLogout} className="logout-button">
-                    Logout
-                  </button>
-                </div>
-              </>
+              <div className="after-login-container">
+                {" "}
+                <h3 className="welcome-message">Welcome, {username}!</h3>{" "}
+                <div className="action-buttons">
+                  {" "}
+                  <button
+                    onClick={openUpdatePasswordModal}
+                    className="action-button"
+                  >
+                    {" "}
+                    Change Password{" "}
+                  </button>{" "}
+                  <button
+                    onClick={openUpdateInfoModal}
+                    className="action-button"
+                  >
+                    {" "}
+                    Update your Info{" "}
+                  </button>{" "}
+                  <button
+                    onClick={handleLogout}
+                    className="action-button logout-button"
+                  >
+                    {" "}
+                    Logout{" "}
+                  </button>{" "}
+                </div>{" "}
+              </div>
             ) : (
               <div className="owner-trainer">
                 <div className="admins">
@@ -200,6 +266,15 @@ export default function Login() {
         />
       )}
 
+      {/* Update Info Modal */}
+      {showUpdateInfoModal && (
+        <UpdateCoachInfo
+          coach={coach}
+          onClose={closeUpdateInfoModal}
+          onUpdate={handleUpdateCoachInfo}
+        />
+      )}
+
       {/* Password Modal */}
       {!isAuthenticated && (
         <PasswordModal
@@ -209,9 +284,7 @@ export default function Login() {
           errorMessage={errorMessage}
           handleLogin={handleLogin}
           handleKeyDown={handleKeyDown}
-          onClose={() => setSelectedAdmin(null)
-            
-          }
+          onClose={() => setSelectedAdmin(null)}
         />
       )}
     </>
