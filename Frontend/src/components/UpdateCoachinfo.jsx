@@ -97,7 +97,9 @@ const UpdateCoachInfo = React.memo(({ coach = {}, onClose, onUpdate }) => {
               />
             </label>
           </div>
-          <label>
+          <div className="field-row">
+
+          <label className="cell">
             Email:
             <input
               type="email"
@@ -106,6 +108,16 @@ const UpdateCoachInfo = React.memo(({ coach = {}, onClose, onUpdate }) => {
               onChange={handleChange}
             />
           </label>
+          <label className="cell">
+              Years of experience:
+              <input
+                type="number"
+                name="yearsOfExperience"
+                value={formData.yearsOfExperience}
+                onChange={handleChange}
+              />
+            </label>
+            </div>
           <div className="field-row">
             <label className="cell">
               Phone Number:
@@ -148,17 +160,7 @@ const UpdateCoachInfo = React.memo(({ coach = {}, onClose, onUpdate }) => {
             </label>
           </div>
 
-          <div className="field-row">
-            <label className="cell">
-              Years of experience:
-              <input
-                type="number"
-                name="yearsOfExperience"
-                value={formData.yearsOfExperience}
-                onChange={handleChange}
-              />
-            </label>
-            <label className="cell">
+            <label>
               Bio:
               <input
                 type="text"
@@ -167,7 +169,6 @@ const UpdateCoachInfo = React.memo(({ coach = {}, onClose, onUpdate }) => {
                 onChange={handleChange}
               />
             </label>
-          </div>
           <div className="modal-actions">
             <button type="submit" className="update-button">
               Save
