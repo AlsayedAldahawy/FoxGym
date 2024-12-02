@@ -100,7 +100,7 @@ const AddNewMember = () => {
           : 1;
   
         // Adjust the price based on the package multiplier
-        const adjustedPrice = basePrice * multiplier;
+        const adjustedPrice = selectedPackage.packageName == "Semi-monthly" && updatedData.program == "Lifting + Treadmill"? 250 : basePrice * multiplier;
   
         const discount = parseFloat(updatedData.discount || 0);
         const paidAmount = parseFloat(updatedData.paied || 0);
