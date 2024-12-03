@@ -21,7 +21,6 @@
   background-color: #ffffff;
   opacity: 0.5;
   transition: all 0.3s;
-
 }
 
 .userButton img:hover {
@@ -79,7 +78,6 @@
   }
 }
 
-
 .admin-login {
   text-align: center;
 }
@@ -125,39 +123,10 @@
   margin-top: 10px;
 }
 
-.after-login {
-  color: white;
-  font-size: 55px;
-  font-weight: bold;
-  margin-bottom: 50px;
-}
-
-.logout-button {
-  background-color: darkred;
-  border-radius: 15px;
-  width: 170px;
-  height: 75px;
-  font-weight: bold;
-  font-size: 30px;
-  color: #ffffff;
-}
-
 .logout-updatepass {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-}
-
-.updatePass-button {
-  background-color: green;
-  font-size: 30px;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  font-weight: bold;
-  color: #ffffff;
-
 }
 
 .after-login-container {
@@ -200,4 +169,11 @@
 
 .logout-button:hover {
   background-color: #a71d2a;
+}
+
+.backup-button {
+  background-color: #ffc107; /* Different color for backup button */
+}
+.backup-button:hover {
+  background-color: #e0a800;
 }

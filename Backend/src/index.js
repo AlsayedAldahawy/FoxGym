@@ -6,6 +6,7 @@ import memberRoute from './routes/memberRoute.js';
 import packageRoute from './routes/packagesRoute.js';
 import adminRoute from './routes/adminRoute.js'
 import paymentRoute from './routes/paymentRoute.js'
+import backupRoute from "./routes/backupRoute.js";
 import { seedInitialPackages } from './services/packagesService.js' ;
 import { seedInitialAdmin } from './services/adminService.js';
 import { seedInitialPayment } from './services/paymentService.js'
@@ -30,6 +31,8 @@ app.use("/member", memberRoute);
 app.use("/packages", packageRoute)
 app.use("/admin", adminRoute);
 app.use("/payment", paymentRoute)
+app.use("/backup", backupRoute)
+
 
 
 

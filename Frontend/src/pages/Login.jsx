@@ -22,6 +22,7 @@ export default function Login() {
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [message, setMessage] = useState("");
   const [coach, setCoach] = useState({});
+  const [filePath, setFilePath] = useState("D:\\portfolio\\db");
 
   const { isAuthenticated, login, logout, username } = useAuth();
   const navigate = useNavigate();
@@ -54,6 +55,22 @@ export default function Login() {
     // console.log("selected admin", selectedAdmin, admin)
     setPassword("");
     setErrorMessage("");
+  };
+
+  const handleBackup = async () => {
+    if (!filePath) {
+      alert("Please enter a file path.");
+      return;
+    }
+    try {
+      const response = await axios.post("http://localhost:5000/backup", {
+        filePath,
+      });
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error during backup:", error);
+      alert("Backup failed");
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -180,32 +197,39 @@ export default function Login() {
             {/* Show Logout if Authenticated */}
             {isAuthenticated ? (
               <div className="after-login-container">
-                {" "}
-                <h3 className="welcome-message">Welcome, {username}!</h3>{" "}
+                <h3 className="welcome-message">Welcome, {username}!</h3>
                 <div className="action-buttons">
-                  {" "}
                   <button
                     onClick={openUpdatePasswordModal}
                     className="action-button"
                   >
-                    {" "}
-                    Change Password{" "}
-                  </button>{" "}
+                    Change Password
+                  </button>
                   <button
                     onClick={openUpdateInfoModal}
                     className="action-button"
                   >
-                    {" "}
-                    Update your Info{" "}
-                  </button>{" "}
+                    Update your Info
+                  </button>
+                  <button
+                    onClick={handleBackup}
+                    className="action-button backup-button"
+                  >
+                    Create Data Backup
+                  </button>
+                  {/* <input
+                    type="text"
+                    placeholder="Enter save path"
+                    value={filePath}
+                    onChange={(e) => setFilePath(e.target.value)}
+                  /> */}
                   <button
                     onClick={handleLogout}
                     className="action-button logout-button"
                   >
-                    {" "}
-                    Logout{" "}
-                  </button>{" "}
-                </div>{" "}
+                    Logout
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="owner-trainer">
