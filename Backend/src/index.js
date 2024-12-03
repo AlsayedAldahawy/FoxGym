@@ -21,7 +21,7 @@ app.use(cors());
 
 
 mongoose
-    .connect('mongodb://localhost:27017/FoxGem')
+    .connect('mongodb://localhost:27017/FoxGym')
     .then(() => console.log('Mongo Connected Successfully!'))
     .catch((err) => console.log('Failed to connect to MongoDB', err));
 

@@ -42,3 +42,7 @@ export const register = async ({ userName, email, birthDate, memberShip, startDa
     throw err;
   }
 };
+
+export const getAllmembers = async () => {
+  return await memberModel.find()
+}
