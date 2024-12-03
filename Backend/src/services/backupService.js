@@ -12,18 +12,28 @@ import fs from 'fs';
 // mongoose.connection.on('error', (err) => { console.error('MongoDB connection error:', err); });
 
 
-export default async function backupData(filePath) {
+export default async function backupData(filePath, username) {
   try {
-    const admins = await getAlladmins(); 
-    const members = await getAllmembers(); 
-    const packages = await getAllPackages(); 
-    const payments = await getAllPayment(); 
-    
+    const date = new Date().toISOString()
+    const admins = await getAlladmins();
+    const members = await getAllmembers();
+    const packages = await getAllPackages();
+    const payments = await getAllPayment();
+
+    console.log("username: ",username)
+
+    const adminsWithMetadata = { createdBy: username, createdAt: date, data: admins };
+    const membersWithMetadata = { createdBy: username, createdAt: date, data: members };
+    const packagesWithMetadata = { createdBy: username, createdAt: date, data: packages };
+    const paymentsWithMetadata = { createdBy: username, createdAt: date, data: payments };
+
+
+    const dateForm = date.replace(/:/g, '');
     // Save each file and capture errors 
-    await saveFile(`${filePath}\\admins.json`, admins);
-    await saveFile(`${filePath}\\members.json`, members);
-    await saveFile(`${filePath}\\packages.json`, packages);
-    await saveFile(`${filePath}\\payments.json`, payments);
+    await saveFile(`${filePath}\\admins_${dateForm}.json`, adminsWithMetadata);
+    await saveFile(`${filePath}\\members_${dateForm}.json`, membersWithMetadata);
+    await saveFile(`${filePath}\\packages_${dateForm}.json`, packagesWithMetadata);
+    await saveFile(`${filePath}\\payments_${dateForm}.json`, paymentsWithMetadata);
   } catch (error) {
     console.error("Error during backup:", error);
     throw new Error(`Backup failed: ${error.message}`);

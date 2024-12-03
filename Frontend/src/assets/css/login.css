@@ -146,6 +146,7 @@
 .action-buttons {
   display: flex;
   gap: 1rem;
+  flex-direction: column;
 }
 
 .action-button {
@@ -157,6 +158,15 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  align-content: center;
+  padding-left: 4rem;
 }
 
 .action-button:hover {
@@ -171,9 +181,14 @@
   background-color: #a71d2a;
 }
 
-.backup-button {
-  background-color: #ffc107; /* Different color for backup button */
+/* .backup-button {
+  background-color: #ffc107;
 }
 .backup-button:hover {
   background-color: #e0a800;
+} */
+
+.action-button svg{
+  position: absolute;
+  left: 1rem;
 }

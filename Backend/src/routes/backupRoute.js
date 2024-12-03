@@ -4,13 +4,13 @@ import backupData from '../services/backupService.js'; // Adjust the path to you
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { filePath } = req.body;
-  if (!filePath) {
+  const { filePath, username } = req.body;
+  if (!filePath || !username) {
     return res.status(400).json({ message: 'File path is required' });
   }
 
   try {
-    await backupData(filePath); res.status(200).json({ message: 'Backup successful' });
+    await backupData(filePath, username); res.status(200).json({ message: 'Backup successful' });
   }
   catch (error) {
     console.error('Error during backup:', error);

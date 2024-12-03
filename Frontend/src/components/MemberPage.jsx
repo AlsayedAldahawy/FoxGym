@@ -78,7 +78,7 @@ function MemberPage() {
 
   const toggleAttendance = async () => {
     if (!member) return;
-
+    console.log("id", member.id)
     try {
       const today = new Date().toISOString().split("T")[0];
       const url = marked
@@ -86,6 +86,7 @@ function MemberPage() {
         : "http://localhost:5000/member/attendance";
 
       const response = await axios.post(url, { id: member.id });
+      
       if (response.status !== 200) {
         setMessage(response.data.message || "Error updating attendance.");
         return;
