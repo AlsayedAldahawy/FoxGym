@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/editMemberInfo.css"; // Add your modal styles
+import { useAuth } from "../context/AuthContext";
 
 const EditMemberInfo = ({ member, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({});
   const [message, setMessage] = useState(""); // To store success or error message
-
+  const { username } = useAuth();
   // Populate fields with the member's original data
   useEffect(() => {
     setFormData({
+      userName: member.userName || "",
       gender: member.gender || "",
       email: member.email || "",
       remaining: member.remaining || "",
@@ -17,7 +19,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
       weight: member.weight || "",
     });
   }, [member]);
-
+  // console.log("username", useAuth().username)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -59,9 +61,21 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
           </p>
         )}
         <form onSubmit={handleSubmit}>
+          <label>
+            Name:
+            {username === "Amir Elsayed" || username === "Mahmoud Farag" ? (
+              <input
+                type="username"
+                name="userName"
+                value={formData.userName}
+                onChange={handleChange}
+              />
+            ) : (
+              <input disabled={true} value={formData.userName} />
+            )}
+          </label>
           <div className="field-row">
             <label className="cell">
-              
               Gender:
               <select
                 name="gender"
@@ -94,27 +108,26 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
             />
           </label>
           <div className="field-row">
-          
-          <label className="cell">
-            Phone Number:
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="cell">
-            Birth Date:
-            <input
-              type="date"
-              name="birthDate"
-              value={formData.birthDate}
-              onChange={handleChange}
-            />
-          </label>
+            <label className="cell">
+              Phone Number:
+              <input
+                type="tel"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="cell">
+              Birth Date:
+              <input
+                type="date"
+                name="birthDate"
+                value={formData.birthDate}
+                onChange={handleChange}
+              />
+            </label>
           </div>
-          
+
           <div className="field-row">
             <label className="cell">
               Height (cm):

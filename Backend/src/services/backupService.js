@@ -20,8 +20,6 @@ export default async function backupData(filePath, username) {
     const packages = await getAllPackages();
     const payments = await getAllPayment();
 
-    console.log("username: ",username)
-
     const adminsWithMetadata = { createdBy: username, createdAt: date, data: admins };
     const membersWithMetadata = { createdBy: username, createdAt: date, data: members };
     const packagesWithMetadata = { createdBy: username, createdAt: date, data: packages };

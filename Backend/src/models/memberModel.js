@@ -19,9 +19,9 @@ const memberSchema = new Schema({
     session: { type: [String], default: [] }, // Array of session dates
     attentanceMatrix: { type: [String], default: [] },
     discount: { type: Number },
-    paied: { type: Number },
+    paid: { type: Number },
     remaining: { type: Number },
-    joinDate: {type: String}
+    joinDate: {type: String},
 })
 
 const memberModel = mongoose.model('Members', memberSchema);

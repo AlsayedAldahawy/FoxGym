@@ -58,8 +58,7 @@ export default function Login() {
   };
 
   const handleBackup = async () => {
-    if (!confirm("Are you sure you want to make a backup?"))
-      return;
+    if (!confirm("Are you sure you want to make a backup?")) return;
 
     if (!filePath) {
       alert("Please enter a file path.");
@@ -113,12 +112,15 @@ export default function Login() {
   };
 
   const handleLogout = () => {
+    if (!confirm("Are you sure you want to logout?"))
+      return;
+
     logout();
     setSelectedAdmin(null);
     setCoach(null);
     setPassword(""); // Clear password
     setErrorMessage(""); // Clear error message
-    alert("You have been logged out.");
+    // alert("You have been logged out.");
   };
 
   const handleUpdatePassword = async (oldPassword, newPassword) => {

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 
 export const getAlladmins = async () => {
-  return await adminModel.find()
+  return await adminModel.find({})
 }
 
 export const seedInitialAdmin = async () => {

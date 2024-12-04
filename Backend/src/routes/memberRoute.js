@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/addMember", async (request, response) => {
   try {
     const { userName, email, birthDate, memberShip, startDate, expiryDate,
-      phoneNumber, program, height, weight, gender, image, discount, paied, remaining, joinDate } = request.body;
+      phoneNumber, program, height, weight, gender, image, discount, paid, remaining, joinDate } = request.body;
 
     const { statusCode, data } = await register({
       userName,
@@ -25,7 +25,7 @@ router.post("/addMember", async (request, response) => {
       gender,
       image,
       discount,
-      paied,
+      paid,
       remaining,
       joinDate
     });
@@ -52,7 +52,7 @@ router.get("/getAllMembers", async (req, res) => {
   const totalPages = Math.ceil(totalMembers / rowsPerPage)
   // const skip = (Number(page) - 1) * Number(rowsPerPage);
   const skiprev = (Number(page) != totalPages) ? totalMembers - (Number(page) * rowsPerPage) : 0
-  
+
 
   try {
     // Use regex to perform a case-insensitive search across `username`, `id`, and `phoneNumber`
@@ -66,9 +66,9 @@ router.get("/getAllMembers", async (req, res) => {
         ]
       })
       .skip(skiprev)
-      .limit(parseInt(Number(page)!= totalPages ? rowsPerPage : (totalMembers - ((totalPages - 1) * rowsPerPage))));
+      .limit(parseInt(Number(page) != totalPages ? rowsPerPage : (totalMembers - ((totalPages - 1) * rowsPerPage))));
 
-    
+
 
     // If no members found, return empty array and total count 0
     if (members.length === 0) {
@@ -116,8 +116,8 @@ router.post('/attendance', async (req, res) => {
     // Check current membership status before incrementing attendance
     const currentStatus = checkMembershipStatus(member);
     if (currentStatus === 'inactive') {
-      return res.status(403).json({ 
-        message: 'Member cannot attend further. Either the package has expired or the max attendance has been reached.' 
+      return res.status(403).json({
+        message: 'Member cannot attend further. Either the package has expired or the max attendance has been reached.'
       });
     }
 
@@ -219,7 +219,7 @@ router.delete('/delete', async (req, res) => {
 });
 
 router.post('/renewPackage', async (req, res) => {
-  const { id, memberShip, startDate, expiryDate, program, discount, paied, remaining } = req.body;
+  const { id, memberShip, startDate, expiryDate, program, discount, paid, remaining } = req.body;
 
   try {
     // Update the member's details in the database
@@ -232,7 +232,7 @@ router.post('/renewPackage', async (req, res) => {
           expiryDate,
           program,
           discount,
-          paied,
+          paid,
           remaining,
         },
       }
@@ -251,7 +251,7 @@ router.post('/renewPackage', async (req, res) => {
 
 
 router.post("/updateInfo", async (req, res) => {
-  const { id, gender, email, phoneNumber, birthDate, height, weight, remaining } = req.body;
+  const { id, userName, gender, email, phoneNumber, birthDate, height, weight, remaining } = req.body;
   console.log(req.body);
 
   try {
@@ -261,6 +261,7 @@ router.post("/updateInfo", async (req, res) => {
     }
 
     // Update fields only if provided
+    if (userName) member.userName = userName;
     if (gender) member.gender = gender;
     if (email) member.email = email;
     if (phoneNumber) member.phoneNumber = phoneNumber;
@@ -269,7 +270,7 @@ router.post("/updateInfo", async (req, res) => {
     if (weight) member.weight = weight;
     if (remaining) member.remaining = remaining;
 
-    
+
 
     await member.save();
 
