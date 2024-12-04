@@ -18,7 +18,7 @@ const AddNewMember = () => {
     gender: "",
     image: "",
     discount: "",
-    paied: "",
+    paid: "",
     remaining: "",
     joinDate: ""
   });
@@ -75,7 +75,7 @@ const AddNewMember = () => {
         }
       }
 
-      if (["program", "discount", "paied", "memberShip"].includes(name)) {
+      if (["program", "discount", "paid", "memberShip"].includes(name)) {
         // Fetch the selected program's base price
         const selectedPayment = payment.find(
           (item) => item.paymentName === updatedData.program
@@ -103,7 +103,7 @@ const AddNewMember = () => {
         const adjustedPrice = selectedPackage && selectedPackage.packageName == "Semi-monthly" && updatedData.program == "Lifting + Treadmill"? 250 : basePrice * multiplier;
   
         const discount = parseFloat(updatedData.discount || 0);
-        const paidAmount = parseFloat(updatedData.paied || 0);
+        const paidAmount = parseFloat(updatedData.paid || 0);
   
         if (!isNaN(adjustedPrice) && !isNaN(discount) && !isNaN(paidAmount)) {
           // Calculate the discounted amount
@@ -134,12 +134,12 @@ const AddNewMember = () => {
       weight,
       gender,
       discount,
-      paied,
+      paid,
       remaining,
       joinDate
       
     } = formData;
-    if (!userName || !memberShip || !program || !gender || !paied || !remaining)
+    if (!userName || !memberShip || !program || !gender || !paid || !remaining)
       return "Please fill all the fields required (*)";
     //if (!/^\S+@\S+\.\S+$/.test(email)) return 'Invalid email address.';
     //if (isNaN(Number(height)) || isNaN(Number(weight))) return 'Height and Weight must be numeric values.';

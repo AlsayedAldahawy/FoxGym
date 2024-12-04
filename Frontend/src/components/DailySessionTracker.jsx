@@ -15,7 +15,7 @@ const DailySessionTracker = ({ member }) => {
   return (
     <div>
 
-      <h3>Attendance Tracker</h3>
+      <h3 className='attendance-title' >Attendance Tracker</h3>
       <CalendarHeatmap
         startDate={new Date(today).setFullYear(new Date().getFullYear() - 1)}
         endDate={new Date(today)}

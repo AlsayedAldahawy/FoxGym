@@ -96,10 +96,10 @@ const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {
             </label>
             <input
               autoComplete="off"
-              name="paied"
+              name="paid"
               placeholder="price paid"
               className="form-control"
-              value={formData.paied}
+              value={formData.paid}
               onChange={handleChange}
             />
           </div>
