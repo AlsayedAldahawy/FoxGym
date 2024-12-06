@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import "../assets/css/messageModule.css";
 import { useEffect } from "react";
 
-const MessageModule = ({ message, type, isVisible, onClose }) => {
+const MessageModal = ({ message, type, isVisible, onClose }) => {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -43,11 +43,11 @@ const MessageModule = ({ message, type, isVisible, onClose }) => {
   );
 };
 
-MessageModule.propTypes = {
+MessageModal.propTypes = {
   message: PropTypes.string.isRequired,
   type: PropTypes.oneOf(["success", "error", "info", "default"]).isRequired,
   isVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default MessageModule;
+export default MessageModal;

@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const columns = [
   { id: "userName", label: "Name", minWidth: 120 },
@@ -70,7 +71,14 @@ export default function StickyHeadTable({ searchQuery }) {
   };
 
   return (
-    <Paper sx={{ width: "90%", mx: "auto", overflow: "hidden", border: "2px solid #ed563b" }}>
+    <Paper
+      sx={{
+        width: "90%",
+        mx: "auto",
+        overflow: "hidden",
+        border: "2px solid #ed563b",
+      }}
+    >
       <TableContainer sx={{ minHeight: 580, width: "90%", mx: "auto" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -98,7 +106,7 @@ export default function StickyHeadTable({ searchQuery }) {
                         <Link to={`/member/${row.id}`}>
                           {/* {column.id == "remaining" ? <span >{value}</span> : "-"} */}
                           <span
-                            className={`${value == "active" ? "active-status" : value == "inactive" || (column.id == "remaining" && value > 0)? "inactive-status" : ""}`}
+                            className={`${value == "active" ? "active-status" : value == "inactive" || (column.id == "remaining" && value > 0) ? "inactive-status" : ""}`}
                           >
                             {value || "-"}
                           </span>
@@ -124,3 +132,5 @@ export default function StickyHeadTable({ searchQuery }) {
     </Paper>
   );
 }
+
+StickyHeadTable.propTypes = { searchQuery: PropTypes.string.isRequired };

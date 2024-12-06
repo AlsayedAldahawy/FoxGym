@@ -6,8 +6,8 @@ import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMem
 import RenewSubscriptionModal from "../components/RenewSubscriptionModal";
 import DailySessionTracker from "../components/DailySessionTracker";
 import { calculatePayments } from "../assets/js/calculatePayments";
-import MessageModule from "./MessageModule";
 import { calculateAge } from "../assets/js/auxFunctions";
+import MessageModal from "../components/MessageModal"
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
 import defMale from "../assets/images/profile_pics/default_m-removebg.jpeg";
@@ -281,7 +281,7 @@ function MemberPage() {
       </div>
       {showMessage && (
         <div className="page-message">
-          <MessageModule
+          <MessageModal
             message={message}
             type={messageType}
             isVisible={showMessage}
