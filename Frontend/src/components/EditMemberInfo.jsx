@@ -66,7 +66,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(""); // Clear any previous messages
+    setMessage("");
 
     try {
       const success = await onUpdate(member.id, formData);
@@ -74,7 +74,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
         setMessage("Member information updated successfully!");
         setTimeout(() => {
           onClose();
-        }, 1000); // Close the modal after 1.5 seconds
+        }, 1000); 
       } else {
         setMessage("Failed to update member information.");
       }

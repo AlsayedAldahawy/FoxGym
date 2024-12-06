@@ -5,7 +5,9 @@ import "../assets/css/memberPage.css";
 import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMemberInfo component
 import RenewSubscriptionModal from "../components/RenewSubscriptionModal";
 import DailySessionTracker from "../components/DailySessionTracker";
-import {calculatePayments} from "../assets/js/calculatePayments";
+import { calculatePayments } from "../assets/js/calculatePayments";
+import MessageModule from "./MessageModule";
+import { calculateAge } from "../assets/js/auxFunctions";
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
 import defMale from "../assets/images/profile_pics/default_m-removebg.jpeg";
@@ -14,7 +16,6 @@ import bg from "../assets/images/backgrounds/bg_bmi.jpg";
 import {
   contactIcon,
   editIcon,
-
   manLift,
   personIcon,
   subIcon,
@@ -29,11 +30,14 @@ function MemberPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [member, setMember] = useState({});
-  const [payment, setPayment] = useState({});
+  const [member, setMember] = useState(null);
+
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("default");
+  const [showMessage, setShowMessage] = useState(false);
+
   const [marked, setMarked] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false); // State to control modal visibility
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showRenewModal, setShowRenewModal] = useState(false);
 
   useEffect(() => {
@@ -51,24 +55,6 @@ function MemberPage() {
     };
     fetchMember();
   }, [id, showEditModal]);
-
-  useEffect(() => {
-    if (member && member.program) {
-      const fetchPayment = async () => {
-        const paymentName = member.program;
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/payment/getPayment`,
-            { params: { paymentName } }
-          );
-          setPayment(response.data);
-        } catch (error) {
-          console.error("Error fetching payment:", error);
-        }
-      };
-      fetchPayment();
-    }
-  }, [member]);
 
   useEffect(() => {
     // Reset the marked state when the day changes
@@ -95,6 +81,9 @@ function MemberPage() {
 
       if (response.status === 200) {
         setMessage("Member information updated successfully!");
+        setMessageType("success");
+        setShowMessage(true);
+
         setMember((prev) => ({
           ...prev,
           ...updatedData,
@@ -102,15 +91,23 @@ function MemberPage() {
         setShowEditModal(false); // Close modal after successful update
       } else {
         setMessage("Failed to update member information.");
+        setMessageType("error");
+        setShowMessage(true);
+
       }
     } catch (error) {
       console.error("Error updating member info:", error);
       setMessage("An error occurred. Please try again.");
+      setMessageType("error");
+      setShowMessage(true);
+
     }
   };
 
   const toggleAttendance = async () => {
     if (!member) return;
+    setShowMessage(true);
+
     console.log("id", member.id);
     try {
       const today = new Date().toISOString().split("T")[0];
@@ -122,6 +119,9 @@ function MemberPage() {
 
       if (response.status !== 200) {
         setMessage(response.data.message || "Error updating attendance.");
+        setMessageType("error");
+
+
         return;
       }
 
@@ -138,12 +138,17 @@ function MemberPage() {
           ? "Attendance removed successfully."
           : "Attendance marked successfully."
       );
+      setMessageType("success");
     } catch (error) {
       if (error.response && error.response.status === 403) {
         setMessage(error.response.data.message);
+        setMessageType("error");
+
       } else {
         console.error("Error updating attendance:", error);
         setMessage("Something went wrong.");
+        setMessageType("error");
+
       }
     }
   };
@@ -158,10 +163,15 @@ function MemberPage() {
       );
       if (response.status !== 200) {
         setMessage(response.data.message || "Error resetting attendance.");
+        setMessageType("error");
+        setShowMessage(true);
+
+
         return;
       }
 
       setMessage("Attendance reset successfully.");
+      setMessageType("success");
       setMember((prevMember) => ({
         ...prevMember,
         session: [],
@@ -171,6 +181,9 @@ function MemberPage() {
     } catch (error) {
       console.error("Error resetting attendance:", error);
       setMessage("Something went wrong.");
+      setMessageType("error");
+      setShowMessage(true);
+
     }
   };
 
@@ -193,14 +206,24 @@ function MemberPage() {
 
       if (response.status !== 200) {
         setMessage(response.data.message || "Error deleting member.");
+        setMessageType("error");
+        setShowMessage(true);
+
         return;
       }
 
       setMessage("Member deleted successfully.");
+      setMessageType("success");
+      setShowMessage(true);
+
+
       navigate("/members"); // Navigate to another page after deletion
     } catch (error) {
       console.error("Error deleting member:", error);
       setMessage("Something went wrong.");
+      setMessageType("error");
+      setShowMessage(true);
+
     }
   };
 
@@ -233,24 +256,6 @@ function MemberPage() {
     }
   };
 
-  function calculateAge(birthDateString) {
-    // Split the birth date string into day, month, and year
-    const [year, month, day] = birthDateString.split("-"); // Create a new Date object using the parsed values
-    const birthDate = new Date(`${year}-${month}-${day}`);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    // Check if the birth month is after the current month or
-    // if it's the current month but the birth day is after today
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
-  }
-
   if (!member) {
     return (
       <div className="member-not-found">
@@ -274,6 +279,16 @@ function MemberPage() {
         <img src={bg} alt="" />
         <div className="bg-shadow"></div>
       </div>
+      {showMessage && (
+        <div className="page-message">
+          <MessageModule
+            message={message}
+            type={messageType}
+            isVisible={showMessage}
+            onClose={() => setShowMessage(false)}
+          />
+        </div>
+      )}
       <div className="member-page">
         <div className="main-row">
           <div className="main-column">
@@ -294,7 +309,13 @@ function MemberPage() {
               </div>
 
               <h6 className="member-id">{member.userName}</h6>
-              <h6 className="member-id" style={{ fontSize: "15px", fontFamily: "'Courier New', Courier, monospace;" }}>
+              <h6
+                className="member-id"
+                style={{
+                  fontSize: "15px",
+                  fontFamily: "'Courier New', Courier, monospace",
+                }}
+              >
                 {member.id}
               </h6>
               <div className="info-icons">
@@ -322,8 +343,7 @@ function MemberPage() {
               </div>
             </div>
 
-            <div className="info-column">
-            </div>
+            <div className="info-column"></div>
             <div className="attendance">
               <DailySessionTracker member={member} />
             </div>
@@ -439,7 +459,12 @@ function MemberPage() {
                   <h6 className="info-item">
                     {" "}
                     <span className="label">Remaining: </span>{" "}
-                    <span className="value red">{member.remaining || "0"}</span>{" "}
+                    <span className={`${member.remaining > 0 ? "value red" : "value green"}`}>{member.remaining || "0"}</span>{" "}
+                  </h6>{" "}
+                  <h6 className="info-item">
+                    {" "}
+                    <span className="label">Status: </span>{" "}
+                    <span className={`${member.status == "inactive" ? "value red" : "value green"}`}>{member.status || "0"}</span>{" "}
                   </h6>{" "}
                 </div>
               </div>
@@ -489,11 +514,9 @@ function MemberPage() {
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
         <div className="manage-member">
-          {/* Mark Attendance Button */}
           <button
             onClick={toggleAttendance}
             disabled={member.status == "inactive"}
@@ -509,13 +532,26 @@ function MemberPage() {
             {marked ? "Unmark Attendance" : "Mark Attendance"}
           </button>
 
-          {/* Reset Attendance Button */}
           <button
-            onClick={() => setShowRenewModal(true)}
+            onClick={() => {
+              if (member.status == "active") {
+                setMessage(`Subscription is currently active. Renewal is not required at this time.`);
+                setMessageType("error");
+                setShowMessage(true);
+              } else if (member.remaining > 0) {
+                setMessage(
+                  `Unable to renew subscription. Please clear the outstanding balance of "${member.remaining}".`
+                );
+                setMessageType("error");
+                setShowMessage(true);
+              } else setShowRenewModal(true);
+            }}
             style={{ backgroundColor: "#ed563b", color: "white" }}
-            disabled={member.status == "active"}
+            // disabled={member.status == "active"}
             className={`${
-              member.status == "active" ? "change-package-disabled" : ""
+              member.status == "active" || member.remaining > 0
+                ? "change-package-disabled"
+                : ""
             } `}
           >
             Renew Subscription

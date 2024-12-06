@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../assets/css/header.css";
 import "../assets/css/bmi.css";
 import BmiImage from "../assets/images/backgrounds/bg_bmi.jpg";
@@ -70,7 +70,7 @@ export default function Bmi() {
             <svg
             className="bmi-icon"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
               version="1.1"
               x="0px"
               y="0px"

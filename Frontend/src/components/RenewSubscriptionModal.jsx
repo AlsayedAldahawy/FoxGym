@@ -9,6 +9,7 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
 
   const [formData, setFormData] = useState({});
   const [message, setMessage] = useState("");
+  const [renewDisable, setRenewDisable] = useState(true);
 
   useEffect(() => {
     if (!loading && !error) {
@@ -45,6 +46,7 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
 
       return updatedFormData;
     });
+    setRenewDisable(false);
   };
 
   const handleSubmit = async (e) => {
@@ -54,7 +56,7 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
     try {
       const success = await onRenew(member.id, formData);
       if (success) {
-        setMessage("Member information updated successfully!");
+        setMessage("Member subscription updated successfully!");
         setTimeout(() => {
           onClose();
         }, 1000);
@@ -167,7 +169,13 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
             </div>
           </div>
           <div className="modal-actions">
-            <button type="submit" className="update-button">
+            <button
+              type="submit"
+              disabled={renewDisable}
+              className={`${
+                 renewDisable ? "update-button-disabled update-button" : "update-button"
+              }`}
+            >
               Renew
             </button>
             <button type="button" onClick={onClose} className="cancel-button">

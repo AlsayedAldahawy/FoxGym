@@ -169,3 +169,7 @@ select {
   justify-content: center;
   margin: 10px 0;
 }
+
+.update-button-disabled{
+  opacity: 50%;
+}
