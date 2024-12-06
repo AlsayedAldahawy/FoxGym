@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../assets/css/editMemberInfo.css"; // Add your modal styles
 import { useAuth } from "../context/AuthContext";
 import { extraFieldsIcon } from "./Icons";
 import useFetchData from "./fetchData";
+import { claculateRemaining } from "../assets/js/calculatePayments";
+import PropTypes from "prop-types";
 
 const EditMemberInfo = ({ member, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({});
@@ -15,12 +17,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
   const [showExtraFields, setShowExtraFields] = useState(false);
 
   const { payment, packages, loading, error } = useFetchData();
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // } // Populate fields with the member's original data
+
   useEffect(() => {
     setFormData({
       userName: member.userName || "",
@@ -39,38 +36,11 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
       status: member.status || "",
       session: member.session || "",
       attendanceMatrix: member.attentanceMatrix || "",
-      discount: member.discount || "",
+      discount: member.discount || 0,
       remaining: member.remaining || 0,
     });
-  }, [member]);
-  // console.log("username", useAuth().username)
+  }, [member, loading, error]);
 
-  const claculateRemaining = (pkg, payment, discount, paid) => {
-    if (!pkg || !payment) {
-      return;
-    }
-
-    if (!discount) {
-      discount = 0;
-    }
-
-    const packageMonths = Math.floor(pkg.numberOfDays / 30);
-
-    const durationConstatnt =
-      payment.paymentName === "Semi-monthly" ? 0.8 : packageMonths;
-
-    const treadmillOverPrice =
-      payment.paymentName === "Semi-monthly" &&
-      pkg.packageName.includes("Treadmill")
-        ? 10 * packageMonths
-        : 0;
-
-    return (
-      durationConstatnt * payment.price * (1 - discount / 100) +
-      treadmillOverPrice -
-      paid
-    );
-  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
@@ -104,7 +74,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
         setMessage("Member information updated successfully!");
         setTimeout(() => {
           onClose();
-        }, 12000); // Close the modal after 1.5 seconds
+        }, 1000); // Close the modal after 1.5 seconds
       } else {
         setMessage("Failed to update member information.");
       }
@@ -113,6 +83,14 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
       setMessage("An error occurred. Please try again.");
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="modal">
@@ -220,15 +198,15 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
                   />
                 </label>
                 <label className="cell">
-                    Remaining:
-                    <input
-                      disabled
-                      type="number"
-                      name="remaining"
-                      value={formData.remaining}
-                      onChange={handleChange}
-                    />
-                  </label>
+                  Remaining:
+                  <input
+                    disabled
+                    type="number"
+                    name="remaining"
+                    value={formData.remaining}
+                    onChange={handleChange}
+                  />
+                </label>
               </div>
             </div>
             {showExtraFields && (
@@ -255,11 +233,9 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
                 </div>
 
                 <div className="field-row">
-                  
                   <label className="cell">
                     Program:
                     <select
-                      type="program"
                       name="program"
                       value={formData.program}
                       onChange={handleChange}
@@ -267,12 +243,11 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
                       <option value="" disabled>
                         Select Program
                       </option>
-                      <option value="Lifting">Lifting</option>
-                      <option value="Lifting + Treadmill">
-                        Lifting + Treadmill
-                      </option>
-                      <option value="Cross Fit">Cross Fit</option>
-                      <option value="Mixed">Mixed</option>
+                      {payment.map((paym) => (
+                        <option key={paym.id} value={paym.paymentName}>
+                          {paym.paymentName}
+                        </option>
+                      ))}
                     </select>
                   </label>
                   <label className="cell">
@@ -292,11 +267,10 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
                       ))}
                     </select>
                   </label>
-                  
                 </div>
 
                 <div className="field-row">
-                <label className="cell">
+                  <label className="cell">
                     Status:
                     <select
                       type="status"
@@ -344,13 +318,39 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
               Save
             </button>
             <button type="button" onClick={onClose} className="cancel-button">
-              Cancel
+              Close
             </button>
           </div>
         </form>
       </div>
     </div>
   );
+};
+
+EditMemberInfo.propTypes = {
+  member: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    paid: PropTypes.number,
+    memberShip: PropTypes.string,
+    startDate: PropTypes.string,
+    expiryDate: PropTypes.string,
+    program: PropTypes.string,
+    discount: PropTypes.number,
+    remaining: PropTypes.number,
+    userName: PropTypes.string,
+    birthDate: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    email: PropTypes.string,
+    gender: PropTypes.string,
+    joinDate:PropTypes.string,
+    attentanceMatrix: PropTypes.array,
+    session:PropTypes.array,
+    status: PropTypes.string,
+    height: PropTypes.number,
+    weight: PropTypes.number
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default EditMemberInfo;

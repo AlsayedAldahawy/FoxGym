@@ -17,15 +17,9 @@ const useFetchData = () => {
         setPayment(data);
       } catch (error) {
         setError(error.message);
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchPayment();
-  }, []);
-
-  useEffect(() => {
     const fetchPackages = async () => {
       try {
         const response = await fetch("http://localhost:5000/packages");
@@ -39,7 +33,13 @@ const useFetchData = () => {
       }
     };
 
-    fetchPackages();
+    const fetchData = async () => {
+      await fetchPayment();
+      await fetchPackages();
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   return { payment, packages, loading, error };

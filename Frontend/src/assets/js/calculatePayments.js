@@ -1,5 +1,5 @@
 // src/calculatePayments.js
-const calculatePayments = (program, duration) => {
+export const calculatePayments = (program, duration) => {
   const durations = {
     "Annual": 12,
     "Semi-annual": 6,
@@ -27,4 +27,28 @@ const calculatePayments = (program, duration) => {
   }
 };
 
-export default calculatePayments;
+export const claculateRemaining = (pkg, payment, discount, paid) => {
+  if (!pkg || !payment) {
+    return;
+  }
+
+  if (!discount) {
+    discount = 0;
+  }
+
+  const packageMonths = Math.floor(pkg.numberOfDays / 30);
+
+  const durationConstatnt =
+  pkg.packageName  === "Semi-monthly" ? 0.8 : packageMonths;
+
+  const treadmillOverPrice =
+  pkg.packageName === "Semi-monthly" &&
+  payment.paymentName.includes("Treadmill")
+      ? 10 * packageMonths
+      : 0;
+
+  return (
+    durationConstatnt * payment.price * (1 - discount / 100) +
+    treadmillOverPrice - paid
+  );
+};

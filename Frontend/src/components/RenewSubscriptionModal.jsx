@@ -1,49 +1,50 @@
-import React, { useState, useEffect } from "react";
-import "../assets/css/editMemberInfo.css"; // Add your modal styles
+import { useState, useEffect } from "react";
+import "../assets/css/editMemberInfo.css";
+import useFetchData from "./fetchData";
+import { claculateRemaining } from "../assets/js/calculatePayments";
+import PropTypes from "prop-types";
 
-const RenewSubscriptionModal = ({ member, onClose, onRenew }) => {
+const RenewSubscription = ({ member, onClose, onRenew }) => {
+  const { payment, packages, loading, error } = useFetchData();
+
   const [formData, setFormData] = useState({});
   const [message, setMessage] = useState("");
-  const [packages, setPackages] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState("");
-
-
-  // change package
-  const [showExtraFields, setShowExtraFields] = useState(false);
-
-  const toggleExtraFields = () => {
-    setShowExtraFields(!showExtraFields);
-  };
-
-
-  // Populate fields with the member's original data
-  useEffect(() => {
-    setFormData({
-      memberShip: member.memberShip || "",
-      startDate: member.startDate || "",
-      expiryDate: member.expiryDate || "",
-      program: member.program || "",
-      discount: member.discount || 0,
-      paied: member.paied || 0,
-      remaining: member.remaining || 0,
-    });
-  }, [member]);
 
   useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/packages");
-        setPackages(response.data);
-      } catch (error) {
-        console.error("Error fetching packages:", error);
-      }
-    };
-    fetchPackages();
-  }, []);
+    if (!loading && !error) {
+      setFormData({
+        paid: 0,
+        memberShip: member.memberShip || "",
+        startDate: member.startDate || "",
+        expiryDate: member.expiryDate || "",
+        program: member.program || "",
+        discount: member.discount || 0,
+        remaining: member.remaining || 0,
+      });
+    }
+  }, [member, loading, error]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevState) => {
+      const updatedFormData = { ...prevState, [name]: value };
+
+      const selectedPackage = packages?.find(
+        (pkg) => pkg.packageName === updatedFormData.memberShip
+      );
+      const selectedPayment = payment?.find(
+        (paym) => paym.paymentName === updatedFormData.program
+      );
+
+      updatedFormData.remaining = claculateRemaining(
+        selectedPackage,
+        selectedPayment,
+        updatedFormData.discount,
+        updatedFormData.paid
+      );
+
+      return updatedFormData;
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -53,96 +54,124 @@ const RenewSubscriptionModal = ({ member, onClose, onRenew }) => {
     try {
       const success = await onRenew(member.id, formData);
       if (success) {
-        setMessage("Subscription renewed successfully!");
+        setMessage("Member information updated successfully!");
         setTimeout(() => {
           onClose();
-        }, 1500);
+        }, 1000);
       } else {
-        setMessage("Failed to renew subscription.");
+        setMessage("Failed to update member information.");
       }
     } catch (error) {
-      console.error("Error renewing subscription:", error);
+      console.error("Error updating member info:", error);
       setMessage("An error occurred. Please try again.");
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="modal">
       <div className="modal-content">
-        <h3 className="header">Renew Subscription</h3>
+        <h3 className="header-edit-text">Renew Member’s subscription</h3>
         {message && (
-          <p className={message.includes("successfully") ? "success-message" : "error-message"}>
+          <p
+            className={
+              message.includes("successfully")
+                ? "success-message"
+                : "error-message"
+            }
+          >
             {message}
           </p>
         )}
         <form onSubmit={handleSubmit}>
-          <label>
-            Membership:
-            <input
-              type="text"
-              name="memberShip"
-              value={formData.memberShip}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Start Date:
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Expiry Date:
-            <input
-              type="date"
-              name="expiryDate"
-              value={formData.expiryDate}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Program:
-            <input
-              type="text"
-              name="program"
-              value={formData.program}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Discount:
-            <input
-              type="number"
-              name="discount"
-              value={formData.discount}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Paid:
-            <input
-              type="number"
-              name="paied"
-              value={formData.paied}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Remaining:
-            <input
-              type="number"
-              name="remaining"
-              value={formData.remaining}
-              onChange={handleChange}
-            />
-          </label>
+          <div className="form-row">
+            <div className="form-column">
+              <div className="field-row">
+                <label className="cell">
+                  Renewal Date:
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label className="cell">
+                  Expiry Date:
+                  <input
+                    type="date"
+                    name="expiryDate"
+                    value={formData.expiryDate}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label className="cell">
+                  Program:
+                  <select
+                    name="program"
+                    value={formData.program}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      Select Program
+                    </option>
+                    {payment.map((paym) => (
+                      <option key={paym.id} value={paym.paymentName}>
+                        {paym.paymentName}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="cell">
+                  Duration:
+                  <select
+                    name="memberShip"
+                    value={formData.memberShip}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>
+                      Select Package
+                    </option>
+                    {packages.map((pkg) => (
+                      <option key={pkg.id} value={pkg.packageName}>
+                        {pkg.packageName}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="cell">
+                  Paid:
+                  <input
+                    name="paid"
+                    value={formData.paid}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label className="cell">
+                  Remaining:
+                  <input
+                    disabled
+                    type="number"
+                    name="remaining"
+                    value={formData.remaining}
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
           <div className="modal-actions">
-            <button type="submit" className="update-button">Save</button>
+            <button type="submit" className="update-button">
+              Renew
+            </button>
             <button type="button" onClick={onClose} className="cancel-button">
-              Cancel
+              Close
             </button>
           </div>
         </form>
@@ -151,4 +180,19 @@ const RenewSubscriptionModal = ({ member, onClose, onRenew }) => {
   );
 };
 
-export default RenewSubscriptionModal;
+RenewSubscription.propTypes = {
+  member: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    paid: PropTypes.number,
+    memberShip: PropTypes.string,
+    startDate: PropTypes.string,
+    expiryDate: PropTypes.string,
+    program: PropTypes.string,
+    discount: PropTypes.number,
+    remaining: PropTypes.number,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+  onRenew: PropTypes.func.isRequired,
+};
+
+export default RenewSubscription;

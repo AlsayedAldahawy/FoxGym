@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../assets/css/memberPage.css";
 import EditMemberInfo from "../components/EditMemberInfo"; // Import the EditMemberInfo component
 import RenewSubscriptionModal from "../components/RenewSubscriptionModal";
 import DailySessionTracker from "../components/DailySessionTracker";
-import calculatePayments from "../assets/js/calculatePayments";
+import {calculatePayments} from "../assets/js/calculatePayments";
 
 import sadFox from "../assets/images/profile_pics/sad_fox.png";
 import defMale from "../assets/images/profile_pics/default_m-removebg.jpeg";
@@ -14,12 +14,10 @@ import bg from "../assets/images/backgrounds/bg_bmi.jpg";
 import {
   contactIcon,
   editIcon,
-  femaleIcon,
-  maleIcon,
+
   manLift,
   personIcon,
   subIcon,
-  treadmill,
   womanLift,
   maleCross,
   femCross,
@@ -31,8 +29,8 @@ function MemberPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [member, setMember] = useState(null);
-  const [payment, setPayment] = useState(null);
+  const [member, setMember] = useState({});
+  const [payment, setPayment] = useState({});
   const [message, setMessage] = useState("");
   const [marked, setMarked] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false); // State to control modal visibility
@@ -325,33 +323,6 @@ function MemberPage() {
             </div>
 
             <div className="info-column">
-              {/* {member.birthDate && (
-                <h6>Age: {calculateAge(member.birthDate) || "No data"}</h6>
-              )} */}
-              {/* <h6>Gender: {member.gender || "No data"}</h6> */}
-              {/* <h6>
-                {" "}
-                Status:{" "}
-                <span
-                  style={{
-                    color: member.status === "active" ? "green" : "red",
-                  }}
-                >
-                  {member.status || "No data"}
-                </span>
-              </h6> */}
-              {/* {member.remaining > 0 && (
-                <h6>
-                  Remaining:{" "}
-                  <span
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {member.remaining || "No data"}
-                  </span>
-                </h6>
-              )} */}
             </div>
             <div className="attendance">
               <DailySessionTracker member={member} />
