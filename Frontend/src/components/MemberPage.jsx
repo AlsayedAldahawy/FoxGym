@@ -52,13 +52,12 @@ function MemberPage() {
       }
     };
     fetchMember();
-  }, [id]);
+  }, [id, showEditModal]);
 
   useEffect(() => {
     if (member && member.program) {
       const fetchPayment = async () => {
         const paymentName = member.program;
-        console.log("paymentname", paymentName);
         try {
           const response = await axios.get(
             `http://localhost:5000/payment/getPayment`,

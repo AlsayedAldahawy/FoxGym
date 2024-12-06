@@ -251,31 +251,31 @@ router.post('/renewPackage', async (req, res) => {
 
 
 router.post("/updateInfo", async (req, res) => {
-  const { id, userName, gender, email, phoneNumber, birthDate, height, weight, remaining } = req.body;
-  console.log(req.body);
+
+  // console.log("request body",req.body.id);
 
   try {
-    const member = await memberModel.findOne({ id });
+    const member = await memberModel.findOne({ id: req.body.id });
     if (!member) {
       return res.status(404).json({ message: "Member not found." });
     }
 
-    // Update fields only if provided
-    if (userName) member.userName = userName;
-    if (gender) member.gender = gender;
-    if (email) member.email = email;
-    if (phoneNumber) member.phoneNumber = phoneNumber;
-    if (birthDate) member.birthDate = birthDate;
-    if (height) member.height = height;
-    if (weight) member.weight = weight;
-    if (remaining) member.remaining = remaining;
+    Object.entries(req.body).forEach(([key, value]) => {
+      if (value) member[key] = value;
+    });
 
-
+    member.remaining = req.body.remaining;
 
     await member.save();
 
     res.status(200).json({ message: "Member information updated successfully!" });
-  } catch (error) {
+  }
+
+
+
+
+
+  catch (error) {
     console.error("Error updating member info:", error);
     res.status(500).json({ message: "Something went wrong." });
   }
