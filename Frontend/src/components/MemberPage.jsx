@@ -200,7 +200,7 @@ function MemberPage() {
       const response = await axios.delete(
         "http://localhost:5000/member/delete",
         {
-          data: { id: member.id }, // Send the ID in the request body
+          data: { id: member.id },
         }
       );
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../assets/css/editMemberInfo.css";
 import useFetchData from "./fetchData";
 import { claculateRemaining } from "../assets/js/calculatePayments";
+import { calculateDate } from "../assets/js/auxFunctions";
 import PropTypes from "prop-types";
 
 const RenewSubscription = ({ member, onClose, onRenew }) => {
@@ -16,8 +17,8 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
       setFormData({
         paid: 0,
         memberShip: member.memberShip || "",
-        startDate: member.startDate || "",
-        expiryDate: member.expiryDate || "",
+        startDate: new Date().toISOString().split("T")[0] || "",
+        expiryDate: "",
         program: member.program || "",
         discount: member.discount || 0,
         remaining: member.remaining || 0,
@@ -28,23 +29,27 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
-      const updatedFormData = { ...prevState, [name]: value };
+      const updatedData = { ...prevState, [name]: value };
 
       const selectedPackage = packages?.find(
-        (pkg) => pkg.packageName === updatedFormData.memberShip
+        (pkg) => pkg.packageName === updatedData.memberShip
       );
       const selectedPayment = payment?.find(
-        (paym) => paym.paymentName === updatedFormData.program
+        (paym) => paym.paymentName === updatedData.program
       );
 
-      updatedFormData.remaining = claculateRemaining(
+      updatedData.expiryDate = calculateDate(
+        updatedData.startDate,
+        selectedPackage
+      );
+      updatedData.remaining = claculateRemaining(
         selectedPackage,
         selectedPayment,
-        updatedFormData.discount,
-        updatedFormData.paid
+        updatedData.discount,
+        updatedData.paid
       );
 
-      return updatedFormData;
+      return updatedData;
     });
     setRenewDisable(false);
   };
@@ -173,7 +178,9 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
               type="submit"
               disabled={renewDisable}
               className={`${
-                 renewDisable ? "update-button-disabled update-button" : "update-button"
+                renewDisable
+                  ? "update-button-disabled update-button"
+                  : "update-button"
               }`}
             >
               Renew

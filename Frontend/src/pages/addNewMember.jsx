@@ -4,6 +4,8 @@ import { autoBackup } from "../assets/js/auxFunctions";
 
 import MemberFormInputs from "../components/MemberFormInputs.jsx"; // Import the new MemberFormInputs component
 import "../assets/css/addMember.css";
+import { calculateDate } from "../assets/js/auxFunctions";
+
 import bg from "../assets/images/backgrounds/bg_reg2.jpg";
 const AddNewMember = () => {
   const [formData, setFormData] = useState({
@@ -22,11 +24,11 @@ const AddNewMember = () => {
     discount: "",
     paid: "",
     remaining: "",
-    joinDate: ""
+    joinDate: "",
   });
 
   const [packages, setPackages] = useState([]);
-  const [payment, setPayment] = useState([])
+  const [payment, setPayment] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +40,7 @@ const AddNewMember = () => {
         const response = await fetch("http://localhost:5000/packages");
         const data = await response.json();
         setPackages(data);
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error("Error fetching packages:", error);
       }
@@ -63,17 +65,12 @@ const AddNewMember = () => {
     const { name, value } = e.target;
     setFormData((prev) => {
       const updatedData = { ...prev, [name]: value };
-      if (name === "memberShip") {
+      if (name === "memberShip" || name == "startDate") {
         const selectedPackage = packages.find(
-          (pkg) => pkg.packageName === value
+          (pkg) => pkg.packageName === updatedData.memberShip
         );
         if (selectedPackage) {
-          const startDate = new Date(updatedData.startDate);
-          const expiryDate = new Date(startDate);
-          expiryDate.setDate(
-            startDate.getDate() + selectedPackage.numberOfDays
-          );
-          updatedData.expiryDate = expiryDate.toISOString().split("T")[0];
+          updatedData.expiryDate = calculateDate(updatedData.startDate, selectedPackage);
         }
       }
 
@@ -82,17 +79,19 @@ const AddNewMember = () => {
         const selectedPayment = payment.find(
           (item) => item.paymentName === updatedData.program
         );
-        const basePrice = selectedPayment ? parseFloat(selectedPayment.price) : 0;
-  
+        const basePrice = selectedPayment
+          ? parseFloat(selectedPayment.price)
+          : 0;
+
         // Map package names to multipliers
         const packageMultipliers = {
-          "Annual": 12,
+          Annual: 12,
           "Semi-annual": 6,
-          "Quarterly": 3,
-          "Monthly": 1,
-          "Semi-monthly": 0.8
+          Quarterly: 3,
+          Monthly: 1,
+          "Semi-monthly": 0.8,
         };
-  
+
         // Fetch the multiplier for the selected package
         const selectedPackage = packages.find(
           (pkg) => pkg.packageName === updatedData.memberShip
@@ -100,20 +99,27 @@ const AddNewMember = () => {
         const multiplier = selectedPackage
           ? packageMultipliers[selectedPackage.packageName] || 1
           : 1;
-  
+
         // Adjust the price based on the package multiplier
-        const adjustedPrice = selectedPackage && selectedPackage.packageName == "Semi-monthly" && updatedData.program == "Lifting + Treadmill"? 250 : basePrice * multiplier;
-  
+        const adjustedPrice =
+          selectedPackage &&
+          selectedPackage.packageName == "Semi-monthly" &&
+          updatedData.program == "Lifting + Treadmill"
+            ? 250
+            : basePrice * multiplier;
+
         const discount = parseFloat(updatedData.discount || 0);
         const paidAmount = parseFloat(updatedData.paid || 0);
-  
+
         if (!isNaN(adjustedPrice) && !isNaN(discount) && !isNaN(paidAmount)) {
           // Calculate the discounted amount
           const discountedAmount = (adjustedPrice * discount) / 100;
-  
+
           // Update the remaining amount
           updatedData.remaining = (
-            adjustedPrice - discountedAmount - paidAmount
+            adjustedPrice -
+            discountedAmount -
+            paidAmount
           ).toFixed(2); // Round to 2 decimal places
         }
       }
@@ -123,14 +129,7 @@ const AddNewMember = () => {
   };
 
   const validateForm = () => {
-    const {
-      userName,
-      memberShip,
-      program,
-      gender,
-      paid,
-      remaining,      
-    } = formData;
+    const { userName, memberShip, program, gender, paid, remaining } = formData;
     if (!userName || !memberShip || !program || !gender || !paid || !remaining)
       return "Please fill all the fields required (*)";
     //if (!/^\S+@\S+\.\S+$/.test(email)) return 'Invalid email address.';
@@ -168,7 +167,7 @@ const AddNewMember = () => {
       }
       setIsSubmitting(true);
       setSuccess("New member added successfully!");
-      autoBackup()
+      autoBackup();
 
       setTimeout(() => navigate("/members"), 1000);
     } catch (error) {
