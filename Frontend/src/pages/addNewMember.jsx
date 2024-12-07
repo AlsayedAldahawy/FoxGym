@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { autoBackup } from "../assets/js/auxFunctions";
+
 import MemberFormInputs from "../components/MemberFormInputs.jsx"; // Import the new MemberFormInputs component
 import "../assets/css/addMember.css";
 import bg from "../assets/images/backgrounds/bg_reg2.jpg";
@@ -123,21 +125,11 @@ const AddNewMember = () => {
   const validateForm = () => {
     const {
       userName,
-      email,
-      birthDate,
       memberShip,
-      startDate,
-      expiryDate,
-      phoneNumber,
       program,
-      height,
-      weight,
       gender,
-      discount,
       paid,
-      remaining,
-      joinDate
-      
+      remaining,      
     } = formData;
     if (!userName || !memberShip || !program || !gender || !paid || !remaining)
       return "Please fill all the fields required (*)";
@@ -176,6 +168,7 @@ const AddNewMember = () => {
       }
       setIsSubmitting(true);
       setSuccess("New member added successfully!");
+      autoBackup()
 
       setTimeout(() => navigate("/members"), 1000);
     } catch (error) {

@@ -12,4 +12,10 @@
       flex-direction: column; /* Stack fields vertically */
     }
   }
-    
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #ffffff;
+}
