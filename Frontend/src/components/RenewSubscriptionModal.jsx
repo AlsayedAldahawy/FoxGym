@@ -117,6 +117,7 @@ const RenewSubscription = ({ member, onClose, onRenew }) => {
                     name="expiryDate"
                     value={formData.expiryDate}
                     onChange={handleChange}
+                    readOnly
                   />
                 </label>
                 <label className="cell">

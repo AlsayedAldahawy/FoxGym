@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../assets/css/discountPayment.css";
 
 const MemberFormInputs = ({ formData, handleChange, packages, payment }) => {

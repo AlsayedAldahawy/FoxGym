@@ -255,7 +255,7 @@ router.post("/updateInfo", async (req, res) => {
   // console.log("request body",req.body.id);
 
   try {
-    const member = await memberModel.findOne({ id: req.body.id });
+    const member = await memberModel.findOne({ "id": req.body.id });
     if (!member) {
       return res.status(404).json({ message: "Member not found." });
     }

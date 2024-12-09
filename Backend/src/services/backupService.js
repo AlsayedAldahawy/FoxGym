@@ -20,6 +20,17 @@ export default async function backupData(filePath, username) {
     const packages = await getAllPackages();
     const payments = await getAllPayment();
 
+
+  console.log(Object.isFrozen(admins[0])); // Should return false
+  console.log(Object.isSealed(admins[0])); // Should return false
+
+    for (const admin of admins) { if (admin.hasOwnProperty('_id')) { delete admin._id; } }
+
+    for (const member of members) {
+      
+      delete member._id
+    }
+
     const adminsWithMetadata = { createdBy: username, createdAt: date, data: admins };
     const membersWithMetadata = { createdBy: username, createdAt: date, data: members };
     const packagesWithMetadata = { createdBy: username, createdAt: date, data: packages };

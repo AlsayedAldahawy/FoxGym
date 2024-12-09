@@ -5,6 +5,7 @@ import { extraFieldsIcon } from "./Icons";
 import useFetchData from "./fetchData";
 import { claculateRemaining } from "../assets/js/calculatePayments";
 import PropTypes from "prop-types";
+import { calculateDate } from "../assets/js/auxFunctions";
 
 const EditMemberInfo = ({ member, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({});
@@ -44,23 +45,27 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
-      const updatedFormData = { ...prevState, [name]: value };
+      const updatedData = { ...prevState, [name]: value };
 
       const selectedPackage = packages.find(
-        (pkg) => pkg.packageName === updatedFormData.memberShip
+        (pkg) => pkg.packageName === updatedData.memberShip
       );
       const selectedPayment = payment.find(
-        (paym) => paym.paymentName === updatedFormData.program
+        (paym) => paym.paymentName === updatedData.program
       );
 
-      updatedFormData.remaining = claculateRemaining(
+      updatedData.expiryDate = calculateDate(
+        updatedData.startDate,
+        selectedPackage
+      );
+      updatedData.remaining = claculateRemaining(
         selectedPackage,
         selectedPayment,
-        updatedFormData.discount,
-        updatedFormData.paid
+        updatedData.discount,
+        updatedData.paid
       );
 
-      return updatedFormData;
+      return updatedData;
     });
   };
 
@@ -74,7 +79,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
         setMessage("Member information updated successfully!");
         setTimeout(() => {
           onClose();
-        }, 1000); 
+        }, 1000);
       } else {
         setMessage("Failed to update member information.");
       }
@@ -217,6 +222,7 @@ const EditMemberInfo = ({ member, onClose, onUpdate }) => {
                     <input
                       type="date"
                       name="startDate"
+                      className="form-control"
                       value={formData.startDate}
                       onChange={handleChange}
                     />
@@ -342,12 +348,12 @@ EditMemberInfo.propTypes = {
     phoneNumber: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    joinDate:PropTypes.string,
+    joinDate: PropTypes.string,
     attentanceMatrix: PropTypes.array,
-    session:PropTypes.array,
+    session: PropTypes.array,
     status: PropTypes.string,
     height: PropTypes.number,
-    weight: PropTypes.number
+    weight: PropTypes.number,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
