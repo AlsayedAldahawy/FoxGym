@@ -21,7 +21,7 @@ export const autoBackup = async () => {
   try {
     await axios.post("http://localhost:5000/backup", {
       filePath: "C:\\foxsys\\data\\db",
-      username: "auto - backup",
+      username: "auto backup",
     });
   } catch (error) {
     console.error("Error during backup:", error);
