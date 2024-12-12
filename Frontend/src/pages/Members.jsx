@@ -7,11 +7,16 @@ import bg from "../assets/images/backgrounds/bg_login.png";
 
 const Members = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [genderQuery, setGenderhQuery] = useState("");
 
 
 
   const handleSearchChange = (newSearchQuery) => {
     setSearchQuery(newSearchQuery);
+  };
+
+  const handleGenderChange = (newGenderQuery) => {
+    setGenderhQuery(newGenderQuery);
   };
 
   return (
@@ -30,7 +35,7 @@ const Members = () => {
             <button className="add-member-btn">Add New Member</button>
           </Link>
         </div>
-        <StickyHeadTable searchQuery={searchQuery} />
+        <StickyHeadTable searchQuery={searchQuery} genderQuery={genderQuery} />
       </div>
     </>
   );

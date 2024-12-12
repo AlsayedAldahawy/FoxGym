@@ -1,0 +1,28 @@
+#table-filter {
+  border: none;
+}
+
+#remaining {
+  border: none;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  background-color: white;
+}
+
+
+.filter-on{
+    color: rgba(186, 20, 20, 0.764);
+}
+
+.filter-off{
+    color: #555;
+
+}
+.no-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

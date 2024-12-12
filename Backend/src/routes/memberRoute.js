@@ -38,33 +38,33 @@ router.post("/addMember", async (request, response) => {
 
 // Backend API example (Node.js/Express with Mongoose)
 router.get("/getAllMembers", async (req, res) => {
-  const { page = 1, rowsPerPage = 10, searchQuery = '' } = req.query;
+  const { page = 1, rowsPerPage = 10, searchQuery = '', genderQuery = '', statusQuery = '', membershipQuery = '', remainingQuery = '' } = req.query;
+
+  const queryConditions = [
+    {
+      $or: [{ userName: { $regex: searchQuery, $options: 'i' } }
+        , { id: { $regex: searchQuery, $options: 'i' } },
+      { phoneNumber: { $regex: searchQuery, $options: 'i' } }]
+    }];
+
+  if (genderQuery) { queryConditions.push({ gender: genderQuery }); }
+  if (statusQuery) { queryConditions.push({ status:statusQuery}); }
+  if (membershipQuery) { queryConditions.push({ memberShip:membershipQuery}); }
+  if (remainingQuery === "true") { queryConditions.push({ remaining: { $gt: 0 } }); }
 
   const totalMembers = await memberModel.countDocuments({
-    $or: [
-      { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
-      { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
-      { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
-      { status: { $regex: searchQuery, $options: 'i' } }
-    ]
+    $and: queryConditions
   });
 
   const totalPages = Math.ceil(totalMembers / rowsPerPage)
-  // const skip = (Number(page) - 1) * Number(rowsPerPage);
   const skiprev = (Number(page) != totalPages) ? totalMembers - (Number(page) * rowsPerPage) : 0
 
 
   try {
     // Use regex to perform a case-insensitive search across `username`, `id`, and `phoneNumber`
-    const members = await memberModel
-      .find({
-        $or: [
-          { userName: { $regex: searchQuery, $options: 'i' } }, // Search by username
-          { id: { $regex: searchQuery, $options: 'i' } }, // Search by id
-          { phoneNumber: { $regex: searchQuery, $options: 'i' } }, // Search by phoneNumber
-          { status: { $regex: searchQuery, $options: 'i' } }
-        ]
-      })
+    const members = await memberModel.find({
+      $and: queryConditions
+    })
       .skip(skiprev)
       .limit(parseInt(Number(page) != totalPages ? rowsPerPage : (totalMembers - ((totalPages - 1) * rowsPerPage))));
 
@@ -251,8 +251,6 @@ router.post('/renewPackage', async (req, res) => {
 
 
 router.post("/updateInfo", async (req, res) => {
-
-  // console.log("request body",req.body.id);
 
   try {
     const member = await memberModel.findOne({ id: req.body.id });
