@@ -2,54 +2,10 @@ import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { containsBadChars } from "../assets/js/auxFunctions";
 
-// these charachters can cause query error in the backend and crash the program
-const badChars = [
-  "[",
-  "]",
-  "*",
-  "(",
-  ")",
-  "{",
-  "}",
-  "<",
-  ">",
-  "^",
-  "%",
-  "$",
-  "#",
-  "@",
-  "!",
-  "~",
-  "`",
-  "|",
-  "\\",
-  "/",
-  "=",
-  "+",
-  "-",
-  "_",
-  ":",
-  ";",
-  '"',
-  "'",
-  ",",
-  ".",
-  "?",
-  "&",
-];
 
-function containsBadChars(inputString) {
-  let hasBadChar = false;
 
-  badChars.forEach((char) => {
-    if (inputString.includes(char)) {
-      hasBadChar = true;
-      return;
-    }
-  });
-  return hasBadChar;
-}
 // Wrapper for the search input, icon, and button
 const SearchWrapper = styled("div")({
   position: "relative",
@@ -114,6 +70,7 @@ const SearchField = ({ onSearch }) => {
     onSearch(searchQuery.trim());
   };
   return (
+    <>
     <SearchWrapper>
       <SearchIconWrapper>
         <SearchIcon />
@@ -127,6 +84,7 @@ const SearchField = ({ onSearch }) => {
       />
       <StyledButton onClick={handleSearch}>Search</StyledButton>
     </SearchWrapper>
+    </>
   );
 };
 

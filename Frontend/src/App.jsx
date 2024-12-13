@@ -10,7 +10,7 @@ import BMICalculator from "./pages/Bmi";
 import Members from "./pages/Members";
 import Coaches from "./components/Coaches";
 import Login from "./pages/Login";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Owner from "./components/Owner";
 import AddNewMember from "./pages/addNewMember";
 import AuthProvider from "./context/AuthContext"; // Update path as per your project
@@ -38,8 +38,6 @@ const App = () => {
             <Route path="/add-new-member" element={<AddNewMember />} />
             <Route path="/member/:id" element={<MemberPage />} />
           </Route>
-          {/* <Route path="/owner" element={< Owner/>} /> */}
-          {/* <Route path="/trainer" element={< Trainer />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

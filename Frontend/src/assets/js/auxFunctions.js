@@ -38,3 +38,50 @@ export const calculateDate = (startDate, pkg) => {
   return expiryDate.toISOString().split("T")[0];
 
 }
+
+// these charachters can cause query error in the backend and crash the program
+export function containsBadChars(inputString) {
+  const badChars = [
+    "[",
+    "]",
+    "*",
+    "(",
+    ")",
+    "{",
+    "}",
+    "<",
+    ">",
+    "^",
+    "%",
+    "$",
+    "#",
+    "@",
+    "!",
+    "~",
+    "`",
+    "|",
+    "\\",
+    "/",
+    "=",
+    "+",
+    "_",
+    ":",
+    ";",
+    '"',
+    "'",
+    ",",
+    ".",
+    "?",
+    "&",
+  ];
+  
+  let hasBadChar = false;
+
+  badChars.forEach((char) => {
+    if (inputString.includes(char)) {
+      hasBadChar = true;
+      return;
+    }
+  });
+  return hasBadChar;
+}
