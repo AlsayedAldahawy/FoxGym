@@ -11,6 +11,8 @@ import { seedInitialPackages } from './services/packagesService.js' ;
 import { seedInitialAdmin } from './services/adminService.js';
 import { seedInitialPayment } from './services/paymentService.js'
 
+import cron from 'node-cron';
+import updateMemberStatus from './services/updateMemberStatus.js';
 
 dotenv.config()
 
@@ -42,4 +44,12 @@ seedInitialPayment()
 
 app.listen(port, () =>{
     console.log(`Server Is Running On Port ${port}`);
+});
+
+updateMemberStatus();
+
+// Schedule the task to run daily at midnight
+cron.schedule('0 * * * *', () => {
+    console.log('Running daily task to update member statuses...');
+    updateMemberStatus();
 });
